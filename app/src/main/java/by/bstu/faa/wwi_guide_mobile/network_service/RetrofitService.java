@@ -7,11 +7,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class NetworkService {
-    private static NetworkService mInstance;
-    private Retrofit mRetrofit;
+public class RetrofitService {
+    private static RetrofitService mInstance;
+    private final Retrofit mRetrofit;
 
-    private NetworkService() {
+    private RetrofitService() {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -27,9 +27,9 @@ public class NetworkService {
                 .build();
     }
 
-    public static NetworkService getInstance() {
+    public static RetrofitService getInstance() {
         if (mInstance == null) {
-            mInstance = new NetworkService();
+            mInstance = new RetrofitService();
         }
         return mInstance;
     }
