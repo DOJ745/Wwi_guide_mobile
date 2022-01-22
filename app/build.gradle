@@ -28,6 +28,9 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-fragment:2.4.0-rc01'
+    implementation 'androidx.navigation:navigation-ui:2.4.0-rc01'
+
 
     // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.22'
