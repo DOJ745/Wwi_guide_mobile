@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface UserApi {
+public interface AppApi {
 
     //@GET("/posts/{id}")
     //Call<Post> getPostWithID(@Path("id") int id);

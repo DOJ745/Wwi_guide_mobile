@@ -4,7 +4,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-import by.bstu.faa.wwi_guide_mobile.network_service.api.UserApi;
+import by.bstu.faa.wwi_guide_mobile.network_service.api.AppApi;
 import by.bstu.faa.wwi_guide_mobile.network_service.callback.TokenCallback;
 import by.bstu.faa.wwi_guide_mobile.network_service.custom_error.TokenError;
 import retrofit2.Call;
@@ -22,7 +22,7 @@ public class TokenRepo implements Callback<Token> {
 
     void getToken(LoginData data){
         callback.onLoading(true);
-        UserApi request = RetrofitService.getInstance().buildService(UserApi.class);
+        AppApi request = RetrofitService.getInstance().buildService(AppApi.class);
         Call call = request.tokenData(data);
         call.enqueue(this);
     }

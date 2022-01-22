@@ -1,7 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.network_service;
 
 import by.bstu.faa.wwi_guide_mobile.constants.Constants;
-import by.bstu.faa.wwi_guide_mobile.network_service.api.UserApi;
+import by.bstu.faa.wwi_guide_mobile.network_service.api.AppApi;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -34,8 +34,8 @@ public class RetrofitService {
         return mInstance;
     }
 
-    public UserApi getUserApi() {
-        return mRetrofit.create(UserApi.class);
+    public AppApi getAppApi() {
+        return mRetrofit.create(AppApi.class);
     }
 
     public <T> T buildService(Class<T> service) {
