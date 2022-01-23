@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.network_service.api;
 
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
@@ -19,5 +21,5 @@ public interface AppApi {
     Call<Token> tokenData(@Body LoginData data);
 
     @GET("/api/year")
-    Call<YearDto> getYears(@Header("Authorization") String token);
+    Call<List<YearDto>> getYears(@Header("Authorization") String token);
 }
