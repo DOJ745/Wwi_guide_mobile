@@ -20,6 +20,6 @@ public interface AppApi {
     @POST("/auth/login")
     Call<Token> tokenData(@Body LoginData data);
 
-    @GET("/api/year")
+    @GET("/api/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
 }
