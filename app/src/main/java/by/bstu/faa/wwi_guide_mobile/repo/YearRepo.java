@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
@@ -13,9 +15,9 @@ import retrofit2.Response;
 
 public class YearRepo {
 
-    private MutableLiveData<YearDto> yearDtoMutableLiveData;
+    private MutableLiveData<List<YearDto>> yearsDtoMutableLiveData;
     public  YearRepo() {
-        yearDtoMutableLiveData = new MutableLiveData<>();
+        yearsDtoMutableLiveData = new MutableLiveData<>();
     }
 
     public void getYears(Token token) {
@@ -23,25 +25,25 @@ public class YearRepo {
         RetrofitService.getInstance()
                 .getAppApi()
                 .getYears("Bearer " + token.getToken())
-                .enqueue(new Callback<YearDto>() {
+                .enqueue(new Callback<List<YearDto>>() {
 
                     @Override
                     public void onResponse(
-                            @NonNull Call<YearDto> call,
-                            @NonNull Response<YearDto> response) {
+                            @NonNull Call<List<YearDto>> call,
+                            @NonNull Response<List<YearDto>> response) {
                         if(response.body() != null) {
-                            yearDtoMutableLiveData.postValue(response.body());
+                            yearsDtoMutableLiveData.postValue(response.body());
                         }
                     }
 
                     @Override
                     public void onFailure(
-                            @NonNull Call<YearDto> call,
+                            @NonNull Call<List<YearDto>> call,
                             @NonNull Throwable t) {
-                        yearDtoMutableLiveData.postValue(null);
+                        yearsDtoMutableLiveData.postValue(null);
                     }
                 });
     }
 
-    public LiveData<YearDto> getYearLiveData() { return yearDtoMutableLiveData; }
+    public LiveData<List<YearDto>> getYearsLiveData() { return yearsDtoMutableLiveData; }
 }

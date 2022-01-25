@@ -8,9 +8,9 @@ import lombok.Data;
 @Data
 public class YearDto {
     @SerializedName("date")@Expose
-    int date;
+    private int date;
     @SerializedName("title")@Expose
-    String title;
+    private String title;
     @SerializedName("img")@Expose
-    String imgUrl;
+    private String imgUrl;
 }

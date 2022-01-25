@@ -1,6 +1,5 @@
 package by.bstu.faa.wwi_guide_mobile.ui.main;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
 import by.bstu.faa.wwi_guide_mobile.ui.main.adapters.YearResultAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_model.YearViewModel;
 
@@ -28,6 +27,7 @@ public class MainFragment extends Fragment {
 
     private YearViewModel yearViewModel;
     private YearResultAdapter yearAdapter;
+    private Token token;
 
     private Button getYearsButton;
 
@@ -44,11 +44,13 @@ public class MainFragment extends Fragment {
 
         yearViewModel = ViewModelProviders.of(this).get(YearViewModel.class);
         yearViewModel.init();
-        /*yearViewModel.getYearDtoResponseLiveData().observe(this, yearResponse -> {
-            if (yearResponse != null) {
-                yearAdapter.setItems(yearResponse);
+        yearViewModel.getYearsDtoResponseLiveData().observe(this, yearsResponse -> {
+            if (yearsResponse != null) {
+                yearAdapter.setItems(yearsResponse);
             }
-        });*/
+        });
+
+        token = new Token();
     }
 
     @Nullable
@@ -64,21 +66,24 @@ public class MainFragment extends Fragment {
 
         getYearsButton = view.findViewById(R.id.main_fragment_button);
 
+        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQzMDk4NDg5LCJleHAiOjE2NDMxMTI4ODl9.pnq4JFPL9Fa_2kjCKjd-0tZzCNrI27MnDeDLImSojGQ");
+
         getYearsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                yearViewModel.getYearDtoResponseLiveData();
+                yearViewModel.getYears(token);
             }
         });
 
         return view;
     }
 
+    /*
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         // TODO: Use the ViewModel
     }
-
+*/
 }

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
 public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.YearResultHolder> {
@@ -36,13 +37,15 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
 
         YearDto year = items.get(position);
 
-        holder.yearDateTextView.setText(year.getDate());
+        holder.yearDateTextView.setText(String.valueOf(year.getDate()));
         holder.yearTitleTextView.setText(year.getTitle());
 
         if (year.getImgUrl() != null) {
-            String imageUrl = year.getImgUrl().replace("https://", "http://");
+            Glide.with(holder.itemView).load(year.getImgUrl()).into(holder.yearImageView);
+        }
 
-            Glide.with(holder.itemView).load(imageUrl).into(holder.yearImageView);
+        if (year.getImgUrl().equals("placeholder.png")) {
+            Glide.with(holder.itemView).load(Constants.Values.NO_IMG_URL).into(holder.yearImageView);
         }
     }
 
@@ -58,9 +61,9 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
 
     class YearResultHolder extends RecyclerView.ViewHolder {
 
-        private TextView yearDateTextView;
-        private TextView yearTitleTextView;
-        private ImageView yearImageView;
+        private final TextView yearDateTextView;
+        private final TextView yearTitleTextView;
+        private final ImageView yearImageView;
 
         public YearResultHolder(@NonNull View itemView) {
             super(itemView);

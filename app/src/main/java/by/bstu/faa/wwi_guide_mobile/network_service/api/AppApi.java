@@ -14,9 +14,6 @@ import retrofit2.http.PUT;
 
 public interface AppApi {
 
-    //@GET("/posts/{id}")
-    //Call<Post> getPostWithID(@Path("id") int id);
-
     @POST("/auth/login")
     Call<Token> tokenData(@Body LoginData data);
 
