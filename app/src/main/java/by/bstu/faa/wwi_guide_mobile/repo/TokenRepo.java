@@ -23,7 +23,7 @@ public class TokenRepo implements Callback<Token> {
     void getToken(LoginData data){
         callback.onLoading(true);
         AppApi request = RetrofitService.getInstance().buildService(AppApi.class);
-        Call call = request.tokenData(data);
+        Call call = request.getToken(data);
         call.enqueue(this);
     }
 

@@ -15,7 +15,10 @@ import retrofit2.http.PUT;
 public interface AppApi {
 
     @POST("/auth/login")
-    Call<Token> tokenData(@Body LoginData data);
+    Call<Token> getToken(@Body LoginData data);
+
+    @POST("/auth/reg")
+    Call<String> getRegStatus(@Body LoginData data);
 
     @GET("/api/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
