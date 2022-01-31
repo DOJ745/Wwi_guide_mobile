@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.view_model;
+package by.bstu.faa.wwi_guide_mobile.view_models;
 
 import android.app.Application;
 

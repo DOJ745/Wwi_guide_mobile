@@ -19,4 +19,10 @@ public interface AppApi {
 
     @GET("/api/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
+
+    @GET("/api/events")
+    Call<List<YearDto>> getEvents(@Header("Authorization") String token);
+
+    @GET("/api/achievements")
+    Call<List<YearDto>> getAchievements(@Header("Authorization") String token);
 }

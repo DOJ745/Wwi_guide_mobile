@@ -1,6 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.main;
-
-import androidx.lifecycle.ViewModelProvider;
+package by.bstu.faa.wwi_guide_mobile.ui.main.fragments;
 
 import android.os.Bundle;
 
@@ -18,8 +16,9 @@ import android.widget.Button;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
+import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import by.bstu.faa.wwi_guide_mobile.ui.main.adapters.YearResultAdapter;
-import by.bstu.faa.wwi_guide_mobile.view_model.YearViewModel;
+import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
 public class MainFragment extends Fragment {
 
@@ -66,14 +65,9 @@ public class MainFragment extends Fragment {
 
         getYearsButton = view.findViewById(R.id.main_fragment_button);
 
-        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQzMDk4NDg5LCJleHAiOjE2NDMxMTI4ODl9.pnq4JFPL9Fa_2kjCKjd-0tZzCNrI27MnDeDLImSojGQ");
+        token.setToken("");
 
-        getYearsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                yearViewModel.getYears(token);
-            }
-        });
+        getYearsButton.setOnClickListener(v -> yearViewModel.getYears(token));
 
         return view;
     }
