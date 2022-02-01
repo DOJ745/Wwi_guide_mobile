@@ -32,6 +32,8 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
         return new YearResultHolder(itemView);
     }
 
+    // Put data in UI elements
+
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
 
@@ -43,8 +45,7 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
         if (year.getImgUrl() != null) {
             Glide.with(holder.itemView).load(year.getImgUrl()).into(holder.yearImageView);
         }
-
-        if (year.getImgUrl().equals("placeholder.png")) {
+        else {
             Glide.with(holder.itemView).load(Constants.Values.NO_IMG_URL).into(holder.yearImageView);
         }
     }
@@ -58,6 +59,8 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
         this.items = items;
         notifyDataSetChanged();
     }
+
+    // Define elements in view of our item
 
     class YearResultHolder extends RecyclerView.ViewHolder {
 
