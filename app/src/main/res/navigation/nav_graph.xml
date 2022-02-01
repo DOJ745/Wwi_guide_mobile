@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.main.fragments.MainFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.MainFragment"
         android:label="main_fragment"
         tools:layout="@layout/main_fragment" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.main.fragments.LoginFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/login_fragment" >
         <action
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.main.fragments.RegisterFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.RegisterFragment"
         android:label="register_fragment"
         tools:layout="@layout/register_fragment" >
         <action

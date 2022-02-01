@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class Token {
-    @SerializedName("token")
+public class RegData extends LoginData {
+    @SerializedName("name")
     @Expose
-    private String token;
+    private String countryName;
 }

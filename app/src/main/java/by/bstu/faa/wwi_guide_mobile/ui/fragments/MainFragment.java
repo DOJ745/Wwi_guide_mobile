@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.main.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.data_objects.Token;
+import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
-import by.bstu.faa.wwi_guide_mobile.ui.main.adapters.YearResultAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearResultAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
 public class MainFragment extends Fragment {
@@ -26,7 +26,7 @@ public class MainFragment extends Fragment {
 
     private YearViewModel yearViewModel;
     private YearResultAdapter yearAdapter;
-    private Token token;
+    private TokenData token;
 
     private Button getYearsButton;
 
@@ -49,7 +49,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        token = new Token();
+        token = new TokenData();
     }
 
     @Nullable

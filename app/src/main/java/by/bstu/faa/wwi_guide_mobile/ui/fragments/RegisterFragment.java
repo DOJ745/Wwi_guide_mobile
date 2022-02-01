@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.main.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 

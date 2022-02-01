@@ -6,12 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
 @Data
-public class LoginData {
-    @SerializedName("login")
+public class TokenData {
+    @SerializedName("token")
     @Expose
-    protected String login;
-
-    @SerializedName("password")
-    @Expose
-    protected String password;
+    private String token;
 }

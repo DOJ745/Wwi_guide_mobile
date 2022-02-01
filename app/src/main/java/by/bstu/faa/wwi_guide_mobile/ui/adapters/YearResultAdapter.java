@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.main.adapters;
+package by.bstu.faa.wwi_guide_mobile.ui.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
