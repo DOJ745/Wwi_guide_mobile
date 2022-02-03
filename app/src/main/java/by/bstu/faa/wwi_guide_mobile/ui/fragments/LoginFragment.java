@@ -66,7 +66,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.login_fragment, container, false);
 
         TextView testTextView = view.findViewById(R.id.textView);
-        String sourceString = "<b>Some bold text</b> Regular text";
+        String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
         testTextView.setText(Html.fromHtml(sourceString));
 
         return view;
