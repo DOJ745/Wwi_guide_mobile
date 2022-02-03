@@ -4,9 +4,11 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 
@@ -61,6 +63,12 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.login_fragment, container, false);
+
+        TextView testTextView = view.findViewById(R.id.textView);
+        String sourceString = "<b>Some bold text</b> Regular text";
+        testTextView.setText(Html.fromHtml(sourceString));
+
+        return view;
     }
 }

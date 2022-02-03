@@ -17,5 +17,6 @@ public class Constants {
         public final static int CODE_FORBIDDEN = 403;
         public final static int CODE_NOT_FOUND= 404;
         public final static int CODE_SERVER_ERROR = 500;
+
     }
 }
