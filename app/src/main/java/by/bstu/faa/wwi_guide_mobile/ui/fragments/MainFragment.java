@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
+import by.bstu.faa.wwi_guide_mobile.ui.adapters.RankSpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearResultAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
@@ -27,12 +28,14 @@ public class MainFragment extends Fragment {
 
     private YearViewModel yearViewModel;
     private YearResultAdapter yearAdapter;
+    private RankSpinnerAdapter rankSpinnerAdapter;
+
     private TokenData token;
 
     private Button getYearsButton;
 
-    public static MainFragment newInstance() {
-        return new MainFragment();
+    public MainFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -72,13 +75,4 @@ public class MainFragment extends Fragment {
 
         return view;
     }
-
-    /*
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
-    }
-*/
 }
