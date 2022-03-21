@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +42,7 @@ public class MainFragment extends Fragment {
 
         yearAdapter = new YearResultAdapter();
 
-        yearViewModel = ViewModelProviders.of(this).get(YearViewModel.class);
+        //yearViewModel = ViewModelProviders.of(this).get(YearViewModel.class);
         yearViewModel.init();
         yearViewModel.getYearsDtoResponseLiveData().observe(this, yearsResponse -> {
             if (yearsResponse != null) {
