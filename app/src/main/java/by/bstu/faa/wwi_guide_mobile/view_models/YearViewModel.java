@@ -23,10 +23,10 @@ public class YearViewModel extends AndroidViewModel {
 
     public void init() {
         yearRepo = new YearRepo();
-        yearsDtoResponseLiveData = yearRepo.getYearsLiveData();
+        yearsDtoResponseLiveData = yearRepo.getElementsLiveData();
     }
 
-    public void getYears(TokenData token){ yearRepo.getYears(token); }
+    public void getYears(TokenData token){ yearRepo.getElements(token); }
 
     public LiveData<List<YearDto>> getYearsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
 }
