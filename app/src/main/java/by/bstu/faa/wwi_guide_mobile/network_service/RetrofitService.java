@@ -16,7 +16,7 @@ public class RetrofitService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        // Watch Request and Response
+        // Watch Request and Response for logs in IDE
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor);
 

@@ -22,6 +22,8 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
 
     private List<YearDto> items = new ArrayList<>();
 
+    // Layout for item
+
     @NonNull
     @Override
     public YearResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -32,7 +34,7 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
         return new YearResultHolder(itemView);
     }
 
-    // Put data in UI elements
+    // Put data in elements of item's UI
 
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {

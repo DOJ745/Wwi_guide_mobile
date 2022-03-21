@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.repo.YearRepo;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,6 +22,9 @@ public interface AppApi {
 
     @GET("/api/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
+
+    @GET("/api/ranks")
+    Call<List<RankDto>> getRanks(@Header("Authorization") String token);
 
     @GET("/api/events")
     Call<List<YearDto>> getEvents(@Header("Authorization") String token);
