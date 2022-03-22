@@ -12,7 +12,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.repo.RankRepo;
 
-public class RegisterViewModel extends AndroidViewModel {
+public class RegisterViewModel extends AndroidViewModel implements ViewModelMethods<RankDto> {
 
     private RankRepo rankRepo;
     private LiveData<List<RankDto>> ranksDtoResponseLiveData;
@@ -26,7 +26,7 @@ public class RegisterViewModel extends AndroidViewModel {
         ranksDtoResponseLiveData = rankRepo.getElementsLiveData();
     }
 
-    public void getRanks(TokenData token){ rankRepo.getElements(token); }
+    public void getElements(TokenData token){ rankRepo.getElements(token); }
 
-    public LiveData<List<RankDto>> getRanksDtoResponseLiveData() { return ranksDtoResponseLiveData; }
+    public LiveData<List<RankDto>> getElementsDtoResponseLiveData() { return ranksDtoResponseLiveData; }
 }

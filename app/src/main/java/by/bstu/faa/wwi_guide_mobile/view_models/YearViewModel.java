@@ -12,7 +12,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.repo.YearRepo;
 
-public class YearViewModel extends AndroidViewModel {
+public class YearViewModel extends AndroidViewModel implements ViewModelMethods<YearDto> {
 
     private YearRepo yearRepo;
     private LiveData<List<YearDto>> yearsDtoResponseLiveData;
@@ -26,7 +26,6 @@ public class YearViewModel extends AndroidViewModel {
         yearsDtoResponseLiveData = yearRepo.getElementsLiveData();
     }
 
-    public void getYears(TokenData token){ yearRepo.getElements(token); }
-
-    public LiveData<List<YearDto>> getYearsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
+    public void getElements(TokenData token){ yearRepo.getElements(token); }
+    public LiveData<List<YearDto>> getElementsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
 }

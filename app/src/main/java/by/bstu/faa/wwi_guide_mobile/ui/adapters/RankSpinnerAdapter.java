@@ -8,15 +8,25 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
-public class RankSpinnerAdapter extends ArrayAdapter<String> {
+public class RankSpinnerAdapter extends ArrayAdapter<RankDto> {
 
-    String[] dayOfWeek = { "Понедельник", "Вторник", "Среда", "Четверг",
-            "Котопятница", "Субкота", "Воскресенье" };
-
-    public RankSpinnerAdapter(Context context, int textViewResourceId, String[] objects) {
+    private List<RankDto> items;
+    public RankSpinnerAdapter(Context context, int textViewResourceId, List<RankDto> objects) {
         super(context, textViewResourceId, objects);
+    }
+
+    public void setItems(List<RankDto> items){
+        this.items = items;
     }
 
     @Override
@@ -35,15 +45,17 @@ public class RankSpinnerAdapter extends ArrayAdapter<String> {
                 .inflate(R.layout.rank_row, parent, false);
 
         TextView name = itemView.findViewById(R.id.name);
-        name.setText(dayOfWeek[position]);
+        name.setText(items.get(position).getName());
 
         ImageView icon = itemView.findViewById(R.id.icon);
 
-        if (dayOfWeek[position].equals("Котопятница") || dayOfWeek[position].equals("Субкота")) {
-            icon.setImageResource(R.drawable.ic_launcher_foreground);
-        } else {
-            icon.setImageResource(R.drawable.ic_launcher_background);
+        if (items.get(position).getImgUrl() != null) {
+            Glide.with(itemView).load(items.get(position).getImgUrl()).into(icon);
         }
+        else {
+            Glide.with(itemView).load(Constants.Values.NO_IMG_URL).into(icon);
+        }
+
         return itemView;
     }
 }

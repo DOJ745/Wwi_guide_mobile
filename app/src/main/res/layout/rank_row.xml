@@ -12,6 +12,9 @@
 
         android:textAlignment="center"
         android:textSize="20sp"
+
+        android:layout_margin="@dimen/small_margin"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -22,6 +25,8 @@
         android:id="@+id/icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
+        android:layout_margin="@dimen/main_margin"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

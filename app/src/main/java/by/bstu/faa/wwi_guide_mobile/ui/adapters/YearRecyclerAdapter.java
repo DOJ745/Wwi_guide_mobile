@@ -18,7 +18,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
-public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.YearResultHolder> {
+public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapter.YearResultHolder> {
 
     private List<YearDto> items = new ArrayList<>();
 
@@ -64,7 +64,7 @@ public class YearResultAdapter extends RecyclerView.Adapter<YearResultAdapter.Ye
 
     // Define elements in view of our item
 
-    class YearResultHolder extends RecyclerView.ViewHolder {
+    static class YearResultHolder extends RecyclerView.ViewHolder {
 
         private final TextView yearDateTextView;
         private final TextView yearTitleTextView;
