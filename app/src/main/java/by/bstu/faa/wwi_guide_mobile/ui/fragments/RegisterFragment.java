@@ -57,25 +57,26 @@ public class RegisterFragment extends Fragment {
 
         List<CountryDto> temp = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 1; i++){
             CountryDto testCountry = new CountryDto();
-            testCountry.setName("TEST" + i);
-            testCountry.setFlagUrl("TEST");
+            testCountry.setName("PLEASE, WAIT..." );
+            testCountry.setFlagUrl("EMPTY");
             temp.add(testCountry);
         }
 
+        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         registerViewModel.init();
-        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
             if (countryResponse != null) {
-                //rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(), R.layout.rank_row, ranksResponse);
                 countrySpinnerAdapter.setItems(countryResponse);
             }
         });
 
         token = new TokenData();
+        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQ3OTU4ODM0LCJleHAiOjE2NDc5NzMyMzR9.l0yIn8yRh2gn1CzezGSk0nQ1l3Xi9fGmg9OsAW9VBBY");
+        registerViewModel.getElements(token);
     }
 
     @Nullable
@@ -88,10 +89,6 @@ public class RegisterFragment extends Fragment {
         Spinner rankSpinner = view.findViewById(R.id.rank_spinner);
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
-
-        Button getRanksButton = view.findViewById(R.id.reg_fragment_button);
-        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQ3OTU4ODM0LCJleHAiOjE2NDc5NzMyMzR9.l0yIn8yRh2gn1CzezGSk0nQ1l3Xi9fGmg9OsAW9VBBY");
-        getRanksButton.setOnClickListener(v -> registerViewModel.getElements(token));
 
         return view;
     }

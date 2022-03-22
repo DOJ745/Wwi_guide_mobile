@@ -10,6 +10,7 @@
     <string name="action_registration">Регистрация</string>
     <string name="prompt_repeat_password">Повторите пароль</string>
     <string name="action_register">Зарегестрироваться</string>
+    <string name="action_choose_side">Выберите сторону</string>
 
     <!-- ERROR OCCURRED -->
     <string name="invalid_username">Имя пользователя должно быть от 4-х до 48 символов!</string>

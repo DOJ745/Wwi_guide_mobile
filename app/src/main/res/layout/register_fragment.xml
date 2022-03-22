@@ -30,6 +30,12 @@
             android:hint="@string/prompt_repeat_password"
             android:inputType="textVisiblePassword" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_choose_side"
+            android:textSize="21sp"/>
+
         <Spinner
             android:id="@+id/rank_spinner"
 

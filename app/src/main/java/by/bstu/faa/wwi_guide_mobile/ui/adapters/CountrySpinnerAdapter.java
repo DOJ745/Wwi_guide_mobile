@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
 
     private List<CountryDto> items;
+
     public CountrySpinnerAdapter(Context context, int textViewResourceId, List<CountryDto> objects) {
         super(context, textViewResourceId, objects);
         this.items = objects;
@@ -27,6 +30,12 @@ public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
     public void setItems(List<CountryDto> items){
         this.items = items;
     }
+
+    @Override
+    public int getCount() { return items.size(); }
+
+    @Override
+    public CountryDto getItem(int position) { return items.get(position); }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
