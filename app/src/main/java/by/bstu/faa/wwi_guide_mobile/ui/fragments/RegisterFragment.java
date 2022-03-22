@@ -57,7 +57,7 @@ public class RegisterFragment extends Fragment {
 
         List<CountryDto> temp = new ArrayList<>();
 
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 3; i++){
             CountryDto testCountry = new CountryDto();
             testCountry.setName("TEST" + i);
             testCountry.setFlagUrl("TEST");
@@ -90,7 +90,7 @@ public class RegisterFragment extends Fragment {
         rankSpinner.setPromptId(R.string.id_for_spinner);
 
         Button getRanksButton = view.findViewById(R.id.reg_fragment_button);
-        token.setToken("");
+        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQ3OTU4ODM0LCJleHAiOjE2NDc5NzMyMzR9.l0yIn8yRh2gn1CzezGSk0nQ1l3Xi9fGmg9OsAW9VBBY");
         getRanksButton.setOnClickListener(v -> registerViewModel.getElements(token));
 
         return view;
