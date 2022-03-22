@@ -10,23 +10,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.Constants;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 
-public class RankSpinnerAdapter extends ArrayAdapter<RankDto> {
+public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
 
-    private List<RankDto> items;
-    public RankSpinnerAdapter(Context context, int textViewResourceId, List<RankDto> objects) {
+    private List<CountryDto> items;
+    public CountrySpinnerAdapter(Context context, int textViewResourceId, List<CountryDto> objects) {
         super(context, textViewResourceId, objects);
         this.items = objects;
     }
 
-    public void setItems(List<RankDto> items){
+    public void setItems(List<CountryDto> items){
         this.items = items;
     }
 
@@ -43,18 +41,18 @@ public class RankSpinnerAdapter extends ArrayAdapter<RankDto> {
     public View getCustomView(int position, View convertView, ViewGroup parent) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.rank_row, parent, false);
+                .inflate(R.layout.country_row, parent, false);
 
         TextView name = itemView.findViewById(R.id.name);
         name.setText(items.get(position).getName());
 
-        ImageView icon = itemView.findViewById(R.id.icon);
+        ImageView flag = itemView.findViewById(R.id.icon);
 
-        if (items.get(position).getImgUrl() != null) {
-            Glide.with(itemView).load(items.get(position).getImgUrl()).into(icon);
+        if (items.get(position).getFlagUrl() != null) {
+            Glide.with(itemView).load(items.get(position).getFlagUrl()).into(flag);
         }
         else {
-            Glide.with(itemView).load(Constants.Values.NO_IMG_URL).into(icon);
+            Glide.with(itemView).load(Constants.Values.NO_IMG_URL).into(flag);
         }
 
         return itemView;

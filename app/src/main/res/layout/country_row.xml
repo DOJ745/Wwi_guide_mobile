@@ -23,8 +23,8 @@
         android:src="@drawable/ic_launcher_background"
 
         android:id="@+id/icon"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
 
         android:layout_margin="@dimen/main_margin"
 

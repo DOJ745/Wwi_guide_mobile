@@ -63,8 +63,7 @@ public class MainFragment extends Fragment {
 
         Button getYearsButton = view.findViewById(R.id.main_fragment_button);
 
-        //token.setToken("");
-        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY4N2ZhZTIzZWIzMGM3Y2QyYjEyMCIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTY0Nzk0MDkwNSwiZXhwIjoxNjQ3OTU1MzA1fQ.aKRK9YOf0qANCCjOB1vYqZG-Lp_RpckvsH1MaxTquxk");
+        token.setToken("");
 
         getYearsButton.setOnClickListener(v -> yearViewModel.getElements(token));
 

@@ -8,7 +8,6 @@ import java.util.List;
 import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +15,7 @@ import retrofit2.Response;
 
 public class CountryRepo extends BasicRepo<CountryDto>{
     @Override
-    void getElements(TokenData token) {
+    public void getElements(TokenData token) {
 
         RetrofitService.getInstance()
                 .getAppApi()

@@ -17,11 +17,9 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.RankSpinnerAdapter;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
-import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
 public class RegisterFragment extends Fragment {
 
@@ -32,7 +30,7 @@ public class RegisterFragment extends Fragment {
     private String mParam2;
 
     private RegisterViewModel registerViewModel;
-    private RankSpinnerAdapter rankSpinnerAdapter;
+    private CountrySpinnerAdapter countrySpinnerAdapter;
     private TokenData token;
 
     public RegisterFragment() {
@@ -65,25 +63,23 @@ public class RegisterFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }*/
 
-        List<RankDto> temp = new ArrayList<>();
+        List<CountryDto> temp = new ArrayList<>();
 
         for (int i = 0; i < 5; i++){
-            RankDto testRank = new RankDto();
-            testRank.setName("TEST" + i);
-            testRank.setImgUrl("TEST");
-            testRank.setPoints(100 + i);
-            testRank.setCountryId("TEST");
-            temp.add(testRank);
+            CountryDto testCountry = new CountryDto();
+            testCountry.setName("TEST" + i);
+            testCountry.setFlagUrl("TEST");
+            temp.add(testCountry);
         }
 
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         registerViewModel.init();
-        rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(), R.layout.rank_row, temp);
+        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);
 
-        registerViewModel.getElementsDtoResponseLiveData().observe(this, ranksResponse -> {
-            if (ranksResponse != null) {
+        registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
+            if (countryResponse != null) {
                 //rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(), R.layout.rank_row, ranksResponse);
-                rankSpinnerAdapter.setItems(ranksResponse);
+                countrySpinnerAdapter.setItems(countryResponse);
             }
         });
 
@@ -98,11 +94,11 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
         Spinner rankSpinner = view.findViewById(R.id.rank_spinner);
-        rankSpinner.setAdapter(rankSpinnerAdapter);
+        rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
 
         Button getRanksButton = view.findViewById(R.id.reg_fragment_button);
-        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY4N2ZhZTIzZWIzMGM3Y2QyYjEyMCIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTY0Nzk0MDkwNSwiZXhwIjoxNjQ3OTU1MzA1fQ.aKRK9YOf0qANCCjOB1vYqZG-Lp_RpckvsH1MaxTquxk");
+        token.setToken("");
         getRanksButton.setOnClickListener(v -> registerViewModel.getElements(token));
 
         return view;
