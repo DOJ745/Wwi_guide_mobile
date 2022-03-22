@@ -15,6 +15,7 @@ import retrofit2.Response;
 
 public class RankRepo extends BasicRepo<RankDto> {
 
+    @Override
     public void getElements(TokenData token) {
 
         RetrofitService.getInstance()
@@ -40,5 +41,6 @@ public class RankRepo extends BasicRepo<RankDto> {
                 });
     }
 
+    @Override
     public LiveData<List<RankDto>> getElementsLiveData() { return  elementsDtoMutableLiveData; }
 }
