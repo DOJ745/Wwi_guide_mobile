@@ -26,9 +26,6 @@ public class RegisterFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
-
     private RegisterViewModel registerViewModel;
     private CountrySpinnerAdapter countrySpinnerAdapter;
     private TokenData token;
@@ -57,11 +54,6 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }*/
 
         List<CountryDto> temp = new ArrayList<>();
 
