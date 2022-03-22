@@ -23,6 +23,7 @@ public class RankSpinnerAdapter extends ArrayAdapter<RankDto> {
     private List<RankDto> items;
     public RankSpinnerAdapter(Context context, int textViewResourceId, List<RankDto> objects) {
         super(context, textViewResourceId, objects);
+        this.items = objects;
     }
 
     public void setItems(List<RankDto> items){

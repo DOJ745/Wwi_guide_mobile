@@ -66,13 +66,23 @@ public class RegisterFragment extends Fragment {
         }*/
 
         List<RankDto> temp = new ArrayList<>();
-        rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(),
-                R.layout.rank_row, temp);
+
+        for (int i = 0; i < 5; i++){
+            RankDto testRank = new RankDto();
+            testRank.setName("TEST" + i);
+            testRank.setImgUrl("TEST");
+            testRank.setPoints(100 + i);
+            testRank.setCountryId("TEST");
+            temp.add(testRank);
+        }
+
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         registerViewModel.init();
+        rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(), R.layout.rank_row, temp);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(this, ranksResponse -> {
             if (ranksResponse != null) {
+                //rankSpinnerAdapter = new RankSpinnerAdapter(this.getContext(), R.layout.rank_row, ranksResponse);
                 rankSpinnerAdapter.setItems(ranksResponse);
             }
         });
@@ -88,15 +98,12 @@ public class RegisterFragment extends Fragment {
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
         Spinner rankSpinner = view.findViewById(R.id.rank_spinner);
-
         rankSpinner.setAdapter(rankSpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
 
         Button getRanksButton = view.findViewById(R.id.reg_fragment_button);
         token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY4N2ZhZTIzZWIzMGM3Y2QyYjEyMCIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTY0Nzk0MDkwNSwiZXhwIjoxNjQ3OTU1MzA1fQ.aKRK9YOf0qANCCjOB1vYqZG-Lp_RpckvsH1MaxTquxk");
         getRanksButton.setOnClickListener(v -> registerViewModel.getElements(token));
-
-        //rankSpinner.setSelection(2, true);
 
         return view;
     }

@@ -32,6 +32,11 @@
 
         <Spinner
             android:id="@+id/rank_spinner"
+
+            android:background="@drawable/red_outline"
+            android:popupBackground="@drawable/red_outline_white_background"
+            android:spinnerMode="dropdown"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

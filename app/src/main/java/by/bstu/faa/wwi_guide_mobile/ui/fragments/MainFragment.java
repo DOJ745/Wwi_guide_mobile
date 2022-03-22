@@ -16,7 +16,6 @@ import android.widget.Button;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.RankSpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
@@ -27,7 +26,6 @@ public class MainFragment extends Fragment {
 
     private YearViewModel yearViewModel;
     private YearRecyclerAdapter yearAdapter;
-    private RankSpinnerAdapter rankSpinnerAdapter;
 
     private TokenData token;
 
@@ -65,7 +63,8 @@ public class MainFragment extends Fragment {
 
         Button getYearsButton = view.findViewById(R.id.main_fragment_button);
 
-        token.setToken("");
+        //token.setToken("");
+        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY4N2ZhZTIzZWIzMGM3Y2QyYjEyMCIsInJvbGVzIjpbIkFETUlOIl0sImlhdCI6MTY0Nzk0MDkwNSwiZXhwIjoxNjQ3OTU1MzA1fQ.aKRK9YOf0qANCCjOB1vYqZG-Lp_RpckvsH1MaxTquxk");
 
         getYearsButton.setOnClickListener(v -> yearViewModel.getElements(token));
 
