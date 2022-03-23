@@ -6,10 +6,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
@@ -86,10 +89,34 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        Spinner rankSpinner = view.findViewById(R.id.rank_spinner);
+        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
 
         return view;
+    }
+
+    private void initEnterTextElements(View view) {
+        EditText loginField = view.findViewById(R.id.reg_login_input);
+        EditText passwordField = view.findViewById(R.id.reg_password_input);
+        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
+
+        loginField.setError("Required field! (at least 4 symbols)");
+        loginField.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (loginField.getText().length() != 0 && loginField.getText().length() > 3) {
+                    loginField.setError(null);
+                }
+                else {
+                    loginField.setError("Required field!");
+                }
+            }
+        });
     }
 }
