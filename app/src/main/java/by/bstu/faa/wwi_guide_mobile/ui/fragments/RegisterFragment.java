@@ -89,6 +89,7 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
+        initEnterTextElements(view);
         Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
@@ -101,22 +102,30 @@ public class RegisterFragment extends Fragment {
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
 
-        loginField.setError("Required field! (at least 4 symbols)");
-        loginField.addTextChangedListener(new TextWatcher() {
+        List<EditText> textFields = new ArrayList<>();
+        textFields.add(loginField);
+        textFields.add(passwordField);
+        textFields.add(repeatPasswordField);
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (loginField.getText().length() != 0 && loginField.getText().length() > 3) {
-                    loginField.setError(null);
+        for (EditText field: textFields) {
+
+            field.setError("Минимум 4 символа!");
+            field.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    if (field.getText().length() != 0 && field.getText().length() > 3) {
+                        field.setError(null);
+                    }
+                    else {
+                        field.setError("Обязательное поле!");
+                    }
                 }
-                else {
-                    loginField.setError("Required field!");
-                }
-            }
-        });
+            });
+        }
+
     }
 }

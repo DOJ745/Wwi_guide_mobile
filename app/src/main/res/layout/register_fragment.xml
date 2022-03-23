@@ -15,6 +15,8 @@
         <EditText
             android:id="@+id/reg_login_input"
 
+            android:autofillHints="username"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/prompt_login"
@@ -23,18 +25,23 @@
         <EditText
             android:id="@+id/reg_password_input"
 
+            android:importantForAutofill="no"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/prompt_password"
-            android:inputType="textVisiblePassword" />
+            android:inputType="textPassword"
+            android:autofillHints="" />
 
         <EditText
             android:id="@+id/reg_rep_password_input"
 
+            android:importantForAutofill="no"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/prompt_repeat_password"
-            android:inputType="textVisiblePassword" />
+            android:inputType="textPassword" />
 
         <TextView
             android:layout_width="match_parent"
