@@ -89,15 +89,6 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        initEnterTextElements(view);
-        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
-        rankSpinner.setAdapter(countrySpinnerAdapter);
-        rankSpinner.setPromptId(R.string.id_for_spinner);
-
-        return view;
-    }
-
-    private void initEnterTextElements(View view) {
         EditText loginField = view.findViewById(R.id.reg_login_input);
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
@@ -106,6 +97,27 @@ public class RegisterFragment extends Fragment {
         textFields.add(loginField);
         textFields.add(passwordField);
         textFields.add(repeatPasswordField);
+
+        initEnterTextElements(textFields);
+
+        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+        rankSpinner.setAdapter(countrySpinnerAdapter);
+        rankSpinner.setPromptId(R.string.id_for_spinner);
+
+        Button regButton = view.findViewById(R.id.reg_register_button);
+
+        regButton.setOnClickListener(listen -> {
+            if(loginField.getError().equals("") &&
+                    passwordField.getError().equals("") &&
+                    repeatPasswordField.getError().equals("")) {
+
+            }
+        });
+
+        return view;
+    }
+
+    private void initEnterTextElements(List<EditText> textFields) {
 
         for (EditText field: textFields) {
 

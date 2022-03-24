@@ -7,10 +7,10 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 
-public abstract class BasicRepo<T> {
+public abstract class DataRepo<T> {
 
     protected MutableLiveData<List<T>> elementsDtoMutableLiveData;
-    public BasicRepo() { elementsDtoMutableLiveData = new MutableLiveData<>(); }
+    public DataRepo() { elementsDtoMutableLiveData = new MutableLiveData<>(); }
 
     abstract void getElements(TokenData token);
     abstract LiveData<List<T>> getElementsLiveData();

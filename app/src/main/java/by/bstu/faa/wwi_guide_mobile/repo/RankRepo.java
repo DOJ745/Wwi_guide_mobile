@@ -13,7 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RankRepo extends BasicRepo<RankDto> {
+public class RankRepo extends DataRepo<RankDto> {
 
     @Override
     public void getElements(TokenData token) {

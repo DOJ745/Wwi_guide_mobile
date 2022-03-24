@@ -13,7 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class YearRepo extends BasicRepo<YearDto> {
+public class YearRepo extends DataRepo<YearDto> {
 
     @Override
     public void getElements(TokenData token) {

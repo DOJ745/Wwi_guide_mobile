@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 public class RegData extends LoginData {
-    @SerializedName("name")
+    @SerializedName("countryId")
     @Expose
-    private String countryName;
+    private String countryId;
 }

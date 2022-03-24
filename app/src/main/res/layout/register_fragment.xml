@@ -13,36 +13,53 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/reg_login_input"
-
-            android:autofillHints="username"
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editLoginLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/prompt_login"
-            android:inputType="text" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/half_main_margin">
 
-        <EditText
-            android:id="@+id/reg_password_input"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_login_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_login"
+                android:autofillHints="username"
+                android:inputType="text"/>
 
-            android:importantForAutofill="no"
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editPasswordLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/prompt_password"
-            android:inputType="textPassword"
-            android:autofillHints="1234" />
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="@dimen/half_main_margin">
 
-        <EditText
-            android:id="@+id/reg_rep_password_input"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:inputType="textPassword"/>
 
-            android:importantForAutofill="no"
+        </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editRepPasswordLayout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/prompt_repeat_password"
-            android:inputType="textPassword" />
+            android:layout_height="wrap_content"
+            app:passwordToggleEnabled="true"
+            android:layout_marginBottom="@dimen/half_main_margin">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_rep_password_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_repeat_password"
+                android:inputType="textPassword"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -60,31 +77,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/reg_register_button"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/action_register" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etPasswordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            android:layout_marginBottom="8dp">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/img_description"
-                android:inputType="textPassword"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 
