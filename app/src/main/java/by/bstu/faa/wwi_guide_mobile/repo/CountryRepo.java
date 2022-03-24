@@ -2,24 +2,26 @@ package by.bstu.faa.wwi_guide_mobile.repo;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CountryRepo extends DataRepo<CountryDto> {
-    @Override
-    public void getElements(TokenData token) {
+public class CountryRepo {
+
+    protected MutableLiveData<List<CountryDto>> elementsDtoResponse;
+    public CountryRepo() { elementsDtoResponse = new MutableLiveData<>(); }
+
+    public void getElements() {
 
         RetrofitService.getInstance()
                 .getAppApi()
-                .getCountries(Constants.Values.BEARER + token.getToken())
+                .getCountries()
                 .enqueue(new Callback<List<CountryDto>>() {
 
                     @Override
@@ -27,7 +29,7 @@ public class CountryRepo extends DataRepo<CountryDto> {
                             @NonNull Call<List<CountryDto>> call,
                             @NonNull Response<List<CountryDto>> response) {
                         if(response.body() != null) {
-                            elementsDtoMutableLiveData.postValue(response.body());
+                            elementsDtoResponse.postValue(response.body());
                         }
                     }
 
@@ -35,11 +37,10 @@ public class CountryRepo extends DataRepo<CountryDto> {
                     public void onFailure(
                             @NonNull Call<List<CountryDto>> call,
                             @NonNull Throwable t) {
-                        elementsDtoMutableLiveData.postValue(null);
+                        elementsDtoResponse.postValue(null);
                     }
                 });
     }
 
-    @Override
-    public LiveData<List<CountryDto>> getElementsLiveData() { return  elementsDtoMutableLiveData; }
+    public LiveData<List<CountryDto>> getResponse() { return elementsDtoResponse; }
 }

@@ -7,11 +7,8 @@ import lombok.Data;
 
 @Data
 public class LoginData {
-    @SerializedName("login")
-    @Expose
+    @SerializedName("login") @Expose
     protected String login;
-
-    @SerializedName("password")
-    @Expose
+    @SerializedName("password") @Expose
     protected String password;
 }

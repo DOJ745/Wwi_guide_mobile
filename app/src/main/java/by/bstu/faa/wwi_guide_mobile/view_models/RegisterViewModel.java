@@ -8,16 +8,18 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
-import by.bstu.faa.wwi_guide_mobile.repo.RankRepo;
+import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
 
-public class RegisterViewModel extends AndroidViewModel implements ViewModelMethods<CountryDto> {
+public class RegisterViewModel extends AndroidViewModel {
 
     private CountryRepo countryRepo;
-    private LiveData<List<CountryDto>> countryDtoResponseLiveData;
+    private RegRepo regRepo;
+    private LiveData<List<CountryDto>> countryDtoResponse;
+    private LiveData<String> regRepoResponse;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
@@ -25,10 +27,14 @@ public class RegisterViewModel extends AndroidViewModel implements ViewModelMeth
 
     public void init() {
         countryRepo = new CountryRepo();
-        countryDtoResponseLiveData = countryRepo.getElementsLiveData();
+        regRepo = new RegRepo();
+        countryDtoResponse = countryRepo.getResponse();
+        regRepoResponse = regRepo.getResponse();
     }
 
-    public void getElements(TokenData token){ countryRepo.getElements(token); }
+    public void getCountryResponse() { countryRepo.getElements(); }
+    public void regUser(RegData regData) { regRepo.regUser(regData); }
 
-    public LiveData<List<CountryDto>> getElementsDtoResponseLiveData() { return countryDtoResponseLiveData; }
+    public LiveData<List<CountryDto>> getElementsDtoResponseLiveData() { return countryDtoResponse; }
+    public LiveData<String> getRegRepoResponse() { return regRepoResponse; }
 }

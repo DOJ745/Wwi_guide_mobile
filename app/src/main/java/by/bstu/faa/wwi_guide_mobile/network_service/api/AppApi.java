@@ -31,7 +31,7 @@ public interface AppApi {
     Call<List<RankDto>> getRanks(@Header("Authorization") String token);
 
     @GET("/api/countries")
-    Call<List<CountryDto>> getCountries(@Header("Authorization") String token);
+    Call<List<CountryDto>> getCountries();
 
     @GET("/api/events")
     Call<List<EventDto>> getEvents(@Header("Authorization") String token);

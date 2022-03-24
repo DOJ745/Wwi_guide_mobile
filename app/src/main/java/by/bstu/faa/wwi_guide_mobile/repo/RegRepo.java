@@ -1,14 +1,10 @@
 package by.bstu.faa.wwi_guide_mobile.repo;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.List;
-
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +12,7 @@ import retrofit2.Response;
 
 public class RegRepo {
 
-    MutableLiveData<String> elementsDtoMutableLiveData;
+    MutableLiveData<String> regResponse;
 
     public void regUser(RegData regData) {
 
@@ -29,7 +25,7 @@ public class RegRepo {
                             @NonNull Call<String> call,
                             @NonNull Response<String> response) {
                         if(response.body() != null) {
-                            elementsDtoMutableLiveData.postValue(response.body());
+                            regResponse.postValue(response.body());
                         }
                     }
 
@@ -37,9 +33,9 @@ public class RegRepo {
                     public void onFailure(
                             @NonNull Call<String> call,
                             @NonNull Throwable t) {
-                        elementsDtoMutableLiveData.postValue(null);
+                        regResponse.postValue(null);
                     }
                 });
     }
-
+    public LiveData<String> getResponse() { return regResponse; }
 }

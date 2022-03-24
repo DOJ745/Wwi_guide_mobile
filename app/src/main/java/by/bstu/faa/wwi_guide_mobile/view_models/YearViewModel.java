@@ -12,7 +12,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.repo.YearRepo;
 
-public class YearViewModel extends AndroidViewModel implements ViewModelMethods<YearDto> {
+public class YearViewModel extends AndroidViewModel implements ViewModelDataMethods<YearDto> {
 
     private YearRepo yearRepo;
     private LiveData<List<YearDto>> yearsDtoResponseLiveData;

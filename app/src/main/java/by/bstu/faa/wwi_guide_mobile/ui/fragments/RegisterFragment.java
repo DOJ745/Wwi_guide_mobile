@@ -11,15 +11,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
+import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
@@ -30,20 +32,15 @@ public class RegisterFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private RegisterViewModel registerViewModel;
+
     private CountrySpinnerAdapter countrySpinnerAdapter;
-    private TokenData token;
+
+    private RegData userRegData;
+    private String selectedCountryId;
 
     public RegisterFragment() {
         // Required empty public constructor
     }
-
-
-    /**
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
 
     public static RegisterFragment newInstance(String param1, String param2) {
         RegisterFragment fragment = new RegisterFragment();
@@ -77,9 +74,8 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        token = new TokenData();
-        token.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZTY3YjBjNzNiMGRiZDI2OTY4N2QwZCIsInJvbGVzIjpbIlVTRVIiXSwiaWF0IjoxNjQ3OTU4ODM0LCJleHAiOjE2NDc5NzMyMzR9.l0yIn8yRh2gn1CzezGSk0nQ1l3Xi9fGmg9OsAW9VBBY");
-        registerViewModel.getElements(token);
+        userRegData = new RegData();
+        registerViewModel.getCountryResponse();
     }
 
     @Nullable
@@ -103,6 +99,17 @@ public class RegisterFragment extends Fragment {
         Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
+        rankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                selectedCountryId = countrySpinnerAdapter.getItem(pos).get;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) { }
+        });
 
         Button regButton = view.findViewById(R.id.reg_register_button);
 
@@ -111,6 +118,20 @@ public class RegisterFragment extends Fragment {
                     passwordField.getError().equals("") &&
                     repeatPasswordField.getError().equals("")) {
 
+                userRegData.setLogin(loginField.getText().toString());
+                userRegData.setPassword(repeatPasswordField.getText().toString());
+                userRegData.setCountryId(selectedCountryId);
+
+                registerViewModel.regUser(userRegData);
+
+                registerViewModel.getRegRepoResponse().observe(this, regResponse ->
+                {
+                    if (regResponse != null) {
+                       Toast.makeText(this.getContext(),
+                               "REG RESPONSE: " + regResponse,
+                               Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
 

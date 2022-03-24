@@ -6,7 +6,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 
-public interface ViewModelMethods<T> {
+public interface ViewModelDataMethods<T> {
     void init();
     void getElements(TokenData token);
     LiveData<List<T>> getElementsDtoResponseLiveData();
