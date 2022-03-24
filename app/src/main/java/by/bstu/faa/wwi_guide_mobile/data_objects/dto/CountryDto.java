@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class CountryDto extends IdDto {
+    public CountryDto() { super(); }
+
     @SerializedName("name")@Expose
     private String name;
     @SerializedName("img")@Expose

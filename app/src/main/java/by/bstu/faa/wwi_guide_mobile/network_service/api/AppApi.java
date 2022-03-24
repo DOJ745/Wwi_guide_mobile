@@ -9,6 +9,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AchievementDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RegDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,7 +23,7 @@ public interface AppApi {
     Call<TokenData> getToken(@Body LoginData data);
 
     @POST("/auth/reg")
-    Call<String> registerUser(@Body RegData regData);
+    Call<RegDto> registerUser(@Body RegData regData);
 
     @GET("/api/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);

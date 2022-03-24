@@ -9,7 +9,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 
 public abstract class DataRepo<T> {
 
-    protected MutableLiveData<List<T>> elementsDtoMutableLiveData;
+    protected final MutableLiveData<List<T>> elementsDtoMutableLiveData;
     public DataRepo() { elementsDtoMutableLiveData = new MutableLiveData<>(); }
 
     abstract void getElements(TokenData token);

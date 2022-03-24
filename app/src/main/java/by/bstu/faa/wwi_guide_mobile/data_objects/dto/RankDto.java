@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class RankDto extends IdDto {
+    public RankDto() { super(); }
+
     @SerializedName("name")@Expose
     private String name;
     @SerializedName("points")@Expose

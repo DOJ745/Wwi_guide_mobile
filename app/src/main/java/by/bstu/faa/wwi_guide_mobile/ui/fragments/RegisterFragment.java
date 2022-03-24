@@ -66,11 +66,26 @@ public class RegisterFragment extends Fragment {
 
         countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+
         registerViewModel.init();
 
         registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
             if (countryResponse != null) {
                 countrySpinnerAdapter.setItems(countryResponse);
+            }
+        });
+
+        registerViewModel.getRegRepoResponse().observe(this, regResponse ->
+        {
+            if (regResponse != null) {
+                Toast.makeText(this.getContext(),
+                        "REG RESPONSE: " + regResponse.getRegStatus(),
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this.getContext(),
+                        "REG NULL RESPONSE! ",
+                        Toast.LENGTH_LONG).show();
             }
         });
 
@@ -88,6 +103,7 @@ public class RegisterFragment extends Fragment {
         EditText loginField = view.findViewById(R.id.reg_login_input);
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
+        Button regButton = view.findViewById(R.id.reg_register_button);
 
         List<EditText> textFields = new ArrayList<>();
         textFields.add(loginField);
@@ -104,34 +120,37 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
-                selectedCountryId = countrySpinnerAdapter.getItem(pos).get;
+                selectedCountryId = countrySpinnerAdapter.getItem(pos).getId();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) { }
+            public void onNothingSelected(AdapterView<?> arg0) {
+                selectedCountryId = countrySpinnerAdapter.getItem(0).getId();
+            }
         });
 
-        Button regButton = view.findViewById(R.id.reg_register_button);
+        regButton.setOnClickListener(v -> {
 
-        regButton.setOnClickListener(listen -> {
-            if(loginField.getError().equals("") &&
-                    passwordField.getError().equals("") &&
-                    repeatPasswordField.getError().equals("")) {
+            if( !loginField.getText().equals("") &&
+                    !passwordField.getText().equals("") &&
+                    !repeatPasswordField.getText().equals("") &&
+                    passwordField.getText().toString().equals(repeatPasswordField.getText().toString()) ) {
 
                 userRegData.setLogin(loginField.getText().toString());
                 userRegData.setPassword(repeatPasswordField.getText().toString());
                 userRegData.setCountryId(selectedCountryId);
 
                 registerViewModel.regUser(userRegData);
-
-                registerViewModel.getRegRepoResponse().observe(this, regResponse ->
-                {
-                    if (regResponse != null) {
-                       Toast.makeText(this.getContext(),
-                               "REG RESPONSE: " + regResponse,
-                               Toast.LENGTH_LONG).show();
-                    }
-                });
+            }
+            else if (!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
+                Toast.makeText(this.getContext(),
+                        "Пароли не совпадают!",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this.getContext(),
+                    "Проверьте введённые данные!",
+                    Toast.LENGTH_LONG).show();
             }
         });
 

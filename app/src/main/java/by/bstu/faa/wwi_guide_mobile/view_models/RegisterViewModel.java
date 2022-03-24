@@ -11,6 +11,7 @@ import java.util.List;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RegDto;
 import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
 
@@ -18,8 +19,9 @@ public class RegisterViewModel extends AndroidViewModel {
 
     private CountryRepo countryRepo;
     private RegRepo regRepo;
+
     private LiveData<List<CountryDto>> countryDtoResponse;
-    private LiveData<String> regRepoResponse;
+    private LiveData<RegDto> regRepoResponse;
 
     public RegisterViewModel(@NonNull Application application) {
         super(application);
@@ -28,6 +30,7 @@ public class RegisterViewModel extends AndroidViewModel {
     public void init() {
         countryRepo = new CountryRepo();
         regRepo = new RegRepo();
+
         countryDtoResponse = countryRepo.getResponse();
         regRepoResponse = regRepo.getResponse();
     }
@@ -36,5 +39,5 @@ public class RegisterViewModel extends AndroidViewModel {
     public void regUser(RegData regData) { regRepo.regUser(regData); }
 
     public LiveData<List<CountryDto>> getElementsDtoResponseLiveData() { return countryDtoResponse; }
-    public LiveData<String> getRegRepoResponse() { return regRepoResponse; }
+    public LiveData<RegDto> getRegRepoResponse() { return regRepoResponse; }
 }
