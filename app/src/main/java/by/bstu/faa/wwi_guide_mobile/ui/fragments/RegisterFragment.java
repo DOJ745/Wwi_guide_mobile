@@ -63,7 +63,6 @@ public class RegisterFragment extends Fragment {
 
         registerViewModel.init();
         userRegData = new RegData();
-
         registerViewModel.getCountryResponse();
 
         Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onCreate");
@@ -76,7 +75,7 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        /*List<CountryDto> temp = new ArrayList<>();
+        List<CountryDto> temp = new ArrayList<>();
 
         for (int i = 0; i < 1; i++){
             CountryDto testCountry = new CountryDto();
@@ -85,90 +84,13 @@ public class RegisterFragment extends Fragment {
             temp.add(testCountry);
         }
 
-        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);*/
-
-
-        /*EditText loginField = view.findViewById(R.id.reg_login_input);
-        EditText passwordField = view.findViewById(R.id.reg_password_input);
-        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
-        Button regButton = view.findViewById(R.id.reg_register_button);
-        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+        countrySpinnerAdapter = new CountrySpinnerAdapter(
+                this.getContext(),
+                R.layout.country_row,
+                temp);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
             if (countryResponse != null) {
-                countrySpinnerAdapter.setItems(countryResponse);
-            }
-        });
-
-        registerViewModel.getRegRepoResponse().observe(this, regResponse ->
-        {
-            if (regResponse != null) {
-                Toast.makeText(this.getContext(),
-                        "REG RESPONSE: " + regResponse.getRegStatus(),
-                        Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(this.getContext(),
-                        "REG NULL RESPONSE! ",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
-        List<EditText> textFields = new ArrayList<>();
-        textFields.add(loginField);
-        textFields.add(passwordField);
-        textFields.add(repeatPasswordField);
-
-        initEnterTextElements(textFields);
-
-        registerViewModel.getCountryResponse();
-        rankSpinner.setAdapter(countrySpinnerAdapter);
-        rankSpinner.setPromptId(R.string.id_for_spinner);
-        rankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int pos, long id) {
-                selectedCountryId = countrySpinnerAdapter.getItem(pos).getId();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                selectedCountryId = countrySpinnerAdapter.getItem(0).getId();
-            }
-        });
-
-        regButton.setOnClickListener(v -> {
-
-            if( !loginField.getText().equals("") &&
-                    !passwordField.getText().equals("") &&
-                    !repeatPasswordField.getText().equals("") &&
-                    passwordField.getText().toString().equals(repeatPasswordField.getText().toString()) ) {
-
-                userRegData.setLogin(loginField.getText().toString());
-                userRegData.setPassword(repeatPasswordField.getText().toString());
-                userRegData.setCountryId(selectedCountryId);
-
-                registerViewModel.regUser(userRegData);
-            }
-            else if (!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
-                Toast.makeText(this.getContext(),
-                        "Пароли не совпадают!",
-                        Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(this.getContext(),
-                    "Проверьте введённые данные!",
-                    Toast.LENGTH_LONG).show();
-            }
-        });*/
-
-        registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
-            if (countryResponse != null) {
-                countrySpinnerAdapter = new CountrySpinnerAdapter(
-                        this.getContext(),
-                        R.layout.country_row,
-                        countryResponse);
                 countrySpinnerAdapter.setItems(countryResponse);
             }
         });
@@ -263,6 +185,42 @@ public class RegisterFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onDetach");
     }
 
     private void initEnterTextElements(List<EditText> textFields) {

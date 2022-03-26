@@ -29,6 +29,7 @@ public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
 
     public void setItems(List<CountryDto> items){
         this.items = items;
+        this.notifyDataSetChanged();
     }
 
     @Override
