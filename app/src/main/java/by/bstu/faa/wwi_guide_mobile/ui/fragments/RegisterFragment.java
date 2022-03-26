@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.constants.Constants;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
@@ -41,6 +43,7 @@ public class RegisterFragment extends Fragment {
 
     public RegisterFragment() {
         // Required empty public constructor
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, Constants.Values.LOG_CONSTRUCTOR);
     }
 
     public static RegisterFragment newInstance(String param1, String param2) {
@@ -56,20 +59,14 @@ public class RegisterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        List<CountryDto> temp = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++){
-            CountryDto testCountry = new CountryDto();
-            testCountry.setName("PLEASE, WAIT..." );
-            testCountry.setFlagUrl("EMPTY");
-            temp.add(testCountry);
-        }
-
-        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         registerViewModel.init();
         userRegData = new RegData();
+
+        registerViewModel.getCountryResponse();
+
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onCreate");
     }
 
     @Nullable
@@ -79,7 +76,19 @@ public class RegisterFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.register_fragment, container, false);
 
-        EditText loginField = view.findViewById(R.id.reg_login_input);
+        /*List<CountryDto> temp = new ArrayList<>();
+
+        for (int i = 0; i < 1; i++){
+            CountryDto testCountry = new CountryDto();
+            testCountry.setName("PLEASE, WAIT..." );
+            testCountry.setFlagUrl("EMPTY");
+            temp.add(testCountry);
+        }
+
+        countrySpinnerAdapter = new CountrySpinnerAdapter(this.getContext(), R.layout.country_row, temp);*/
+
+
+        /*EditText loginField = view.findViewById(R.id.reg_login_input);
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
         Button regButton = view.findViewById(R.id.reg_register_button);
@@ -152,15 +161,108 @@ public class RegisterFragment extends Fragment {
                     "Проверьте введённые данные!",
                     Toast.LENGTH_LONG).show();
             }
+        });*/
+
+        registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
+            if (countryResponse != null) {
+                countrySpinnerAdapter = new CountrySpinnerAdapter(
+                        this.getContext(),
+                        R.layout.country_row,
+                        countryResponse);
+                countrySpinnerAdapter.setItems(countryResponse);
+            }
         });
 
+        registerViewModel.getRegRepoResponse().observe(this, regResponse ->
+        {
+            if (regResponse != null) {
+                Toast.makeText(this.getContext(),
+                        "REG RESPONSE: " + regResponse.getRegStatus(),
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this.getContext(),
+                        "REG NULL RESPONSE! ",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onCreateView");
         return view;
     }
 
     @Nullable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
 
+        EditText loginField = view.findViewById(R.id.reg_login_input);
+        EditText passwordField = view.findViewById(R.id.reg_password_input);
+        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
+        Button regButton = view.findViewById(R.id.reg_register_button);
+        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+
+        rankSpinner.setAdapter(countrySpinnerAdapter);
+        rankSpinner.setPromptId(R.string.id_for_spinner);
+        rankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int pos, long id) {
+                selectedCountryId = countrySpinnerAdapter.getItem(pos).getId();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                selectedCountryId = countrySpinnerAdapter.getItem(0).getId();
+            }
+        });
+
+        List<EditText> textFields = new ArrayList<>();
+        textFields.add(loginField);
+        textFields.add(passwordField);
+        textFields.add(repeatPasswordField);
+
+        initEnterTextElements(textFields);
+
+        regButton.setOnClickListener(v -> {
+
+            if( !loginField.getText().equals("") &&
+                    !passwordField.getText().equals("") &&
+                    !repeatPasswordField.getText().equals("") &&
+                    passwordField.getText().toString().equals(repeatPasswordField.getText().toString()) ) {
+
+                userRegData.setLogin(loginField.getText().toString());
+                userRegData.setPassword(repeatPasswordField.getText().toString());
+                userRegData.setCountryId(selectedCountryId);
+
+                registerViewModel.regUser(userRegData);
+            }
+            else if (!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
+                Toast.makeText(this.getContext(),
+                        "Пароли не совпадают!",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(this.getContext(),
+                        "Проверьте введённые данные!",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onViewCreated");
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onViewStateRestored");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onStart");
     }
 
     private void initEnterTextElements(List<EditText> textFields) {

@@ -18,5 +18,22 @@ public class Constants {
         public final static int CODE_NOT_FOUND= 404;
         public final static int CODE_SERVER_ERROR = 500;
 
+        public static final String LOG_CONSTRUCTOR = "CONSTRUCTOR";
+        public static final String LOG_REPO = "REPOSITORY";
+        public static final String LOG_VIEW_MODEL = "VIEW MODEL";
+
+        private final static String LOG_TAG_REG = "REGISTER ";
+        private final static String LOG_TAG_MAIN = "MAIN ";
+        private final static String LOG_TAG_LOGIN = "LOGIN ";
+
+        public final static String LOG_TAG_REG_REPO = LOG_TAG_REG + LOG_REPO;
+
+        public final static String LOG_TAG_REG_VIEW_MODEL = LOG_TAG_REG + LOG_VIEW_MODEL;
+        public final static String LOG_TAG_MAIN_VIEW_MODEL = LOG_TAG_MAIN + LOG_VIEW_MODEL;
+        public final static String LOG_TAG_LOGIN_VIEW_MODEL = LOG_TAG_LOGIN + LOG_VIEW_MODEL;
+
+        public final static String LOG_TAG_REG_FRAGMENT = "REGISTER FRAGMENT";
+        public final static String LOG_TAG_MAIN_FRAGMENT = "MAIN FRAGMENT";
+        public final static String LOG_TAG_LOGIN_FRAGMENT = "LOGIN FRAGMENT";
     }
 }
