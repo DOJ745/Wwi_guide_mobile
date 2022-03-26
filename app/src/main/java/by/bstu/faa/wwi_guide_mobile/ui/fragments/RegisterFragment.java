@@ -2,6 +2,7 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -68,6 +69,21 @@ public class RegisterFragment extends Fragment {
         registerViewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
 
         registerViewModel.init();
+        userRegData = new RegData();
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.register_fragment, container, false);
+
+        EditText loginField = view.findViewById(R.id.reg_login_input);
+        EditText passwordField = view.findViewById(R.id.reg_password_input);
+        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
+        Button regButton = view.findViewById(R.id.reg_register_button);
+        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(this, countryResponse -> {
             if (countryResponse != null) {
@@ -89,22 +105,6 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        userRegData = new RegData();
-        registerViewModel.getCountryResponse();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.register_fragment, container, false);
-
-        EditText loginField = view.findViewById(R.id.reg_login_input);
-        EditText passwordField = view.findViewById(R.id.reg_password_input);
-        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
-        Button regButton = view.findViewById(R.id.reg_register_button);
-
         List<EditText> textFields = new ArrayList<>();
         textFields.add(loginField);
         textFields.add(passwordField);
@@ -112,7 +112,7 @@ public class RegisterFragment extends Fragment {
 
         initEnterTextElements(textFields);
 
-        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+        registerViewModel.getCountryResponse();
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
         rankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -155,6 +155,12 @@ public class RegisterFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Nullable
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+
     }
 
     private void initEnterTextElements(List<EditText> textFields) {
