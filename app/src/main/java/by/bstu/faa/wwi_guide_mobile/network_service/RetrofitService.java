@@ -37,8 +37,4 @@ public class RetrofitService {
     public AppApi getAppApi() {
         return mRetrofit.create(AppApi.class);
     }
-
-    public <T> T buildService(Class<T> service) {
-        return mRetrofit.create(service);
-    }
 }

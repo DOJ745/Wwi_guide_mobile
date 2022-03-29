@@ -62,6 +62,17 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:id="@+id/reg_password_requirements"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:text="@string/prompt_password_requirements"
+            android:textAlignment="viewStart"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/action_choose_side"
@@ -84,6 +95,23 @@
             android:layout_height="wrap_content"
             android:text="@string/action_register" />
 
+        <TextView
+            android:id="@+id/reg_msg_response"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="21sp"
+            android:text="@string/success_registration"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/reg_toLogin_button"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_to_login"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </FrameLayout>

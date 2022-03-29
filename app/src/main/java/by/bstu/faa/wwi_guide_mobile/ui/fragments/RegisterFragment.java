@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
@@ -17,10 +19,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Pattern;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.Constants;
@@ -95,25 +100,10 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        registerViewModel.getRegRepoResponse().observe(this, regResponse ->
-        {
-            if (regResponse != null) {
-                Toast.makeText(this.getContext(),
-                        "REG RESPONSE: " + regResponse.getRegStatus(),
-                        Toast.LENGTH_LONG).show();
-            }
-            else {
-                Toast.makeText(this.getContext(),
-                        "REG NULL RESPONSE! ",
-                        Toast.LENGTH_LONG).show();
-            }
-        });
-
         Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onCreateView");
         return view;
     }
 
-    @Nullable
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
@@ -122,7 +112,31 @@ public class RegisterFragment extends Fragment {
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
         Button regButton = view.findViewById(R.id.reg_register_button);
+        Button toLoginFragment = view.findViewById(R.id.reg_toLogin_button);
         Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+        TextView passwordRequirements = view.findViewById(R.id.reg_password_requirements);
+        TextView regMsgResponse = view.findViewById(R.id.reg_msg_response);
+
+        registerViewModel.getRegRepoResponse().observe(this, regResponse ->
+        {
+            if (regResponse != null) {
+                regMsgResponse.setVisibility(View.VISIBLE);
+                if(regResponse.getRegStatus().equals("Successful registration")){
+                    toLoginFragment.setVisibility(View.VISIBLE);
+                    toLoginFragment.setOnClickListener(v -> loadLoginFragment());
+                }
+                if(regResponse.getRegStatus().equals("Such user already exists!")){
+                    regMsgResponse.setText("Пользователь с таким именем уже существует!");
+                }
+                if(regResponse.getRegError() != null){
+                    regMsgResponse.setText(regResponse.getRegError());
+                }
+            }
+            else {
+                regMsgResponse.setVisibility(View.VISIBLE);
+                regMsgResponse.setText(R.string.err_reg_failed);
+            }
+        });
 
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
@@ -140,12 +154,10 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        List<EditText> textFields = new ArrayList<>();
-        textFields.add(loginField);
-        textFields.add(passwordField);
-        textFields.add(repeatPasswordField);
-
-        initEnterTextElements(textFields);
+        setTextListeners(loginField,
+                passwordField,
+                repeatPasswordField,
+                passwordRequirements);
 
         regButton.setOnClickListener(v -> {
 
@@ -160,7 +172,7 @@ public class RegisterFragment extends Fragment {
 
                 registerViewModel.regUser(userRegData);
             }
-            else if (!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
+            else if(!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
                 Toast.makeText(this.getContext(),
                         "Пароли не совпадают!",
                         Toast.LENGTH_LONG).show();
@@ -169,6 +181,7 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(this.getContext(),
                         "Проверьте введённые данные!",
                         Toast.LENGTH_LONG).show();
+                passwordRequirements.setVisibility(View.VISIBLE);
             }
         });
 
@@ -223,27 +236,76 @@ public class RegisterFragment extends Fragment {
         Log.d(Constants.Values.LOG_TAG_REG_FRAGMENT, "onDetach");
     }
 
-    private void initEnterTextElements(List<EditText> textFields) {
+    private void setTextListeners(EditText loginField,
+                                  EditText passwordField,
+                                  EditText repPasswordField,
+                                  TextView passwordRequirements) {
 
-        for (EditText field: textFields) {
+        loginField.setError("Минимум 4 символа!");
+        loginField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (loginField.getText().length() > 3) { loginField.setError(null); }
+                else { loginField.setError("Обязательное поле!"); }
+            }
+        });
 
-            field.setError("Минимум 4 символа!");
-            field.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
-                @Override
-                public void afterTextChanged(Editable editable) {
-                    if (field.getText().length() != 0 && field.getText().length() > 3) {
-                        field.setError(null);
-                    }
-                    else {
-                        field.setError("Обязательное поле!");
-                    }
+        passwordField.setError("Минимум 4 символа!");
+        passwordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                /* Pattern explain
+
+                    ^                 # start-of-string
+                    (?=.*[0-9])       # a digit must occur at least once
+                    (?=.*[a-z])       # a lower case letter must occur at least once
+                    (?=.*[A-Z])       # an upper case letter must occur at least once
+                    (?=.*[@#$%^&+=_]) # a special character must occur at least once
+                    (?=\S+$)          # no whitespace allowed in the entire string
+                    .{4,}             # anything, at least 4 places though
+                    $                 # end-of-string
+
+                     */
+                String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_])(?=\\S+$).{4,}$";
+                if (Pattern.matches(regexPattern, passwordField.getText().toString())) {
+                    passwordField.setError(null);
+                    passwordRequirements.setVisibility(View.GONE);
                 }
-            });
-        }
+                else {
+                    passwordField.setError("Не выполнены требования к паролю!");
+                    passwordRequirements.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
+        repPasswordField.setError("Минимум 4 символа");
+        repPasswordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (repPasswordField.getText().length() > 3) { repPasswordField.setError(null); }
+                else { repPasswordField.setError("Обязательное поле!"); }
+            }
+        });
+    }
+
+    private void loadLoginFragment() {
+        Fragment loginFragment = new LoginFragment();
+        FragmentManager fragmentManager = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.nav_host_fragment, loginFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 }

@@ -3,24 +3,47 @@
     <string name="app_name">Wwi_guide_mobile</string>
     <string name="img_description">IMG</string>
 
-    <!-- Strings related to LOGIN/REGISTER FRAGMENT -->
+    <string name="default_font_size">21sp</string>
+
+    <!-- LOGIN/REGISTER FRAGMENT -->
     <string name="prompt_login">Логин</string>
     <string name="prompt_password">Пароль</string>
+    <string name="prompt_repeat_password">Повторите пароль</string>
+    <string name="prompt_password_requirements">
+        Требовани к паролю:
+        \n- 1 строчный символ (п)
+        \n- 1 прописной символ (П)
+        \n- 1 спецсимвол (@, #, $, %, ^, +, =, _)
+        \n- 1 цифра
+        \n- не имеет пробела
+        \n- минимум 4 символа
+    </string>
     <string name="action_sign_in">Войти</string>
     <string name="action_registration">Регистрация</string>
-    <string name="prompt_repeat_password">Повторите пароль</string>
     <string name="action_register">Зарегестрироваться</string>
     <string name="action_choose_side">Выберите сторону</string>
+    <string name="action_to_login">Перейти на страницу входа</string>
 
-    <!-- ERROR OCCURRED -->
-    <string name="invalid_username">Имя пользователя должно быть от 4-х до 48 символов!</string>
-    <string name="invalid_password">Пароль должен быть от 4-х до 12-ти символов!</string>
-    <string name="login_failed">"Ошибка входа"</string>
-    <string name="user_exist">Пользователь с таким именем уже существует!</string>
+    <!-- REG/LOGIN ERROR OCCURRED -->
+    <string name="err_invalid_username">Имя пользователя должно быть от 4-х до 48 символов!</string>
+    <string name="err_invalid_password">Пароль должен быть от 4-х до 12-ти символов!</string>
+    <string name="err_login_failed">"Ошибка входа"</string>
+    <string name="err_user_exist">Пользователь с таким именем уже существует!</string>
+    <string name="err_reg_failed">Ошибка регистрации</string>
 
-    <!-- SUCCESS -->
+    <!-- SUCCESS LOGIN/REG -->
     <string name="success_registration">"Регистрация прошла успешно!"</string>
     <string name="welcome">"Добро пожаловать!"</string>
+
+    <!-- MAIN FRAGMENT -->
+    <!-- USER INFO FRAGMENT -->
+    <!-- ACHIEVEMENTS FRAGMENT -->
+    <!-- EVENTS FRAGMENT -->
+    <!-- YEARS FRAGMENT -->
+    <!-- TESTS FRAGMENT -->
+    <!-- WEAPON FRAGMENT -->
+    <!-- TECHNIQUE FRAGMENT -->
+
 
     <!-- OTHER -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
