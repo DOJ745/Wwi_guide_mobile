@@ -112,7 +112,7 @@ public class RegisterFragment extends Fragment {
         EditText passwordField = view.findViewById(R.id.reg_password_input);
         EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
         Button regButton = view.findViewById(R.id.reg_register_button);
-        Button toLoginFragment = view.findViewById(R.id.reg_toLogin_button);
+        Button loginFragmentButton = view.findViewById(R.id.reg_toLogin_button);
         Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
         TextView passwordRequirements = view.findViewById(R.id.reg_password_requirements);
         TextView regMsgResponse = view.findViewById(R.id.reg_msg_response);
@@ -122,8 +122,8 @@ public class RegisterFragment extends Fragment {
             if (regResponse != null) {
                 regMsgResponse.setVisibility(View.VISIBLE);
                 if(regResponse.getRegStatus().equals("Successful registration")){
-                    toLoginFragment.setVisibility(View.VISIBLE);
-                    toLoginFragment.setOnClickListener(v -> loadLoginFragment());
+                    loginFragmentButton.setVisibility(View.VISIBLE);
+                    loginFragmentButton.setOnClickListener(v -> loadLoginFragment());
                 }
                 if(regResponse.getRegStatus().equals("Such user already exists!")){
                     regMsgResponse.setText("Пользователь с таким именем уже существует!");
