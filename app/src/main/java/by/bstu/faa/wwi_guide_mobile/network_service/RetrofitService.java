@@ -1,6 +1,6 @@
 package by.bstu.faa.wwi_guide_mobile.network_service;
 
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.api.AppApi;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -21,7 +21,7 @@ public class RetrofitService {
                 .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(Constants.Values.BASE_URL)
+                .baseUrl(CONSTANTS.URLS.BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build())
                 .build();

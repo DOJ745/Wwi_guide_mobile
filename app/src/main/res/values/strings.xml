@@ -22,7 +22,7 @@
     <string name="action_registration">Регистрация</string>
     <string name="action_register">Зарегестрироваться</string>
     <string name="action_choose_side">Выберите сторону</string>
-    <string name="action_to_login">Перейти на страницу входа</string>
+    <string name="action_to_login">На страницу входа</string>
 
     <!-- REG/LOGIN ERROR OCCURRED -->
     <string name="err_invalid_username">Имя пользователя должно быть от 4-х до 48 символов!</string>
@@ -30,6 +30,8 @@
     <string name="err_login_failed">"Ошибка входа"</string>
     <string name="err_user_exist">Пользователь с таким именем уже существует!</string>
     <string name="err_reg_failed">Ошибка регистрации</string>
+    <string name="err_mismatch_password">Пароли не совпадают!</string>
+    <string name="err_mismatch_data">Проверьте введеённые данные!</string>
 
     <!-- SUCCESS LOGIN/REG -->
     <string name="success_registration">"Регистрация прошла успешно!"</string>

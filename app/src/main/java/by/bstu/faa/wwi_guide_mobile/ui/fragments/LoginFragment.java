@@ -5,35 +5,32 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class LoginFragment extends Fragment {
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private static final String USER_TOKEN = "token";
+    private static final String ARG_LOGIN = "login";
+    private static final String ARG_PASSWORD = "password";
 
-    private String mParam1;
-    private String mParam2;
+    private String loginParam;
+    private String passwordParam;
 
     public LoginFragment() {
         // Required empty public constructor
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, Constants.Values.LOG_CONSTRUCTOR);
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     /**
@@ -48,8 +45,8 @@ public class LoginFragment extends Fragment {
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_LOGIN, param1);
+        args.putString(ARG_PASSWORD, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,11 +55,15 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            loginParam = getArguments().getString(ARG_LOGIN);
+            passwordParam = getArguments().getString(ARG_PASSWORD);
+        }
+        else {
+            loginParam = "";
+            passwordParam = "";
         }
 
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onCreate");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreate");
     }
 
     @Override
@@ -70,7 +71,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_fragment, container, false);
 
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onCreateView");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreateView");
         return view;
     }
 
@@ -79,57 +80,77 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView testTextView = view.findViewById(R.id.textView);
+
+        Button regFragmentButton = view.findViewById(R.id.login_toReg_button);
+
+        EditText loginField = view.findViewById(R.id.login_login_input);
+        EditText passwordField = view.findViewById(R.id.login_password_input);
+
         String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
         testTextView.setText(Html.fromHtml(sourceString));
 
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onViewCreated");
+        loginField.setText(loginParam);
+        passwordField.setText(passwordParam);
+
+        regFragmentButton.setOnClickListener(v -> loadRegFragment());
+
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewCreated");
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onViewStateRestored");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewStateRestored");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onStart");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStart");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onResume");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onResume");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onPause");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onPause");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onStop");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStop");
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onDestroyView");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroyView");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onDestroy");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroy");
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(Constants.Values.LOG_TAG_LOGIN_FRAGMENT, "onDetach");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
+    }
+
+    private void loadRegFragment() {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.nav_host_fragment, RegisterFragment.class, null)
+                .setReorderingAllowed(true)
+                .addToBackStack(null) // name can be null
+                .commit();
     }
 }

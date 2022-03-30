@@ -8,14 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 
 public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
@@ -62,7 +60,7 @@ public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
             Glide.with(itemView).load(items.get(position).getFlagUrl()).into(flag);
         }
         else {
-            Glide.with(itemView).load(Constants.Values.NO_IMG_URL).into(flag);
+            Glide.with(itemView).load(CONSTANTS.URLS.NO_IMG).into(flag);
         }
 
         return itemView;

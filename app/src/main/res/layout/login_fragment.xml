@@ -14,23 +14,31 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/login_login_input"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/prompt_login"
             android:inputType="text" />
 
         <EditText
+            android:id="@+id/login_password_input"
+
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:hint="@string/prompt_password"
             android:inputType="textVisiblePassword" />
 
         <Button
+            android:id="@+id/login_enter_button"
+
             android:text="@string/action_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
+            android:id="@+id/login_toReg_button"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/action_registration" />

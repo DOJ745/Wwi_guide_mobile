@@ -9,9 +9,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RegDto;
 import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
@@ -30,7 +29,7 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public void init() {
-        Log.d(Constants.Values.LOG_TAG_REG_VIEW_MODEL, "init");
+        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, "init");
         countryRepo = new CountryRepo();
         regRepo = new RegRepo();
 
@@ -39,7 +38,7 @@ public class RegisterViewModel extends AndroidViewModel {
     }
 
     public void getCountryResponse() {
-        Log.d(Constants.Values.LOG_TAG_REG_VIEW_MODEL, "getCountryResponse");
+        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, "getCountryResponse");
         countryRepo.getElements();
     }
     public void regUser(RegData regData) { regRepo.regUser(regData); }

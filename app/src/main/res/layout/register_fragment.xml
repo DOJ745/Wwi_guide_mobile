@@ -101,17 +101,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:textSize="21sp"
-            android:text="@string/success_registration"
-            android:visibility="gone"/>
+            android:textSize="21sp" />
 
-        <Button
-            android:id="@+id/reg_toLogin_button"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_to_login"
-            android:visibility="gone"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/reg_toLogin_button"
+
+        android:layout_marginBottom="@dimen/main_margin"
+
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_to_login" />
 
 </FrameLayout>

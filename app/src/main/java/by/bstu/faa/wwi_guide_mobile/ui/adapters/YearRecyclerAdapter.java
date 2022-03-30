@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
 public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapter.YearResultHolder> {
@@ -48,7 +48,7 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
             Glide.with(holder.itemView).load(year.getImgUrl()).into(holder.yearImageView);
         }
         else {
-            Glide.with(holder.itemView).load(Constants.Values.NO_IMG_URL).into(holder.yearImageView);
+            Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.yearImageView);
         }
     }
 

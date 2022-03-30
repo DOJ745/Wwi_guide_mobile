@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
@@ -20,7 +20,7 @@ public class RankRepo extends DataRepo<RankDto> {
 
         RetrofitService.getInstance()
                 .getAppApi()
-                .getRanks(Constants.Values.BEARER + token.getToken())
+                .getRanks(CONSTANTS.URLS.BEARER + token.getToken())
                 .enqueue(new Callback<List<RankDto>>() {
 
                     @Override

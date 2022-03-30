@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-import by.bstu.faa.wwi_guide_mobile.constants.Constants;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RegDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
@@ -37,13 +37,13 @@ public class RegRepo {
                         if(response.body() != null && response.isSuccessful()) {
                             regResponse.postValue(response.body());
                         }
-                        if (response.errorBody()!= null && response.code() == Constants.Values.CODE_BAD_REQUEST){
+                        if (response.errorBody()!= null && response.code() == CONSTANTS.HTTP_CODES.BAD_REQUEST){
                             // Deserializing RegDto from errorBody
                             Gson gson = new Gson();
                             Type type = new TypeToken<RegDto>(){}.getType();
                             RegDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
 
-                            Log.d(Constants.Values.LOG_TAG_REG_REPO, "errorResponse:\n" + errorResponse.toString());
+                            Log.d(CONSTANTS.LOG_TAGS.REG_REPO, "errorResponse:\n" + errorResponse.toString());
                             regResponse.postValue(errorResponse);
                         }
                     }
