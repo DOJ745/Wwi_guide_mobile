@@ -31,7 +31,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
 
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends Fragment implements FragmentMethods {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -119,7 +119,7 @@ public class RegisterFragment extends Fragment {
         TextView passwordRequirements = view.findViewById(R.id.reg_password_requirements);
         TextView regMsgResponse = view.findViewById(R.id.reg_msg_response);
 
-        loginFragmentButton.setOnClickListener(v -> loadLoginFragment());
+        loginFragmentButton.setOnClickListener(v -> replaceFragment());
 
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
@@ -296,7 +296,7 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    private void loadLoginFragment() {
+    public void replaceFragment() {
         Bundle regResult = new Bundle();
         regResult.putString("login", dataToTransfer.get(0));
         regResult.putString("password", dataToTransfer.get(1));

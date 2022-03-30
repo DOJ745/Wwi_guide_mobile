@@ -20,7 +20,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends Fragment implements FragmentMethods{
 
     private static final String ARG_LOGIN = "login";
     private static final String ARG_PASSWORD = "password";
@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment {
         loginField.setText(loginParam);
         passwordField.setText(passwordParam);
 
-        regFragmentButton.setOnClickListener(v -> loadRegFragment());
+        regFragmentButton.setOnClickListener(v -> replaceFragment());
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewCreated");
     }
@@ -145,7 +145,7 @@ public class LoginFragment extends Fragment {
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
     }
 
-    private void loadRegFragment() {
+    public void replaceFragment() {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.nav_host_fragment, RegisterFragment.class, null)
