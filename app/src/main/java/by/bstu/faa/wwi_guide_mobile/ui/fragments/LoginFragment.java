@@ -7,7 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,15 +35,6 @@ public class LoginFragment extends Fragment implements FragmentMethods{
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LoginFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static LoginFragment newInstance(String param1, String param2) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
@@ -79,7 +72,7 @@ public class LoginFragment extends Fragment implements FragmentMethods{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        TextView testTextView = view.findViewById(R.id.textView);
+        TextView testTextView = view.findViewById(R.id.login_msg_response);
 
         Button regFragmentButton = view.findViewById(R.id.login_toReg_button);
 
@@ -88,6 +81,8 @@ public class LoginFragment extends Fragment implements FragmentMethods{
 
         String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
         testTextView.setText(Html.fromHtml(sourceString));
+
+        setTextFieldListeners(loginField, passwordField);
 
         loginField.setText(loginParam);
         passwordField.setText(passwordParam);
@@ -143,6 +138,34 @@ public class LoginFragment extends Fragment implements FragmentMethods{
     public void onDetach() {
         super.onDetach();
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
+    }
+
+    private void setTextFieldListeners(EditText loginField, EditText passwordField){
+        loginField.setError("Минимум 4 символа!");
+        loginField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (loginField.getText().length() > 3) { loginField.setError(null); }
+                else { loginField.setError("Обязательное поле!"); }
+            }
+        });
+
+        passwordField.setError("Минимум 4 символа");
+        passwordField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (passwordField.getText().length() > 3) { passwordField.setError(null); }
+                else { passwordField.setError("Обязательное поле!"); }
+            }
+        });
     }
 
     public void replaceFragment() {

@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RegDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 
 import retrofit2.Call;
@@ -22,26 +22,26 @@ import retrofit2.Response;
 
 public class RegRepo {
 
-    final MutableLiveData<RegDto> regResponse = new MutableLiveData<>();
+    final MutableLiveData<AppMsgResponseDto> regResponse = new MutableLiveData<>();
 
     public void regUser(RegData regData) {
 
         RetrofitService.getInstance()
                 .getAppApi()
                 .registerUser(regData)
-                .enqueue(new Callback<RegDto>() {
+                .enqueue(new Callback<AppMsgResponseDto>() {
                     @Override
                     public void onResponse(
-                            @NonNull Call<RegDto> call,
-                            @NonNull Response<RegDto> response) {
+                            @NonNull Call<AppMsgResponseDto> call,
+                            @NonNull Response<AppMsgResponseDto> response) {
                         if(response.body() != null && response.isSuccessful()) {
                             regResponse.postValue(response.body());
                         }
                         if (response.errorBody()!= null && response.code() == CONSTANTS.HTTP_CODES.BAD_REQUEST){
                             // Deserializing RegDto from errorBody
                             Gson gson = new Gson();
-                            Type type = new TypeToken<RegDto>(){}.getType();
-                            RegDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
+                            Type type = new TypeToken<AppMsgResponseDto>(){}.getType();
+                            AppMsgResponseDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
 
                             Log.d(CONSTANTS.LOG_TAGS.REG_REPO, "errorResponse:\n" + errorResponse.toString());
                             regResponse.postValue(errorResponse);
@@ -50,11 +50,11 @@ public class RegRepo {
 
                     @Override
                     public void onFailure(
-                            @NonNull Call<RegDto> call,
+                            @NonNull Call<AppMsgResponseDto> call,
                             @NonNull Throwable t) {
                         regResponse.postValue(null);
                     }
                 });
     }
-    public LiveData<RegDto> getResponse() { return regResponse; }
+    public LiveData<AppMsgResponseDto> getResponse() { return regResponse; }
 }

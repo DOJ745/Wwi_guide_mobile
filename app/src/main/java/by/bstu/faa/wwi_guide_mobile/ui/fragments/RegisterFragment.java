@@ -124,16 +124,16 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
             if (regResponse != null) {
-                if(regResponse.getRegStatus().equals("Successful registration")){
+                if(regResponse.getMsgStatus().equals("Successful registration")){
                     regMsgResponse.setText(R.string.success_registration);
                     dataToTransfer.add(loginField.getText().toString());
                     dataToTransfer.add(passwordField.getText().toString());
                 }
-                if(regResponse.getRegStatus().equals("Such user already exists!")){
+                if(regResponse.getMsgStatus().equals("Such user already exists!")){
                     regMsgResponse.setText(R.string.err_user_exist);
                 }
-                if(regResponse.getRegError() != null){
-                    regMsgResponse.setText(regResponse.getRegError());
+                if(regResponse.getMsgError() != null){
+                    regMsgResponse.setText(regResponse.getMsgError());
                 }
             }
             else {
@@ -157,7 +157,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             }
         });
 
-        setTextListeners(loginField,
+        setTextFieldListeners(loginField,
                 passwordField,
                 repeatPasswordField,
                 passwordRequirements);
@@ -232,10 +232,10 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onDetach");
     }
 
-    private void setTextListeners(EditText loginField,
-                                  EditText passwordField,
-                                  EditText repPasswordField,
-                                  TextView passwordRequirements) {
+    private void setTextFieldListeners(EditText loginField,
+                                       EditText passwordField,
+                                       EditText repPasswordField,
+                                       TextView passwordRequirements) {
 
         loginField.setError("Минимум 4 символа!");
         loginField.addTextChangedListener(new TextWatcher() {

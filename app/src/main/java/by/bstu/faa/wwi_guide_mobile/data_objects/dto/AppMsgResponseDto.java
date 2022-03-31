@@ -8,9 +8,9 @@ import org.jetbrains.annotations.Nullable;
 import lombok.Data;
 
 @Data
-public class RegDto {
+public class AppMsgResponseDto {
     @SerializedName("message")@Expose
-    private String regStatus;
+    private String msgStatus;
     @SerializedName("error")@Expose@Nullable
-    private String regError;
+    private String msgError;
 }

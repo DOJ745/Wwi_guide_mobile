@@ -9,6 +9,7 @@
     <string name="prompt_login">Логин</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_repeat_password">Повторите пароль</string>
+    <string name="prompt_remember_me">Запомнить меня</string>
     <string name="prompt_password_requirements">
         Требовани к паролю:
         \n- 1 строчный символ (п)
@@ -32,6 +33,8 @@
     <string name="err_reg_failed">Ошибка регистрации</string>
     <string name="err_mismatch_password">Пароли не совпадают!</string>
     <string name="err_mismatch_data">Проверьте введеённые данные!</string>
+    <string name="err_user_login_attempt">Неверное имя пользователя!</string>
+    <string name="err_user_password_attempt">Неверный пароль!</string>
 
     <!-- SUCCESS LOGIN/REG -->
     <string name="success_registration">"Регистрация прошла успешно!"</string>
