@@ -23,7 +23,7 @@ public class TestRepo {
 
         RetrofitService.getInstance()
                 .getAppApi()
-                .getToken(data)
+                .loginUser(data)
                 .enqueue(new Callback<TokenData>() {
 
                     @Override

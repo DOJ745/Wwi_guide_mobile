@@ -20,7 +20,7 @@ import retrofit2.http.POST;
 public interface AppApi {
 
     @POST("/auth/login")
-    Call<TokenData> getToken(@Body LoginData data);
+    Call<AppMsgResponseDto> loginUser(@Body LoginData data);
 
     @POST("/auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);

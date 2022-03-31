@@ -3,8 +3,6 @@ package by.bstu.faa.wwi_guide_mobile.repo;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -12,21 +10,20 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
+import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegRepo extends AuthRepo {
+public class LoginRepo extends AuthRepo{
 
-    public void regUser(RegData regData) {
+    public void loginUser(LoginData loginData) {
 
         RetrofitService.getInstance()
                 .getAppApi()
-                .registerUser(regData)
+                .loginUser(loginData)
                 .enqueue(new Callback<AppMsgResponseDto>() {
                     @Override
                     public void onResponse(

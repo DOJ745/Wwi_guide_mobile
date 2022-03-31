@@ -2,6 +2,17 @@ package by.bstu.faa.wwi_guide_mobile.constants;
 
 public class CONSTANTS {
 
+    public static class APP_SUCCESS_RESPONSES {
+        public final static String REG_SUCCESS = "Successful registration";
+        public final static String LOGIN_SUCCESS = "Successful login";
+    }
+
+    public static class APP_ERR_RESPONSES {
+        public final static String REG_SUCH_USER_EXISTS = "Such user already exists!";
+        public final static String LOGIN_NO_SUCH_USER = "No such user!";
+        public final static String LOGIN_INCORRECT_PASSWORD = "Incorrect password!";
+    }
+
     public static class HTTP_CODES {
         public final static int BAD_REQUEST = 400;
         public final static int UNAUTHORIZED = 401;

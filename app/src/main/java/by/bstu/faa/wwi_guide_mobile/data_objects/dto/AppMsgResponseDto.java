@@ -13,4 +13,6 @@ public class AppMsgResponseDto {
     private String msgStatus;
     @SerializedName("error")@Expose@Nullable
     private String msgError;
+    @SerializedName("token")@Expose@Nullable
+    private String token;
 }
