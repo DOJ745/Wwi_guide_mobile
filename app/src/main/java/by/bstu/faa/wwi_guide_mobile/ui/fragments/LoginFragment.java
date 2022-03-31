@@ -6,29 +6,42 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
 
 
-public class LoginFragment extends Fragment implements FragmentMethods{
+public class LoginFragment extends Fragment implements FragmentMethods {
 
     private static final String ARG_LOGIN = "login";
     private static final String ARG_PASSWORD = "password";
+    private static final String ARG_CHECKBOX = "checkbox";
 
+    private LoginViewModel loginViewModel;
+
+    private LoginData loginData;
+
+    private String token;
     private String loginParam;
     private String passwordParam;
+    private String checkboxParam;
+
+    private SecurePreferences preferences;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -47,6 +60,13 @@ public class LoginFragment extends Fragment implements FragmentMethods{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferences = new SecurePreferences(
+                this.requireContext(),
+                "user-info",
+                "8a8023a47791351b2547ff2468ffbd89d15c80f1b4870f6853158e9a11ec50b7",
+                true);
+
         if (getArguments() != null) {
             loginParam = getArguments().getString(ARG_LOGIN);
             passwordParam = getArguments().getString(ARG_PASSWORD);
@@ -55,6 +75,23 @@ public class LoginFragment extends Fragment implements FragmentMethods{
             loginParam = "";
             passwordParam = "";
         }
+
+        if (preferences.containsKey(ARG_CHECKBOX) &&
+                preferences.containsKey(ARG_LOGIN) &&
+                preferences.containsKey(ARG_PASSWORD)) {
+            checkboxParam = preferences.getString(ARG_CHECKBOX);
+            loginParam = preferences.getString(ARG_LOGIN);
+            passwordParam = preferences.getString(ARG_PASSWORD);
+        }
+        else {
+            checkboxParam = "";
+            loginParam = "";
+            passwordParam = "";
+        }
+
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel.init();
+        loginData = new LoginData();
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreate");
     }
@@ -72,21 +109,79 @@ public class LoginFragment extends Fragment implements FragmentMethods{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        TextView testTextView = view.findViewById(R.id.login_msg_response);
+        TextView loginMsgResponse = view.findViewById(R.id.login_msg_response);
 
+        Button loginButton = view.findViewById(R.id.login_enter_button);
         Button regFragmentButton = view.findViewById(R.id.login_toReg_button);
 
         EditText loginField = view.findViewById(R.id.login_login_input);
         EditText passwordField = view.findViewById(R.id.login_password_input);
 
-        String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
-        testTextView.setText(Html.fromHtml(sourceString));
+        CheckBox rememberMeBox = view.findViewById(R.id.login_remember_me);
 
-        setTextFieldListeners(loginField, passwordField);
+        setTextFieldListeners(loginField, passwordField, rememberMeBox);
+
+        rememberMeBox.setChecked(checkboxParam.equals("true"));
+
+        rememberMeBox.setOnClickListener(v -> {
+            if(rememberMeBox.isChecked()) {
+
+                checkboxParam = "true";
+                try {
+                    preferences.put(ARG_CHECKBOX, checkboxParam);
+                    preferences.put(ARG_LOGIN, loginField.getText().toString());
+                    preferences.put(ARG_PASSWORD, passwordField.getText().toString());
+
+                    String username = preferences.getString(ARG_LOGIN);
+                    String password = preferences.getString(ARG_PASSWORD);
+
+                    Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT,
+                            "\tDecrypted password:" + password +
+                                    "\n Decrypted username: " + username);
+                }
+                catch (Exception e) { e.printStackTrace(); }
+            }
+            else {
+                preferences.removeValue(ARG_CHECKBOX);
+                preferences.removeValue(ARG_LOGIN);
+                preferences.removeValue(ARG_PASSWORD);
+                Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "checkBox unchecked");
+            }
+        });
+
+        //String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
+        //loginMsgResponse.setText(Html.fromHtml(sourceString));
 
         loginField.setText(loginParam);
         passwordField.setText(passwordParam);
 
+        loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
+            if (loginResponse != null) {
+                if (loginResponse.getMsgStatus().equals(CONSTANTS.APP_SUCCESS_RESPONSES.LOGIN_SUCCESS)) {
+                    token = loginResponse.getToken();
+                    Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "\t\nReceived token:" + token);
+                    loginMsgResponse.setText("TOKEN\n" + token);
+                }
+                if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD)){
+                    loginMsgResponse.setText(R.string.err_login_wrong_user_password);
+                }
+                if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER)){
+                    loginMsgResponse.setText(R.string.err_login_wrong_user_login);
+                }
+                if(loginResponse.getMsgError() != null){
+                    loginMsgResponse.setText(loginResponse.getMsgError());
+                }
+            }
+        });
+
+        loginButton.setOnClickListener(v -> {
+            if(loginField.getError() == null && passwordField.getError() == null){
+                loginData.setLogin(loginField.getText().toString());
+                loginData.setPassword(passwordField.getText().toString());
+                loginViewModel.loginUser(loginData);
+            }
+            else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
+        });
         regFragmentButton.setOnClickListener(v -> replaceFragment());
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewCreated");
@@ -140,7 +235,7 @@ public class LoginFragment extends Fragment implements FragmentMethods{
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
     }
 
-    private void setTextFieldListeners(EditText loginField, EditText passwordField){
+    private void setTextFieldListeners(EditText loginField, EditText passwordField, CheckBox rememberMeBox) {
         loginField.setError("Минимум 4 символа!");
         loginField.addTextChangedListener(new TextWatcher() {
             @Override
@@ -149,12 +244,18 @@ public class LoginFragment extends Fragment implements FragmentMethods{
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (loginField.getText().length() > 3) { loginField.setError(null); }
-                else { loginField.setError("Обязательное поле!"); }
+                if (loginField.getText().length() > 3) {
+                    loginField.setError(null);
+                    rememberMeBox.setEnabled(true);
+                }
+                else {
+                    loginField.setError("Обязательное поле!");
+                    rememberMeBox.setEnabled(false);
+                }
             }
         });
 
-        passwordField.setError("Минимум 4 символа");
+        passwordField.setError("Минимум 6 символов!");
         passwordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -162,8 +263,14 @@ public class LoginFragment extends Fragment implements FragmentMethods{
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (passwordField.getText().length() > 3) { passwordField.setError(null); }
-                else { passwordField.setError("Обязательное поле!"); }
+                if (passwordField.getText().length() > 5) {
+                    passwordField.setError(null);
+                    rememberMeBox.setEnabled(true);
+                }
+                else {
+                    passwordField.setError("Обязательное поле!");
+                    rememberMeBox.setEnabled(false);
+                }
             }
         });
     }

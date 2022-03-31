@@ -130,7 +130,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
                     dataToTransfer.add(passwordField.getText().toString());
                 }
                 if(regResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS)){
-                    regMsgResponse.setText(R.string.err_user_exist);
+                    regMsgResponse.setText(R.string.err_reg_user_exist);
                 }
                 if(regResponse.getMsgError() != null){
                     regMsgResponse.setText(regResponse.getMsgError());
@@ -164,9 +164,9 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
 
         regButton.setOnClickListener(v -> {
 
-            if( !loginField.getText().equals("") &&
-                    !passwordField.getText().equals("") &&
-                    !repeatPasswordField.getText().equals("") &&
+            if( loginField.getError() == null &&
+                    passwordField.getError() == null &&
+                    repeatPasswordField.getError() == null &&
                     passwordField.getText().toString().equals(repeatPasswordField.getText().toString()) ) {
 
                 userRegData.setLogin(loginField.getText().toString());
@@ -176,7 +176,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
                 registerViewModel.regUser(userRegData);
             }
             else if(!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
-                regMsgResponse.setText(R.string.err_mismatch_password);
+                regMsgResponse.setText(R.string.err_reg_mismatch_password);
             }
             else { regMsgResponse.setText(R.string.err_mismatch_data); }
         });
@@ -250,7 +250,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             }
         });
 
-        passwordField.setError("Минимум 4 символа!");
+        passwordField.setError("Минимум 6 символов!");
         passwordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -266,11 +266,11 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
                     (?=.*[A-Z])       # an upper case letter must occur at least once
                     (?=.*[@#$%^&+=_]) # a special character must occur at least once
                     (?=\S+$)          # no whitespace allowed in the entire string
-                    .{4,}             # anything, at least 4 places though
+                    .{6,}             # anything, at least 6 places though
                     $                 # end-of-string
 
                      */
-                String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_])(?=\\S+$).{4,}$";
+                String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_])(?=\\S+$).{6,}$";
                 if (Pattern.matches(regexPattern, passwordField.getText().toString())) {
                     passwordField.setError(null);
                     passwordRequirements.setVisibility(View.GONE);
@@ -282,7 +282,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             }
         });
 
-        repPasswordField.setError("Минимум 4 символа");
+        repPasswordField.setError("Минимум 6 символов!");
         repPasswordField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
@@ -290,7 +290,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (repPasswordField.getText().length() > 3) { repPasswordField.setError(null); }
+                if (repPasswordField.getText().length() > 5) { repPasswordField.setError(null); }
                 else { repPasswordField.setError("Обязательное поле!"); }
             }
         });
@@ -298,8 +298,15 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
 
     public void replaceFragment() {
         Bundle regResult = new Bundle();
-        regResult.putString("login", dataToTransfer.get(0));
-        regResult.putString("password", dataToTransfer.get(1));
+
+        try{
+            regResult.putString("login", dataToTransfer.get(0));
+            regResult.putString("password", dataToTransfer.get(1));
+        }
+        catch (IndexOutOfBoundsException e){
+            regResult.putString("login", "");
+            regResult.putString("password", "");
+        }
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction()

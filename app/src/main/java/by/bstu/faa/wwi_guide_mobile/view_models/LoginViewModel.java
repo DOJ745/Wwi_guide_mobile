@@ -1,21 +1,29 @@
 package by.bstu.faa.wwi_guide_mobile.view_models;
 
-import androidx.lifecycle.LiveData;
+import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
+
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.repo.LoginRepo;
 
-public class LoginViewModel {
+public class LoginViewModel extends ViewModel {
 
     private LoginRepo loginRepo;
     private LiveData<AppMsgResponseDto> loginRepoResponse;
 
     public void init(){
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "init");
         loginRepo = new LoginRepo();
         loginRepoResponse = loginRepo.getResponse();
     }
 
-    public void loginUser(LoginData loginData) { loginRepo.loginUser(loginData); }
+    public void loginUser(LoginData loginData) {
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "loginUser");
+        loginRepo.loginUser(loginData);
+    }
     public LiveData<AppMsgResponseDto> getLoginRepoResponse() { return loginRepoResponse; }
 }
