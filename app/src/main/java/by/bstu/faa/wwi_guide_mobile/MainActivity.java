@@ -2,8 +2,12 @@ package by.bstu.faa.wwi_guide_mobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.room.Room;
 
 import android.os.Bundle;
+
+import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
+import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -124,12 +124,12 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
             if (regResponse != null) {
-                if(regResponse.getMsgStatus().equals(CONSTANTS.APP_SUCCESS_RESPONSES.REG_SUCCESS)){
+                if(regResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_SUCCESS_RESPONSES.REG_SUCCESS)){
                     regMsgResponse.setText(R.string.success_registration);
                     dataToTransfer.add(loginField.getText().toString());
                     dataToTransfer.add(passwordField.getText().toString());
                 }
-                if(regResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS)){
+                if(regResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS)){
                     regMsgResponse.setText(R.string.err_reg_user_exist);
                 }
                 if(regResponse.getMsgError() != null){

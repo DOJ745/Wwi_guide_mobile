@@ -161,16 +161,16 @@ public class LoginFragment extends Fragment implements FragmentMethods {
 
         loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
             if (loginResponse != null) {
-                if (loginResponse.getMsgStatus().equals(CONSTANTS.APP_SUCCESS_RESPONSES.LOGIN_SUCCESS)) {
+                if (loginResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_SUCCESS_RESPONSES.LOGIN_SUCCESS)) {
 
                     setUserData(userData, loginResponse);
                     token = loginResponse.getToken();
                     preferences.put(ARG_TOKEN, token);
                 }
-                if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD)){
+                if(loginResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD)){
                     loginMsgResponse.setText(R.string.err_login_wrong_user_password);
                 }
-                if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER)){
+                if(loginResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER)){
                     loginMsgResponse.setText(R.string.err_login_wrong_user_login);
                 }
                 if(loginResponse.getMsgError() != null){

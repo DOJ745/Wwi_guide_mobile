@@ -2,12 +2,17 @@ package by.bstu.faa.wwi_guide_mobile.constants;
 
 public class CONSTANTS {
 
-    public static class APP_SUCCESS_RESPONSES {
+    public static class APP_DATABASE {
+        public final static String DATABASE_NAME = "main_db";
+        public final static String USER_TABLE = "user";
+    }
+
+    public static class WEB_APP_SUCCESS_RESPONSES {
         public final static String REG_SUCCESS = "Successful registration";
         public final static String LOGIN_SUCCESS = "Successful login";
     }
 
-    public static class APP_ERR_RESPONSES {
+    public static class WEB_APP_ERR_RESPONSES {
         public final static String REG_SUCH_USER_EXISTS = "Such user already exists!";
         public final static String LOGIN_NO_SUCH_USER = "No such user!";
         public final static String LOGIN_INCORRECT_PASSWORD = "Incorrect password!";
