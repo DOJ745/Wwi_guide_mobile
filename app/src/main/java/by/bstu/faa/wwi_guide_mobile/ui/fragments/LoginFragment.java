@@ -29,6 +29,7 @@ import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
 
 public class LoginFragment extends Fragment implements FragmentMethods {
 
+    private static final String ARG_TOKEN = "token";
     private static final String ARG_LOGIN = "login";
     private static final String ARG_PASSWORD = "password";
     private static final String ARG_CHECKBOX = "checkbox";
@@ -164,6 +165,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
 
                     setUserData(userData, loginResponse);
                     token = loginResponse.getToken();
+                    preferences.put(ARG_TOKEN, token);
                 }
                 if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD)){
                     loginMsgResponse.setText(R.string.err_login_wrong_user_password);
