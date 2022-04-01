@@ -22,6 +22,7 @@ import android.widget.TextView;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
 
@@ -35,6 +36,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     private LoginViewModel loginViewModel;
 
     private LoginData loginData;
+    private UserDto userData;
 
     private String token;
     private String loginParam;
@@ -92,6 +94,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.init();
         loginData = new LoginData();
+        userData = new UserDto();
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreate");
     }
@@ -158,9 +161,9 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
             if (loginResponse != null) {
                 if (loginResponse.getMsgStatus().equals(CONSTANTS.APP_SUCCESS_RESPONSES.LOGIN_SUCCESS)) {
+
+                    setUserData(userData, loginResponse);
                     token = loginResponse.getToken();
-                    Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "\t\nReceived token:" + token);
-                    loginMsgResponse.setText("TOKEN\n" + token);
                 }
                 if(loginResponse.getMsgStatus().equals(CONSTANTS.APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD)){
                     loginMsgResponse.setText(R.string.err_login_wrong_user_password);
@@ -282,5 +285,15 @@ public class LoginFragment extends Fragment implements FragmentMethods {
                 .setReorderingAllowed(true)
                 .addToBackStack(null) // name can be null
                 .commit();
+    }
+
+    private void setUserData(UserDto userData, UserDto loginResponse) {
+        userData.setLogin(loginResponse.getLogin());
+        userData.setPassword(loginResponse.getPassword());
+        userData.setCountryId(loginResponse.getCountryId());
+        userData.setAchievements(loginResponse.getAchievements());
+        userData.setRankId(loginResponse.getRankId());
+        userData.setScore(loginResponse.getScore());
+        userData.setRoles(loginResponse.getRoles());
     }
 }

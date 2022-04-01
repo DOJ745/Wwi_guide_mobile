@@ -10,6 +10,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,7 +21,7 @@ import retrofit2.http.POST;
 public interface AppApi {
 
     @POST("/auth/login")
-    Call<AppMsgResponseDto> loginUser(@Body LoginData data);
+    Call<UserDto> loginUser(@Body LoginData data);
 
     @POST("/auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
