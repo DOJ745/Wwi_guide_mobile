@@ -12,10 +12,10 @@ import by.bstu.faa.wwi_guide_mobile.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LoadingFragment#newInstance} factory method to
+ * Use the {@link SplashFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoadingFragment extends Fragment implements FragmentMethods {
+public class SplashFragment extends Fragment implements FragmentMethods {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class LoadingFragment extends Fragment implements FragmentMethods {
     private String mParam1;
     private String mParam2;
 
-    public LoadingFragment() {
+    public SplashFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class LoadingFragment extends Fragment implements FragmentMethods {
      * @return A new instance of fragment LoadingFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoadingFragment newInstance(String param1, String param2) {
-        LoadingFragment fragment = new LoadingFragment();
+    public static SplashFragment newInstance(String param1, String param2) {
+        SplashFragment fragment = new SplashFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,7 +61,7 @@ public class LoadingFragment extends Fragment implements FragmentMethods {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.loading_fragment, container, false);
+        return inflater.inflate(R.layout.splash_fragment, container, false);
     }
 
     @Override
