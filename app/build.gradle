@@ -60,6 +60,7 @@ dependencies {
     // ROOM
     implementation 'androidx.room:room-runtime:2.4.2'
     annotationProcessor 'androidx.room:room-compiler:2.4.2'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
 
     // Lifecycle components
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

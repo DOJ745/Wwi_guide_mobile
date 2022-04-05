@@ -26,7 +26,6 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
 
-
 public class LoginFragment extends Fragment implements FragmentMethods {
 
     private static final String ARG_TOKEN = "token";
@@ -161,30 +160,34 @@ public class LoginFragment extends Fragment implements FragmentMethods {
 
         loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
             if (loginResponse != null) {
-                switch (loginResponse.getMsgStatus()){
-                    case (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.LOGIN_SUCCESS):
-                        setUserData(userData, loginResponse);
-                        token = loginResponse.getToken();
-                        preferences.put(ARG_TOKEN, token);
-                        break;
+                if (!loginResponse.getMsgStatus().equals("") && loginResponse.getMsgError() == null) {
+                    switch (loginResponse.getMsgStatus()) {
+                        case (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.LOGIN_SUCCESS):
+                            setUserData(userData, loginResponse);
+                            token = loginResponse.getToken();
+                            preferences.put(ARG_TOKEN, token);
+                            break;
 
-                    case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD):
-                        loginMsgResponse.setText(R.string.err_login_wrong_user_password);
-                        break;
+                        case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD):
+                            loginMsgResponse.setText(R.string.err_login_wrong_user_password);
+                            break;
 
-                    case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER):
-                        loginMsgResponse.setText(R.string.err_login_wrong_user_login);
-                        break;
+                        case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER):
+                            loginMsgResponse.setText(R.string.err_login_wrong_user_login);
+                            break;
 
-                    default:
-                        loginMsgResponse.setText(loginResponse.getMsgError());
-                        break;
+                        default:
+                            loginMsgResponse.setText(R.string.err_login_failed);
+                            break;
+                    }
                 }
+                else
+                    loginMsgResponse.setText(loginResponse.getMsgError());
             }
         });
 
         loginButton.setOnClickListener(v -> {
-            if(loginField.getError() == null && passwordField.getError() == null){
+            if(loginField.getError() == null && passwordField.getError() == null) {
                 loginData.setLogin(loginField.getText().toString());
                 loginData.setPassword(passwordField.getText().toString());
                 loginViewModel.loginUser(loginData);
@@ -293,7 +296,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
                 .commit();
     }
 
-    private void setUserData(UserDto userData, UserDto loginResponse) {
+    private void setUserData(@NonNull UserDto userData, UserDto loginResponse) {
         userData.setLogin(loginResponse.getLogin());
         userData.setPassword(loginResponse.getPassword());
         userData.setCountryId(loginResponse.getCountryId());

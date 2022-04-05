@@ -124,20 +124,25 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
             if (regResponse != null) {
-                if(regResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_SUCCESS_RESPONSES.REG_SUCCESS)){
-                    regMsgResponse.setText(R.string.success_registration);
-                    dataToTransfer.add(loginField.getText().toString());
-                    dataToTransfer.add(passwordField.getText().toString());
+                if (!regResponse.getMsgStatus().equals("") && regResponse.getMsgError() == null) {
+                    switch (regResponse.getMsgStatus()) {
+                        case (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.REG_SUCCESS):
+                            regMsgResponse.setText(R.string.success_registration);
+                            dataToTransfer.add(loginField.getText().toString());
+                            dataToTransfer.add(passwordField.getText().toString());
+                            break;
+
+                        case (CONSTANTS.WEB_APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS):
+                            regMsgResponse.setText(R.string.err_reg_user_exist);
+                            break;
+
+                        default:
+                            regMsgResponse.setText(R.string.err_reg_failed);
+                            break;
+                    }
                 }
-                if(regResponse.getMsgStatus().equals(CONSTANTS.WEB_APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS)){
-                    regMsgResponse.setText(R.string.err_reg_user_exist);
-                }
-                if(regResponse.getMsgError() != null){
+                else
                     regMsgResponse.setText(regResponse.getMsgError());
-                }
-            }
-            else {
-                regMsgResponse.setText(R.string.err_reg_failed);
             }
         });
 
