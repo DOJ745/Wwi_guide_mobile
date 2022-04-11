@@ -48,7 +48,8 @@ public class CONSTANTS {
     }
 
     public static class URLS {
-        public final static String BASE = "http://10.0.2.2:9000/";
+        public final static String API_URL = "/api.wwi-guide.by";
+        public final static String BASE = "https://quiet-eyrie-18331.herokuapp.com" + API_URL;
 
         public final static String IMG = BASE + "images/";
         public final static String RANK_IMG = IMG + "ranks";

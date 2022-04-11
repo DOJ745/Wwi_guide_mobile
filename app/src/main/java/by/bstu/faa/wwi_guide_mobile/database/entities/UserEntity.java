@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import lombok.EqualsAndHashCode;
@@ -31,8 +32,8 @@ public class UserEntity {
     private int score;
 
     @ColumnInfo(name = "roles")
-    private ArrayList<String> roles;
+    private String roles;
 
     @ColumnInfo(name = "achievements")
-    private ArrayList<String> achievements;
+    private String achievements;
 }

@@ -26,18 +26,18 @@ public interface AppApi {
     @POST("/auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
 
-    @GET("/api/years")
+    @GET("/years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
 
-    @GET("/api/ranks")
+    @GET("/ranks")
     Call<List<RankDto>> getRanks(@Header("Authorization") String token);
 
-    @GET("/api/countries")
+    @GET("/countries")
     Call<List<CountryDto>> getCountries();
 
-    @GET("/api/events")
+    @GET("/events")
     Call<List<EventDto>> getEvents(@Header("Authorization") String token);
 
-    @GET("/api/achievements")
+    @GET("/achievements")
     Call<List<AchievementDto>> getAchievements(@Header("Authorization") String token);
 }
