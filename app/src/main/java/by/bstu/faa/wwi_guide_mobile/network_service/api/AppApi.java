@@ -20,24 +20,24 @@ import retrofit2.http.POST;
 
 public interface AppApi {
 
-    @POST("/auth/login")
+    @POST("auth/login")
     Call<UserDto> loginUser(@Body LoginData data);
 
-    @POST("/auth/reg")
+    @POST("auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
 
-    @GET("/years")
+    @GET("years")
     Call<List<YearDto>> getYears(@Header("Authorization") String token);
 
-    @GET("/ranks")
+    @GET("ranks")
     Call<List<RankDto>> getRanks(@Header("Authorization") String token);
 
-    @GET("/countries")
+    @GET("countries")
     Call<List<CountryDto>> getCountries();
 
-    @GET("/events")
+    @GET("events")
     Call<List<EventDto>> getEvents(@Header("Authorization") String token);
 
-    @GET("/achievements")
+    @GET("achievements")
     Call<List<AchievementDto>> getAchievements(@Header("Authorization") String token);
 }
