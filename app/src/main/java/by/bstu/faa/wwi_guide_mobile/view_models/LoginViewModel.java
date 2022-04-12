@@ -5,18 +5,24 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
+import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.LoginRepo;
+import io.reactivex.Completable;
 
 public class LoginViewModel extends ViewModel {
 
+    private AppDatabase database;
     private LoginRepo loginRepo;
     private LiveData<UserDto> loginRepoResponse;
 
     public void init() {
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "init");
+        database = AppInstance.getInstance().getDatabase();
         loginRepo = new LoginRepo();
         loginRepoResponse = loginRepo.getUserResponse();
     }
@@ -26,4 +32,28 @@ public class LoginViewModel extends ViewModel {
         loginRepo.loginUser(loginData);
     }
     public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }
+
+    public Completable insertOrUpdateUser(UserDto data){
+        UserEntity loggedUser = new UserEntity();
+
+        StringBuilder tempRoles = new StringBuilder();
+        StringBuilder tempAchievements = new StringBuilder();
+
+        loggedUser.setLogin(data.getLogin());
+        loggedUser.setPassword(data.getPassword());
+        loggedUser.setCountryId(data.getCountryId());
+        loggedUser.setRankId(data.getRankId());
+        loggedUser.setScore(data.getScore());
+
+        for (String item : data.getRoles()) { tempRoles.append("-").append(item); }
+        loggedUser.setRoles(tempRoles.toString());
+
+        if(data.getAchievements() != null && !data.getAchievements().isEmpty()) {
+            for (String item: data.getAchievements()) { tempAchievements.append("-").append(item); }
+            loggedUser.setAchievements(tempAchievements.toString());
+        }
+        else loggedUser.setAchievements("none");
+
+        return database.userDao().insert(loggedUser);
+    }
 }

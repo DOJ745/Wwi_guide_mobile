@@ -50,6 +50,7 @@ public class CONSTANTS {
     public static class URLS {
         public final static String API_URL = "/api.wwi-guide.by/";
         public final static String BASE = "https://quiet-eyrie-18331.herokuapp.com" + API_URL;
+        public final static String BASE_LOCALHOST = "http://10.0.2.2:5000" + API_URL;
 
         public final static String IMG = BASE + "images/";
         public final static String RANK_IMG = IMG + "ranks";
@@ -60,7 +61,7 @@ public class CONSTANTS {
         public final static String BEARER = "Bearer ";
     }
 
-    public static class LIFECYCLE {
+    public static class LIFECYCLE_STATES {
         public final static String ON_CREATE = "ON CREATE";
         public final static String ON_CREATE_VIEW = "ON CREATE VIEW";
         public final static String ON_VIEW_CREATED = "ON VIEW CREATED";

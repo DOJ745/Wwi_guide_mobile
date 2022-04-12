@@ -10,14 +10,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,13 +21,9 @@ import retrofit2.Response;
 
 public class LoginRepo {
 
-    private AppDatabase database;
     protected final MutableLiveData<UserDto> userResponse;
 
-    public LoginRepo() {
-        database = AppInstance.getInstance().getDatabase();
-        userResponse = new MutableLiveData<>();
-    }
+    public LoginRepo() { userResponse = new MutableLiveData<>(); }
 
     public void loginUser(LoginData loginData) {
 
@@ -67,8 +59,4 @@ public class LoginRepo {
     }
 
     public LiveData<UserDto> getUserResponse() { return userResponse; }
-
-    public void saveUser(){
-
-    }
 }

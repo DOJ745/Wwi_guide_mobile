@@ -25,6 +25,9 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LoginFragment extends Fragment implements FragmentMethods {
 
@@ -44,6 +47,8 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     private String checkboxParam;
 
     private SecurePreferences preferences;
+
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public LoginFragment() {
         // Required empty public constructor
@@ -159,6 +164,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         passwordField.setText(passwordParam);
 
         loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
+
             if (loginResponse != null) {
                 if (!loginResponse.getMsgStatus().equals("") && loginResponse.getMsgError() == null) {
                     switch (loginResponse.getMsgStatus()) {
@@ -166,6 +172,15 @@ public class LoginFragment extends Fragment implements FragmentMethods {
                             setUserData(userData, loginResponse);
                             token = loginResponse.getToken();
                             preferences.put(ARG_TOKEN, token);
+
+                            mDisposable.add(loginViewModel.insertOrUpdateUser(userData)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    () -> Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "User has been written into database"),
+                                    throwable -> Log.e(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "Unable to get username", throwable))
+                            );
+
                             break;
 
                         case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD):
@@ -226,6 +241,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     @Override
     public void onStop() {
         super.onStop();
+        mDisposable.clear();
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStop");
     }
 

@@ -21,16 +21,14 @@ public class RetrofitService {
                 .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(CONSTANTS.URLS.BASE)
+                .baseUrl(CONSTANTS.URLS.BASE_LOCALHOST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build())
                 .build();
     }
 
     public static RetrofitService getInstance() {
-        if (mInstance == null) {
-            mInstance = new RetrofitService();
-        }
+        if (mInstance == null) { mInstance = new RetrofitService(); }
         return mInstance;
     }
 

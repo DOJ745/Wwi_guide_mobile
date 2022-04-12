@@ -12,14 +12,11 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 
 @Dao
 public interface UserDao extends BaseDao<UserEntity> {
-    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.USER_TABLE + " WHERE login = :login")
-    UserEntity getByLogin(String login);
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.USER_TABLE + " LIMIT 1")
+    UserEntity getUser();
 
     @Query("SELECT score FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
     int getUserScore();
-
-    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
-    UserEntity getCurrentUser();
 
     @Query("DELETE FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
     void deleteTempData();
