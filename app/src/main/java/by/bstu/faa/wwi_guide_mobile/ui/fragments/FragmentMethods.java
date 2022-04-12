@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
+import android.view.View;
+
 public interface FragmentMethods {
-    void replaceFragment();
+    void navigateToFragment(View view);
 }

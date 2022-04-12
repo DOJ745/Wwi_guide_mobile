@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -101,7 +101,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         loginData = new LoginData();
         userData = new UserDto();
 
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreate");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_fragment, container, false);
 
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onCreateView");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -209,58 +209,59 @@ public class LoginFragment extends Fragment implements FragmentMethods {
             }
             else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
         });
-        regFragmentButton.setOnClickListener(v -> replaceFragment());
 
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewCreated");
+        regFragmentButton.setOnClickListener(this::navigateToFragment);
+
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewStateRestored");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStart");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onResume");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onPause");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mDisposable.clear();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStop");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroyView");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroy");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField, EditText passwordField, CheckBox rememberMeBox) {
@@ -303,13 +304,8 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         });
     }
 
-    public void replaceFragment() {
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, RegisterFragment.class, null)
-                .setReorderingAllowed(true)
-                .addToBackStack(null) // name can be null
-                .commit();
+    public void navigateToFragment(View view) {
+        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
     }
 
     private void setUserData(@NonNull UserDto userData, UserDto loginResponse) {

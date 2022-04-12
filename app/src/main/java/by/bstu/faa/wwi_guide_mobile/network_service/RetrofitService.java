@@ -1,5 +1,9 @@
 package by.bstu.faa.wwi_guide_mobile.network_service;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.api.AppApi;
 import okhttp3.OkHttpClient;
@@ -34,5 +38,12 @@ public class RetrofitService {
 
     public AppApi getAppApi() {
         return mRetrofit.create(AppApi.class);
+    }
+
+    public static boolean hasConnection(final Context context)
+    {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 }

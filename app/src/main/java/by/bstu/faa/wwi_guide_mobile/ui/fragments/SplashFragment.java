@@ -59,6 +59,8 @@ public class SplashFragment extends Fragment implements FragmentMethods {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -122,7 +124,7 @@ public class SplashFragment extends Fragment implements FragmentMethods {
     }
 
     @Override
-    public void replaceFragment() {
+    public void navigateToFragment(View view) {
 
     }
 }

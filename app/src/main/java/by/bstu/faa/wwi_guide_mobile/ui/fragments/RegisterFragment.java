@@ -5,8 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -69,7 +69,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         dataToTransfer = new ArrayList<>();
         registerViewModel.getCountryResponse();
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onCreate");
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Nullable
@@ -94,12 +94,10 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
                 temp);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(getViewLifecycleOwner(), countryResponse -> {
-            if (countryResponse != null) {
-                countrySpinnerAdapter.setItems(countryResponse);
-            }
+            if (countryResponse != null) { countrySpinnerAdapter.setItems(countryResponse); }
         });
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onCreateView");
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -119,7 +117,10 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         TextView passwordRequirements = view.findViewById(R.id.reg_password_requirements);
         TextView regMsgResponse = view.findViewById(R.id.reg_msg_response);
 
-        loginFragmentButton.setOnClickListener(v -> replaceFragment());
+        loginFragmentButton.setOnClickListener(this::navigateToFragment);
+        /*loginFragmentButton.setOnClickListener(
+                Navigation.createNavigateOnClickListener(R.id.action_registerFragment_to_loginFragment2, null)
+        );*/
 
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
@@ -186,55 +187,55 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             else { regMsgResponse.setText(R.string.err_mismatch_data); }
         });
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onViewCreated");
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onViewStateRestored");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onStart");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onResume");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onPause");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onStop");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onDestroyView");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onDestroy");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, "onDetach");
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField,
@@ -301,23 +302,18 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         });
     }
 
-    public void replaceFragment() {
+    public void navigateToFragment(View view) {
         Bundle regResult = new Bundle();
 
-        try{
+        try {
             regResult.putString("login", dataToTransfer.get(0));
             regResult.putString("password", dataToTransfer.get(1));
         }
-        catch (IndexOutOfBoundsException e){
+        catch (IndexOutOfBoundsException e) {
             regResult.putString("login", "");
             regResult.putString("password", "");
         }
 
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.nav_host_fragment, LoginFragment.class, regResult)
-                .setReorderingAllowed(true)
-                .addToBackStack("test") // name can be null
-                .commit();
+        Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment2, regResult);
     }
 }

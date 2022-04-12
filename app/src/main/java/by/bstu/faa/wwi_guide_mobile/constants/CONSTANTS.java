@@ -72,5 +72,6 @@ public class CONSTANTS {
         public final static String ON_STOP = "onStop";
         public final static String ON_DESTROY_VIEW = "onDestroyView";
         public final static String ON_DESTROY = "onDestroy";
+        public final static String ON_DETACH = "onDetach";
     }
 }
