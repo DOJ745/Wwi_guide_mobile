@@ -2,13 +2,17 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,6 +66,59 @@ public class SplashFragment extends Fragment implements FragmentMethods {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.splash_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onViewStateRestored");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onResume");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onPause");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onStop");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroyView");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "onDetach");
     }
 
     @Override

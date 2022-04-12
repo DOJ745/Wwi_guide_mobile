@@ -62,8 +62,15 @@ public class CONSTANTS {
     }
 
     public static class LIFECYCLE_STATES {
-        public final static String ON_CREATE = "ON CREATE";
-        public final static String ON_CREATE_VIEW = "ON CREATE VIEW";
-        public final static String ON_VIEW_CREATED = "ON VIEW CREATED";
+        public final static String ON_CREATE = "onCreate";
+        public final static String ON_CREATE_VIEW = "onCreateView";
+        public final static String ON_VIEW_CREATED = "onViewCreated";
+        public final static String ON_VIEW_STATE_RESTORED = "onViewStateRestored";
+        public final static String ON_START = "onStart";
+        public final static String ON_RESUME = "onResume";
+        public final static String ON_PAUSE = "onPause";
+        public final static String ON_STOP = "onStop";
+        public final static String ON_DESTROY_VIEW = "onDestroyView";
+        public final static String ON_DESTROY = "onDestroy";
     }
 }
