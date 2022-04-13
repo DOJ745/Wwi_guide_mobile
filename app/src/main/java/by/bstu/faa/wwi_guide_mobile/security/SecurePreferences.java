@@ -66,7 +66,7 @@ public class SecurePreferences {
      * @param encryptKeys    settings this to false will only encrypt the values,
      *                       true will encrypt both values and keys. Keys can contain a lot of information about
      *                       the plaintext value of the value which can be used to decipher the value.
-     * @throws SecurePreferencesException
+     * @throws SecurePreferencesException   custom exception
      */
     public SecurePreferences(Context context,
                              String preferenceName,

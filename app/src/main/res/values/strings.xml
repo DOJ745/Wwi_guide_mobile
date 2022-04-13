@@ -3,8 +3,6 @@
     <string name="app_name">Wwi_guide_mobile</string>
     <string name="img_description">IMG</string>
 
-    <string name="default_font_size">21sp</string>
-
     <!-- LOGIN/REGISTER FRAGMENT -->
     <string name="prompt_login">Логин</string>
     <string name="prompt_password">Пароль</string>
@@ -44,7 +42,11 @@
     <string name="success_login">Вход прошел успешно!</string>
     <string name="welcome">Добро пожаловать!</string>
 
-    <!-- MAIN FRAGMENT -->
+    <!-- MAIN ACTIVITY -->
+    <string name="prompt_retry">Повторить</string>
+    <string name="prompt_exit">Выйти</string>
+    <string name="prompt_no_internet_connection">Нет соединения с интернетом.
+        \nПожалуйста, проверьте ваше подключение и попробуйте ещё раз.</string>
     <!-- USER INFO FRAGMENT -->
     <!-- ACHIEVEMENTS FRAGMENT -->
     <!-- EVENTS FRAGMENT -->
@@ -58,4 +60,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="id_for_spinner">0</string>
 
+    <!-- LOREN IPSUM -->
+    <string name="loren_ipsum_small">Lorem ipsum dolor sit amet.</string>
+    <string name="loren_ipsum_medium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nibh ante, pellentesque nec dictum ut, tincidunt quis turpis. Praesent condimentum odio in orci tincidunt, vitae commodo ligula laoreet. Ut vitae.</string>
+    <string name="loren_ipsum_large">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lectus turpis, porta efficitur imperdiet nec, pretium eget mauris. Vivamus quis nisl vitae orci finibus vehicula. Quisque sodales id lectus ac finibus. Aenean accumsan nibh nec enim vulputate sollicitudin. Donec egestas sit amet nisi non congue. Nam blandit tellus nec rhoncus dignissim. In feugiat neque et lorem finibus pulvinar. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Quisque et risus in mauris dapibus pulvinar.</string>
 </resources>
