@@ -31,10 +31,12 @@ public class CONSTANTS {
         public static final String REPO = "REPOSITORY";
         public static final String VIEW_MODEL = "VIEW MODEL";
         public static final String FRAGMENT = "FRAGMENT";
+        public static final String ACTIVITY = "ACTIVITY";
 
         private final static String REG = "REGISTER ";
         private final static String MAIN = "MAIN ";
         private final static String LOGIN = "LOGIN ";
+        private final static String SPLASH = "SPLASH ";
 
         public final static String REG_REPO = REG + REPO;
 
@@ -45,6 +47,7 @@ public class CONSTANTS {
         public final static String REG_FRAGMENT = REG + FRAGMENT;
         public final static String MAIN_FRAGMENT = MAIN + FRAGMENT;
         public final static String LOGIN_FRAGMENT = LOGIN + FRAGMENT;
+        public final static String MAIN_ACTIVITY = MAIN + ACTIVITY;
     }
 
     public static class URLS {
@@ -67,6 +70,7 @@ public class CONSTANTS {
         public final static String ON_VIEW_CREATED = "onViewCreated";
         public final static String ON_VIEW_STATE_RESTORED = "onViewStateRestored";
         public final static String ON_START = "onStart";
+        public final static String ON_RESTART = "onRestart";
         public final static String ON_RESUME = "onResume";
         public final static String ON_PAUSE = "onPause";
         public final static String ON_STOP = "onStop";

@@ -29,7 +29,7 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
     public YearResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.year_item, parent, false);
+                .inflate(R.layout.item_year, parent, false);
 
         return new YearResultHolder(itemView);
     }

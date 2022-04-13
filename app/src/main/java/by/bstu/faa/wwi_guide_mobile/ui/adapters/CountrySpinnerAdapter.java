@@ -49,7 +49,7 @@ public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
     public View getCustomView(int position, View convertView, ViewGroup parent) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.country_row, parent, false);
+                .inflate(R.layout.row_country, parent, false);
 
         TextView name = itemView.findViewById(R.id.name);
         name.setText(items.get(position).getName());

@@ -77,7 +77,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.register_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
         List<CountryDto> temp = new ArrayList<>();
 
@@ -90,7 +90,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
 
         countrySpinnerAdapter = new CountrySpinnerAdapter(
                 this.getContext(),
-                R.layout.country_row,
+                R.layout.row_country,
                 temp);
 
         registerViewModel.getElementsDtoResponseLiveData().observe(getViewLifecycleOwner(), countryResponse -> {
@@ -105,22 +105,19 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        EditText loginField = view.findViewById(R.id.reg_login_input);
-        EditText passwordField = view.findViewById(R.id.reg_password_input);
-        EditText repeatPasswordField = view.findViewById(R.id.reg_rep_password_input);
+        EditText loginField = view.findViewById(R.id.fragment_reg_login_input);
+        EditText passwordField = view.findViewById(R.id.fragment_reg_password_input);
+        EditText repeatPasswordField = view.findViewById(R.id.fragment_reg_rep_password_input);
 
-        Button regButton = view.findViewById(R.id.reg_register_button);
-        Button loginFragmentButton = view.findViewById(R.id.reg_toLogin_button);
+        Button regButton = view.findViewById(R.id.fragment_reg_register_button);
+        Button loginFragmentButton = view.findViewById(R.id.fragment_reg_toLogin_button);
 
-        Spinner rankSpinner = view.findViewById(R.id.reg_country_spinner);
+        Spinner rankSpinner = view.findViewById(R.id.fragment_reg_country_spinner);
 
-        TextView passwordRequirements = view.findViewById(R.id.reg_password_requirements);
-        TextView regMsgResponse = view.findViewById(R.id.reg_msg_response);
+        TextView passwordRequirements = view.findViewById(R.id.fragment_reg_password_requirements);
+        TextView regMsgResponse = view.findViewById(R.id.fragment_reg_msg_response);
 
         loginFragmentButton.setOnClickListener(this::navigateToFragment);
-        /*loginFragmentButton.setOnClickListener(
-                Navigation.createNavigateOnClickListener(R.id.action_registerFragment_to_loginFragment2, null)
-        );*/
 
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
@@ -193,49 +190,49 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField,

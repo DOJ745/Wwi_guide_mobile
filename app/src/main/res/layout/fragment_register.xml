@@ -14,13 +14,12 @@
         android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editLoginLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/half_main_margin">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_login_input"
+                android:id="@+id/fragment_reg_login_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_login"
@@ -30,14 +29,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
             android:layout_marginBottom="@dimen/half_main_margin">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_password_input"
+                android:id="@+id/fragment_reg_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
@@ -46,14 +44,13 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editRepPasswordLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true"
             android:layout_marginBottom="@dimen/half_main_margin">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/reg_rep_password_input"
+                android:id="@+id/fragment_reg_rep_password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_repeat_password"
@@ -62,8 +59,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/reg_password_requirements"
-
+            android:id="@+id/fragment_reg_password_requirements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="false"
@@ -79,25 +75,21 @@
             android:textSize="21sp"/>
 
         <Spinner
-            android:id="@+id/reg_country_spinner"
-
+            android:id="@+id/fragment_reg_country_spinner"
             android:background="@drawable/red_outline"
             android:popupBackground="@drawable/red_outline_white_background"
             android:spinnerMode="dropdown"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/reg_register_button"
-
+            android:id="@+id/fragment_reg_register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/action_register" />
 
         <TextView
-            android:id="@+id/reg_msg_response"
-
+            android:id="@+id/fragment_reg_msg_response"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -106,10 +98,8 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/reg_toLogin_button"
-
+        android:id="@+id/fragment_reg_toLogin_button"
         android:layout_marginBottom="@dimen/main_margin"
-
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

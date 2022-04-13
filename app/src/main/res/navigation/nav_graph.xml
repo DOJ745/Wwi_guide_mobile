@@ -9,13 +9,13 @@
         android:id="@+id/mainFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.MainFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/loginFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.LoginFragment"
         android:label="login_fragment"
-        tools:layout="@layout/login_fragment" >
+        tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -30,7 +30,7 @@
         android:id="@+id/registerFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.RegisterFragment"
         android:label="register_fragment"
-        tools:layout="@layout/register_fragment" >
+        tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />

@@ -55,7 +55,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.main_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
 
         RecyclerView yearRecyclerView = view.findViewById(R.id.main_fragment_year_list);
         yearRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

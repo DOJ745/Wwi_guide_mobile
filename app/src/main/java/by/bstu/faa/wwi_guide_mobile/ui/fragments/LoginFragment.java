@@ -107,7 +107,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.login_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
@@ -117,15 +117,15 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        TextView loginMsgResponse = view.findViewById(R.id.login_msg_response);
+        TextView loginMsgResponse = view.findViewById(R.id.fragment_login_msg_response);
 
-        Button loginButton = view.findViewById(R.id.login_enter_button);
-        Button regFragmentButton = view.findViewById(R.id.login_toReg_button);
+        Button loginButton = view.findViewById(R.id.fragment_login_enter_button);
+        Button regFragmentButton = view.findViewById(R.id.fragment_login_toReg_button);
 
-        EditText loginField = view.findViewById(R.id.login_login_input);
-        EditText passwordField = view.findViewById(R.id.login_password_input);
+        EditText loginField = view.findViewById(R.id.fragment_login_login_input);
+        EditText passwordField = view.findViewById(R.id.fragment_login_password_input);
 
-        CheckBox rememberMeBox = view.findViewById(R.id.login_remember_me);
+        CheckBox rememberMeBox = view.findViewById(R.id.fragment_login_remember_me);
 
         setTextFieldListeners(loginField, passwordField, rememberMeBox);
 
