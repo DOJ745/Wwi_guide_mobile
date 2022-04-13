@@ -47,6 +47,10 @@
     <string name="prompt_exit">Выйти</string>
     <string name="prompt_no_internet_connection">Нет соединения с интернетом.
         \nПожалуйста, проверьте ваше подключение и попробуйте ещё раз.</string>
+    <string name="prompt_first_launch_no_internet_connection">
+        Для того, чтобы пользоваться приложением, необходимо подключится к интернету и зарегестрироваться.
+        \n После регистрации интернет-соединение потребуется для синхронизации данных с сервером
+    </string>
     <!-- USER INFO FRAGMENT -->
     <!-- ACHIEVEMENTS FRAGMENT -->
     <!-- EVENTS FRAGMENT -->

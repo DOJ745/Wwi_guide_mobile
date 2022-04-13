@@ -17,11 +17,13 @@ import com.google.android.material.navigation.NavigationView;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 
 public class MainActivity extends AppCompatActivity {
 
     private boolean hasConnection = true;
     private NavHostFragment navHostFragment;
+    private SecurePreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
 
+        preferences = SecurePreferences.getInstance(this.getApplicationContext());
         hasConnection = RetrofitService.hasConnection(this);
 
         setContentView(R.layout.activity_main);
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Button exitButton = findViewById(R.id.activity_main_exit_button);
 
         retryButton.setOnClickListener(view -> {
+            hasConnection = RetrofitService.hasConnection(this);
             if(hasConnection) {
                 fragmentContainerView.setVisibility(View.VISIBLE);
                 makeElementsGone(textPrompt, img, retryButton, exitButton, true);

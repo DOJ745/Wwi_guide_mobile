@@ -68,11 +68,12 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        preferences = new SecurePreferences(
+        /*preferences = new SecurePreferences(
                 this.requireContext(),
                 "user-info",
                 "8a8023a47791351b2547ff2468ffbd89d15c80f1b4870f6853158e9a11ec50b7",
-                true);
+                true);*/
+        preferences = SecurePreferences.getInstance(this.requireContext());
 
         if (getArguments() != null) {
             loginParam = getArguments().getString(ARG_LOGIN);
