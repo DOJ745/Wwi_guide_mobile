@@ -13,27 +13,30 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@EqualsAndHashCode @Getter @Setter
+@EqualsAndHashCode
+@Getter
+@Setter
 @Entity(tableName = CONSTANTS.APP_DATABASE.USER_TABLE)
 public class UserEntity {
-    @PrimaryKey @NonNull
+    @PrimaryKey
+    @NonNull
     private String login;
 
-    @ColumnInfo(name = "password")
+    @ColumnInfo
     private String password;
 
-    @ColumnInfo(name = "rankId")
+    @ColumnInfo
     private String rankId;
 
-    @ColumnInfo(name = "countryId")
+    @ColumnInfo
     private String countryId;
 
-    @ColumnInfo(name = "score")
+    @ColumnInfo
     private int score;
 
-    @ColumnInfo(name = "roles")
+    @ColumnInfo
     private String roles;
 
-    @ColumnInfo(name = "achievements")
+    @ColumnInfo
     private String achievements;
 }

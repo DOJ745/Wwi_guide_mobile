@@ -9,20 +9,24 @@ import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;
+import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.LoginRepo;
 import io.reactivex.Completable;
 
 public class LoginViewModel extends ViewModel {
 
-    private AppDatabase database;
+    private final UserDao userDao;
     private LoginRepo loginRepo;
     private LiveData<UserDto> loginRepoResponse;
 
+    public LoginViewModel() {
+        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        userDao = AppInstance.getInstance().getDatabase().userDao();
+    }
+
     public void init() {
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "init");
-        database = AppInstance.getInstance().getDatabase();
         loginRepo = new LoginRepo();
         loginRepoResponse = loginRepo.getUserResponse();
     }
@@ -33,7 +37,7 @@ public class LoginViewModel extends ViewModel {
     }
     public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }
 
-    public Completable insertOrUpdateUser(UserDto data){
+    public Completable insertOrUpdateUser(UserDto data) {
         UserEntity loggedUser = new UserEntity();
 
         StringBuilder tempRoles = new StringBuilder();
@@ -54,6 +58,6 @@ public class LoginViewModel extends ViewModel {
         }
         else loggedUser.setAchievements("none");
 
-        return database.userDao().insert(loggedUser);
+        return userDao.insert(loggedUser);
     }
 }

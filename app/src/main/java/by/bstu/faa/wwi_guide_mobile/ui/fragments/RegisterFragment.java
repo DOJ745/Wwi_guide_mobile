@@ -44,6 +44,11 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
     private String selectedCountryId;
     private List<String> dataToTransfer;
 
+    private EditText loginField;
+    private EditText passwordField;
+    private EditText repeatPasswordField;
+    private TextView regMsgResponse;
+
     public RegisterFragment() {
         // Required empty public constructor
         Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
@@ -105,17 +110,14 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        EditText loginField = view.findViewById(R.id.fragment_reg_login_input);
-        EditText passwordField = view.findViewById(R.id.fragment_reg_password_input);
-        EditText repeatPasswordField = view.findViewById(R.id.fragment_reg_rep_password_input);
-
+        loginField = view.findViewById(R.id.fragment_reg_login_input);
+        passwordField = view.findViewById(R.id.fragment_reg_password_input);
+        repeatPasswordField = view.findViewById(R.id.fragment_reg_rep_password_input);
         Button regButton = view.findViewById(R.id.fragment_reg_register_button);
         Button loginFragmentButton = view.findViewById(R.id.fragment_reg_toLogin_button);
-
         Spinner rankSpinner = view.findViewById(R.id.fragment_reg_country_spinner);
-
         TextView passwordRequirements = view.findViewById(R.id.fragment_reg_password_requirements);
-        TextView regMsgResponse = view.findViewById(R.id.fragment_reg_msg_response);
+        regMsgResponse = view.findViewById(R.id.fragment_reg_msg_response);
 
         loginFragmentButton.setOnClickListener(this::navigateToFragment);
 

@@ -47,8 +47,12 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     private String checkboxParam;
 
     private SecurePreferences preferences;
-
     private final CompositeDisposable mDisposable = new CompositeDisposable();
+
+    private TextView loginMsgResponse;
+    private EditText loginField;
+    private EditText passwordField;
+    private CheckBox rememberMeBox;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -68,11 +72,6 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        /*preferences = new SecurePreferences(
-                this.requireContext(),
-                "user-info",
-                "8a8023a47791351b2547ff2468ffbd89d15c80f1b4870f6853158e9a11ec50b7",
-                true);*/
         preferences = SecurePreferences.getInstance(this.requireContext());
 
         if (getArguments() != null) {
@@ -118,17 +117,16 @@ public class LoginFragment extends Fragment implements FragmentMethods {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        TextView loginMsgResponse = view.findViewById(R.id.fragment_login_msg_response);
-
+        loginMsgResponse = view.findViewById(R.id.fragment_login_msg_response);
         Button loginButton = view.findViewById(R.id.fragment_login_enter_button);
         Button regFragmentButton = view.findViewById(R.id.fragment_login_toReg_button);
-
-        EditText loginField = view.findViewById(R.id.fragment_login_login_input);
-        EditText passwordField = view.findViewById(R.id.fragment_login_password_input);
-
-        CheckBox rememberMeBox = view.findViewById(R.id.fragment_login_remember_me);
+        loginField = view.findViewById(R.id.fragment_login_login_input);
+        passwordField = view.findViewById(R.id.fragment_login_password_input);
+        rememberMeBox = view.findViewById(R.id.fragment_login_remember_me);
 
         setTextFieldListeners(loginField, passwordField, rememberMeBox);
+
+        // TODO: Save user in database only when he pressed "Remember me"
 
         rememberMeBox.setChecked(checkboxParam.equals("true"));
 
