@@ -96,7 +96,10 @@ public class YearsFragment extends Fragment implements FragmentMethods{
         });
 
         token.setToken("");
-        getYearsButton.setOnClickListener(v -> yearViewModel.getElements(token));
+        getYearsButton.setOnClickListener(v -> {
+            yearViewModel.getElements(token);
+            getYearsButton.setVisibility(View.GONE);
+        });
 
         Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
