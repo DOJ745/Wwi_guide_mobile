@@ -31,10 +31,8 @@
     <string name="err_reg_user_exist">Пользователь с таким именем уже существует!</string>
     <string name="err_reg_failed">Ошибка регистрации</string>
     <string name="err_reg_mismatch_password">Пароли не совпадают!</string>
-
     <string name="err_login_wrong_user_login">Неверное имя пользователя!</string>
     <string name="err_login_wrong_user_password">Неверный пароль!</string>
-
     <string name="err_mismatch_data">Проверьте введённые данные!</string>
 
     <!-- SUCCESS LOGIN/REG -->
@@ -51,18 +49,25 @@
         Для того, чтобы пользоваться приложением, необходимо подключится к интернету и зарегестрироваться.
         \n После регистрации интернет-соединение потребуется для синхронизации данных с сервером
     </string>
+
     <!-- USER INFO FRAGMENT -->
     <!-- ACHIEVEMENTS FRAGMENT -->
     <!-- EVENTS FRAGMENT -->
     <!-- YEARS FRAGMENT -->
     <!-- TESTS FRAGMENT -->
-    <!-- WEAPON FRAGMENT -->
-    <!-- TECHNIQUE FRAGMENT -->
+    <!-- WEAPONS AND TECHNIQUE FRAGMENT -->
 
+    <!-- BOTTOM NAV BAR -->
+    <string name="nav_item_years">Года</string>
+    <string name="nav_item_user_info">Досье</string>
+    <string name="nav_item_weapons_and_technique">Вооружение</string>
+    <string name="nav_item_tests">Тесты</string>
+    <string name="nav_item_achievements">Достижения</string>
 
     <!-- OTHER -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="id_for_spinner">0</string>
+    <string name="test">test</string>
 
     <!-- LOREN IPSUM -->
     <string name="loren_ipsum_small">Lorem ipsum dolor sit amet.</string>

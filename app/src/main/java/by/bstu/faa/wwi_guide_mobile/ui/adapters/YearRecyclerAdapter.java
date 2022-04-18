@@ -30,7 +30,6 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
 
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_year, parent, false);
-
         return new YearResultHolder(itemView);
     }
 
@@ -59,7 +58,7 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
 
     public void setItems(List<YearDto> items) {
         this.items = items;
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     // Define elements in view of our item
@@ -72,7 +71,6 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
 
         public YearResultHolder(@NonNull View itemView) {
             super(itemView);
-
             yearDateTextView = itemView.findViewById(R.id.year_date_value);
             yearTitleTextView = itemView.findViewById(R.id.year_title_value);
             yearImageView = itemView.findViewById(R.id.year_item_image);

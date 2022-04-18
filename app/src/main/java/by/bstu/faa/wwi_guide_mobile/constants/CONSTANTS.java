@@ -44,6 +44,7 @@ public class CONSTANTS {
         private final static String REG = "REGISTER ";
         private final static String MAIN = "MAIN ";
         private final static String LOGIN = "LOGIN ";
+        private final static String YEARS = "YEARS ";
 
         public final static String REG_REPO = REG + REPO;
 
@@ -52,7 +53,7 @@ public class CONSTANTS {
         public final static String LOGIN_VIEW_MODEL = LOGIN + VIEW_MODEL;
 
         public final static String REG_FRAGMENT = REG + FRAGMENT;
-        public final static String MAIN_FRAGMENT = MAIN + FRAGMENT;
+        public final static String YEARS_FRAGMENT = YEARS + FRAGMENT;
         public final static String LOGIN_FRAGMENT = LOGIN + FRAGMENT;
         public final static String MAIN_ACTIVITY = MAIN + ACTIVITY;
     }

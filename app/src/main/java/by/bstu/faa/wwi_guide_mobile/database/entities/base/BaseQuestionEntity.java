@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.database.entities;
+package by.bstu.faa.wwi_guide_mobile.database.entities.base;
 
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;

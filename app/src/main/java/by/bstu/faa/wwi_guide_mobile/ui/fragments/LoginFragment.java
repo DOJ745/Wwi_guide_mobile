@@ -156,9 +156,6 @@ public class LoginFragment extends Fragment implements FragmentMethods {
             }
         });
 
-        //String sourceString = "<b>Some bold text</b> Regular text <i>italic text</i>";
-        //loginMsgResponse.setText(Html.fromHtml(sourceString));
-
         loginField.setText(loginParam);
         passwordField.setText(passwordParam);
 
@@ -179,7 +176,6 @@ public class LoginFragment extends Fragment implements FragmentMethods {
                                     () -> Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "User has been written into database"),
                                     throwable -> Log.e(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, "Unable to get username", throwable))
                             );
-
                             break;
 
                         case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD):
@@ -209,7 +205,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
             else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
         });
 
-        regFragmentButton.setOnClickListener(this::navigateToFragment);
+        regFragmentButton.setOnClickListener(view1 -> navigateToFragment(view1, "login"));
 
         Log.d(CONSTANTS.LOG_TAGS.LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
@@ -303,8 +299,10 @@ public class LoginFragment extends Fragment implements FragmentMethods {
         });
     }
 
-    public void navigateToFragment(View view) {
-        Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+    @Override
+    public void navigateToFragment(View view, String fragmentName) {
+        if ("login".equals(fragmentName))
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
     }
 
     private void setUserData(@NonNull UserDto userData, UserDto loginResponse) {

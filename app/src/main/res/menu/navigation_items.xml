@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_action_weapons_and_technique"
+        android:title="@string/nav_item_weapons_and_technique"
+        android:icon="@drawable/test_icon"/>
+    <item
+        android:id="@+id/nav_action_user_info"
+        android:title="@string/nav_item_user_info"
+        android:icon="@drawable/square" />
+    <item
+        android:id="@+id/nav_action_tests"
+        android:title="@string/nav_item_tests"
+        android:icon="@drawable/square"/>
+    <item
+        android:id="@+id/nav_action_years"
+        android:title="@string/nav_item_years"
+        android:icon="@drawable/square"/>
+    <item
+        android:id="@+id/nav_action_achievements"
+        android:title="@string/nav_item_achievements"
+        android:icon="@drawable/square"/>
+</menu>

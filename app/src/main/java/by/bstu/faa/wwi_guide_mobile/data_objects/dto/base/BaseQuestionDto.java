@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.data_objects.dto;
+package by.bstu.faa.wwi_guide_mobile.data_objects.dto.base;
 
 import androidx.annotation.Nullable;
 

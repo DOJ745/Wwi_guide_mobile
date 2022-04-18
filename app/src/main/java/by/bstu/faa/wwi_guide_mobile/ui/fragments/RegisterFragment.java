@@ -119,7 +119,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         TextView passwordRequirements = view.findViewById(R.id.fragment_reg_password_requirements);
         regMsgResponse = view.findViewById(R.id.fragment_reg_msg_response);
 
-        loginFragmentButton.setOnClickListener(this::navigateToFragment);
+        loginFragmentButton.setOnClickListener(view1 -> navigateToFragment(view1, "reg"));
 
         registerViewModel.getRegRepoResponse().observe(getViewLifecycleOwner(), regResponse ->
         {
@@ -302,7 +302,8 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         });
     }
 
-    public void navigateToFragment(View view) {
+    @Override
+    public void navigateToFragment(View view, String fragmentName) {
         Bundle regResult = new Bundle();
 
         try {
@@ -314,6 +315,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             regResult.putString("password", "");
         }
 
-        Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment2, regResult);
+        if("reg".equals(fragmentName))
+            Navigation.findNavController(view).navigate(R.id.action_registerFragment_to_loginFragment2, regResult);
     }
 }

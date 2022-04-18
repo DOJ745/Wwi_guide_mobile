@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/yearsFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/yearsFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.YearsFragment"
-        android:label="main_fragment"
+        android:label="years_fragment"
         tools:layout="@layout/fragment_years" />
 
     <fragment
@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_login" >
         <action
             android:id="@+id/action_loginFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/yearsFragment" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment"

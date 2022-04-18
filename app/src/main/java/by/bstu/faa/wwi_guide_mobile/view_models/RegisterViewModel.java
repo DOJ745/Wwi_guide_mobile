@@ -1,11 +1,9 @@
 package by.bstu.faa.wwi_guide_mobile.view_models;
 
-import android.app.Application;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
 
-public class RegisterViewModel extends AndroidViewModel {
+public class RegisterViewModel extends ViewModel {
 
     private CountryRepo countryRepo;
     private RegRepo regRepo;
@@ -24,8 +22,8 @@ public class RegisterViewModel extends AndroidViewModel {
     private LiveData<List<CountryDto>> countryDtoResponse;
     private LiveData<AppMsgResponseDto> regRepoResponse;
 
-    public RegisterViewModel(@NonNull Application application) {
-        super(application);
+    public RegisterViewModel() {
+        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     public void init() {

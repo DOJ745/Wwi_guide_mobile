@@ -3,14 +3,18 @@ package by.bstu.faa.wwi_guide_mobile.network_service.api;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AchievementDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.SurveyAnswerDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.SurveyQuestionDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.TestAnswerDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.TestQuestionDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.ArmamentDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -34,6 +38,21 @@ public interface AppApi {
 
     @GET("countries")
     Call<List<CountryDto>> getCountries();
+
+    @GET("weapons-technology")
+    Call<List<ArmamentDto>> getWeaponsTechnology();
+
+    @GET("tests-questions")
+    Call<List<TestQuestionDto>> getTestsQuestions();
+
+    @GET("tests-answers")
+    Call<List<TestAnswerDto>> getTestsAnswers();
+
+    @GET("surveys-questions")
+    Call<List<SurveyQuestionDto>> getSurveysQuestions();
+
+    @GET("surveys-answers")
+    Call<List<SurveyAnswerDto>> getSurveysAnswers();
 
     @GET("events")
     Call<List<EventDto>> getEvents(@Header("Authorization") String token);
