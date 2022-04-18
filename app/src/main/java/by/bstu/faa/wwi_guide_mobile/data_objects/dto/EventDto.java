@@ -1,4 +1,9 @@
 package by.bstu.faa.wwi_guide_mobile.data_objects.dto;
 
-public class EventDto {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class EventDto extends BaseDataDto {
 }

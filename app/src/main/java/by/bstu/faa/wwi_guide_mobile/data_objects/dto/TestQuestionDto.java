@@ -1,4 +1,9 @@
 package by.bstu.faa.wwi_guide_mobile.data_objects.dto;
 
-public class TestQuestionDto {
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class TestQuestionDto extends BaseQuestionDto {
 }
