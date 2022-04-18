@@ -4,7 +4,14 @@ public class CONSTANTS {
 
     public static class APP_DATABASE {
         public final static String DATABASE_NAME = "main_db";
+
         public final static String USER_TABLE = "user";
+        public final static String ACHIEVEMENTS_TABLE = "achievements";
+        public final static String LOGS_TABLE = "logs";
+        public final static String EVENTS_TABLE = "events";
+        public final static String RANKS_TABLE = "ranks";
+        public final static String YEARS_TABLE = "years";
+
         public final static String ELEMENT_DIVIDER = "*";
     }
 
@@ -19,13 +26,7 @@ public class CONSTANTS {
         public final static String LOGIN_INCORRECT_PASSWORD = "Incorrect password!";
     }
 
-    public static class HTTP_CODES {
-        public final static int BAD_REQUEST = 400;
-        public final static int UNAUTHORIZED = 401;
-        public final static int FORBIDDEN = 403;
-        public final static int NOT_FOUND= 404;
-        public final static int SERVER_ERROR = 500;
-    }
+    public static class HTTP_CODES { public final static int BAD_REQUEST = 400; }
 
     public static class LOG_TAGS {
         public static final String CONSTRUCTOR = "CONSTRUCTOR";
@@ -37,7 +38,6 @@ public class CONSTANTS {
         private final static String REG = "REGISTER ";
         private final static String MAIN = "MAIN ";
         private final static String LOGIN = "LOGIN ";
-        private final static String SPLASH = "SPLASH ";
 
         public final static String REG_REPO = REG + REPO;
 

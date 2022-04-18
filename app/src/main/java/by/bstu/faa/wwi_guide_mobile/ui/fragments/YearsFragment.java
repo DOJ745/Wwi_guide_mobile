@@ -20,7 +20,7 @@ import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
-public class MainFragment extends Fragment {
+public class YearsFragment extends Fragment {
 
     private MainViewModel mViewModel;
 
@@ -29,7 +29,7 @@ public class MainFragment extends Fragment {
 
     private TokenData token;
 
-    public MainFragment() {
+    public YearsFragment() {
         // Required empty public constructor
     }
 
@@ -55,7 +55,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_years, container, false);
 
         RecyclerView yearRecyclerView = view.findViewById(R.id.main_fragment_year_list);
         yearRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

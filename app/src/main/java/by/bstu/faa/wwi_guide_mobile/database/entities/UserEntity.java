@@ -12,10 +12,13 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+import lombok.Value;
 
 @EqualsAndHashCode
 @Getter
 @Setter
+@ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.USER_TABLE)
 public class UserEntity {
     @PrimaryKey

@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.MainFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.YearsFragment"
         android:label="main_fragment"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_years" />
 
     <fragment
         android:id="@+id/loginFragment"
