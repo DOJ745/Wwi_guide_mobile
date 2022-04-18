@@ -5,6 +5,7 @@ public class CONSTANTS {
     public static class APP_DATABASE {
         public final static String DATABASE_NAME = "main_db";
         public final static String USER_TABLE = "user";
+        public final static String ELEMENT_DIVIDER = "*";
     }
 
     public static class WEB_APP_SUCCESS_RESPONSES {

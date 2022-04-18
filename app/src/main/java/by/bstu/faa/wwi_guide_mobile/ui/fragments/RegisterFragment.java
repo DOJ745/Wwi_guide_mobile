@@ -250,7 +250,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (loginField.getText().length() > 3) { loginField.setError(null); }
+                if (loginField.getText().length() > 3 && loginField.getText().length() < 47) { loginField.setError(null); }
                 else { loginField.setError("Обязательное поле!"); }
             }
         });
@@ -271,11 +271,11 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
                     (?=.*[A-Z])       # an upper case letter must occur at least once
                     (?=.*[@#$%^&+=_]) # a special character must occur at least once
                     (?=\S+$)          # no whitespace allowed in the entire string
-                    .{6,}             # anything, at least 6 places though
+                    .{6,18}           # anything, at least 6 places though and less than 18
                     $                 # end-of-string
 
                      */
-                String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_])(?=\\S+$).{6,}$";
+                String regexPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_])(?=\\S+$).{6,18}$";
                 if (Pattern.matches(regexPattern, passwordField.getText().toString())) {
                     passwordField.setError(null);
                     passwordRequirements.setVisibility(View.GONE);
@@ -295,7 +295,8 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (repPasswordField.getText().length() > 5) { repPasswordField.setError(null); }
+                if (repPasswordField.getText().length() > 5 && repPasswordField.getText().length() < 17 )
+                { repPasswordField.setError(null); }
                 else { repPasswordField.setError("Обязательное поле!"); }
             }
         });

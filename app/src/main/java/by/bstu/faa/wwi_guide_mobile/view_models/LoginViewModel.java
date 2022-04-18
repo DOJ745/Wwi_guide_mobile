@@ -49,11 +49,15 @@ public class LoginViewModel extends ViewModel {
         loggedUser.setRankId(data.getRankId());
         loggedUser.setScore(data.getScore());
 
-        for (String item : data.getRoles()) { tempRoles.append("-").append(item); }
+        for (String item : data.getRoles()) {
+            tempRoles.append(CONSTANTS.APP_DATABASE.ELEMENT_DIVIDER).append(item);
+        }
         loggedUser.setRoles(tempRoles.toString());
 
         if(data.getAchievements() != null && !data.getAchievements().isEmpty()) {
-            for (String item: data.getAchievements()) { tempAchievements.append("-").append(item); }
+            for (String item: data.getAchievements()) {
+                tempAchievements.append(CONSTANTS.APP_DATABASE.ELEMENT_DIVIDER).append(item);
+            }
             loggedUser.setAchievements(tempAchievements.toString());
         }
         else loggedUser.setAchievements("none");

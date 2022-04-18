@@ -272,7 +272,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (loginField.getText().length() > 3) {
+                if (loginField.getText().length() > 3 && loginField.getText().length() < 47) {
                     loginField.setError(null);
                     rememberMeBox.setEnabled(true);
                 }
@@ -291,7 +291,7 @@ public class LoginFragment extends Fragment implements FragmentMethods {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
             @Override
             public void afterTextChanged(Editable editable) {
-                if (passwordField.getText().length() > 5) {
+                if (passwordField.getText().length() > 5 && passwordField.getText().length() < 17) {
                     passwordField.setError(null);
                     rememberMeBox.setEnabled(true);
                 }

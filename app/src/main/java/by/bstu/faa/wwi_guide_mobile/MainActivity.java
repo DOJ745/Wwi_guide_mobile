@@ -14,17 +14,22 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+// TODO: set timer for automatic token refresh if we have internet connection
+// TODO: check for "Remember me" to navigate user to main fragment
+
 public class MainActivity extends AppCompatActivity {
 
+    private String FIRST_LAUNCH;
     private boolean hasConnection = false;
-    private NavHostFragment navHostFragment;
     private MainViewModel mainViewModel;
 
+    private NavHostFragment navHostFragment;
     private TextView textPrompt;
     private ImageView img;
     private Button retryButton;
@@ -41,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SecurePreferences preferences = SecurePreferences.getInstance(this);
+        String FIRST_LAUNCH_KEY = "FIRST_LAUNCH";
+        if(preferences.getString(FIRST_LAUNCH_KEY) == null )
+            FIRST_LAUNCH = "0";
+        else if (preferences.getString(FIRST_LAUNCH_KEY) != null)
+            FIRST_LAUNCH = preferences.getString(FIRST_LAUNCH_KEY);
+        else preferences.put(FIRST_LAUNCH_KEY, "1");
+
+        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "First launch check: " + FIRST_LAUNCH);
+
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
@@ -54,19 +69,29 @@ public class MainActivity extends AppCompatActivity {
         retryButton.setOnClickListener(view -> checkUserAndConnection());
         exitButton.setOnClickListener(view -> finish());
 
-        // TODO: proper connection check and first launch check
-        // TODO: set timer for automatic token refresh if we have internet connection
-
         if(hasConnection) {
+            // Going to login, because it's home fragment
             Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "We have internet connection!");
+
+            FIRST_LAUNCH = "1";
+            preferences.removeValue(FIRST_LAUNCH_KEY);
+            preferences.put(FIRST_LAUNCH_KEY, FIRST_LAUNCH);
+
             retryButton.setEnabled(false);
             exitButton.setEnabled(false);
         }
         else {
-            Log.e(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "No internet!");
-            makeElementsGone(textPrompt, img, retryButton, exitButton, false);
-            textPrompt.setText(R.string.prompt_no_internet_connection);
-            fragmentContainerView.setVisibility(View.GONE);
+            Log.e(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "No internet connection!");
+            if(FIRST_LAUNCH.equals("0")) {
+                makeElementsGone(textPrompt, img, retryButton, exitButton, false);
+                textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                fragmentContainerView.setVisibility(View.GONE);
+            }
+            else {
+                makeElementsGone(textPrompt, img, retryButton, exitButton, false);
+                textPrompt.setText(R.string.prompt_no_internet_connection);
+                fragmentContainerView.setVisibility(View.GONE);
+            }
         }
         Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
@@ -124,13 +149,24 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
+                    Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "checkUserAndConnection");
                     hasConnection = RetrofitService.hasConnection(this);
-                    if(hasConnection) {
+                    if(hasConnection && user.size() > 0) {
                         fragmentContainerView.setVisibility(View.VISIBLE);
                         makeElementsGone(textPrompt, img, retryButton, exitButton, true);
                         navHostFragment.getNavController().navigate(R.id.loginFragment, null);
                     }
-                    else { textPrompt.setText(R.string.prompt_no_internet_connection); }
+                    else if (!hasConnection && user.size() == 0) {
+                        if(FIRST_LAUNCH.equals("1"))
+                            textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                        else
+                            textPrompt.setText(R.string.prompt_no_internet_connection);
+                    }
+                    else {
+                        fragmentContainerView.setVisibility(View.VISIBLE);
+                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
+                        navHostFragment.getNavController().navigate(R.id.registerFragment, null);
+                    }
                 }, throwable -> Log.e(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "Unable to get user", throwable)));
     }
 }
