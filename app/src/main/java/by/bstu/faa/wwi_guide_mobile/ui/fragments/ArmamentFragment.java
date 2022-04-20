@@ -2,23 +2,28 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.data_objects.IdDto;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ArmamentFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ArmamentFragment extends Fragment {
+public class ArmamentFragment extends Fragment implements FragmentBottomNav {
     private final String ARMAMENT_FRAGMENT = "ARMAMENT FRAGMENT";
 
     // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +37,7 @@ public class ArmamentFragment extends Fragment {
 
     public ArmamentFragment() {
         // Required empty public constructor
+        Log.d(ARMAMENT_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     /**
@@ -68,6 +74,13 @@ public class ArmamentFragment extends Fragment {
         // Inflate the layout for this fragment
         Log.d(ARMAMENT_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return inflater.inflate(R.layout.fragment_armament, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d(ARMAMENT_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override

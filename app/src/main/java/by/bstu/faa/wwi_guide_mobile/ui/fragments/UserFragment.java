@@ -2,13 +2,17 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
@@ -18,7 +22,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
  * Use the {@link UserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserFragment extends Fragment {
+public class UserFragment extends Fragment implements FragmentBottomNav {
     private final String USER_FRAGMENT = "USER FRAGMENT";
 
     // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +36,7 @@ public class UserFragment extends Fragment {
 
     public UserFragment() {
         // Required empty public constructor
+        Log.d(USER_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     /**
@@ -68,6 +73,13 @@ public class UserFragment extends Fragment {
         // Inflate the layout for this fragment
         Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return inflater.inflate(R.layout.fragment_user, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override

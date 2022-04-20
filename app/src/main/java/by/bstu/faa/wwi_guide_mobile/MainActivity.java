@@ -10,7 +10,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
@@ -21,9 +26,12 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 // TODO: set timer for automatic token refresh if we have internet connection
-// TODO: check for "Remember me" to navigate user to main fragment
+// TODO: check for "Remember me" to navigate user to years fragment
 
 public class MainActivity extends AppCompatActivity {
+
+    public static BottomNavigationView BottomNavigationView;
+
     private final String MAIN_ACTIVITY = "MAIN ACTIVITY";
 
     private String FIRST_LAUNCH;
@@ -66,6 +74,24 @@ public class MainActivity extends AppCompatActivity {
         img = findViewById(R.id.activity_main_img);
         retryButton = findViewById(R.id.activity_main_retry_button);
         exitButton = findViewById(R.id.activity_main_exit_button);
+        BottomNavigationView = findViewById(R.id.main_bottom_nav_view);
+
+        // Passing each menu ID as a set of IDs because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.achievementsFragment,
+                R.id.testsFragment,
+                R.id.yearsFragment,
+                R.id.armamentFragment,
+                R.id.userFragment).build();
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.nav_host_fragment);
+
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(BottomNavigationView, navController);
 
         retryButton.setOnClickListener(view -> checkUserAndConnection());
         exitButton.setOnClickListener(view -> finish());

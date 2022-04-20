@@ -7,7 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.fragments.YearsFragment"
-    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin">
+    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
+    android:layout_marginBottom="60dp">
 
     <Button
         android:visibility="visible"
@@ -19,28 +20,18 @@
         android:layout_height="wrap_content"
         android:text="@string/test" />
 
+    <!--
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignTop="@id/years_fragment_button"
-        android:layout_above="@id/years_fragment_bottom_nav">
+        android:layout_alignTop="@id/years_fragment_button">
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>         -->
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/years_fragment_year_list"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@id/years_fragment_bottom_nav"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/years_fragment_bottom_nav"
-        android:layout_alignParentBottom="true"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/years_fragment_year_list"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:menu="@menu/navigation_items"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

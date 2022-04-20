@@ -65,4 +65,15 @@
         android:text="@string/prompt_exit"
         app:layout_constraintTop_toBottomOf="@id/activity_main_retry_button"/>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_nav_view"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation_items"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
