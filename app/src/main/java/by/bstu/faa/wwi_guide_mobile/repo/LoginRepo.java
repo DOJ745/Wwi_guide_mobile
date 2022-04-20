@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginRepo {
+    private final String LOGIN_REPO = "LOGIN REPO";
 
     protected final MutableLiveData<UserDto> userResponse;
 
@@ -44,7 +45,7 @@ public class LoginRepo {
                             Type type = new TypeToken<UserDto>(){}.getType();
                             UserDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
 
-                            Log.d(CONSTANTS.LOG_TAGS.REG_REPO, "errorResponse:\n" + errorResponse.toString());
+                            Log.d(LOGIN_REPO, "errorResponse:\n" + errorResponse.toString());
                             userResponse.postValue(errorResponse);
                         }
                     }

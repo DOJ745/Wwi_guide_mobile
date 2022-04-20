@@ -15,24 +15,25 @@ import by.bstu.faa.wwi_guide_mobile.repo.LoginRepo;
 import io.reactivex.Completable;
 
 public class LoginViewModel extends ViewModel {
+    private final String LOGIN_VIEW_MODEL = "LOGIN VIEW_MODEL";
 
     private final UserDao userDao;
     private LoginRepo loginRepo;
     private LiveData<UserDto> loginRepoResponse;
 
     public LoginViewModel() {
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(LOGIN_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
         userDao = AppInstance.getInstance().getDatabase().userDao();
     }
 
     public void init() {
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "init");
+        Log.d(LOGIN_VIEW_MODEL, "init");
         loginRepo = new LoginRepo();
         loginRepoResponse = loginRepo.getUserResponse();
     }
 
     public void loginUser(LoginData loginData) {
-        Log.d(CONSTANTS.LOG_TAGS.LOGIN_VIEW_MODEL, "loginUser");
+        Log.d(LOGIN_VIEW_MODEL, "loginUser");
         loginRepo.loginUser(loginData);
     }
     public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }

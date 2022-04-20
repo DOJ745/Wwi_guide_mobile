@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.database.dao;
+package by.bstu.faa.wwi_guide_mobile.database.dao.base;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

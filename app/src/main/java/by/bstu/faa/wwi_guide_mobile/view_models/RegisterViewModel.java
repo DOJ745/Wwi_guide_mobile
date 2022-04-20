@@ -15,6 +15,7 @@ import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
 
 public class RegisterViewModel extends ViewModel {
+    private final String REG_VIEW_MODEL = "REG VIEW_MODEL";
 
     private CountryRepo countryRepo;
     private RegRepo regRepo;
@@ -23,11 +24,11 @@ public class RegisterViewModel extends ViewModel {
     private LiveData<AppMsgResponseDto> regRepoResponse;
 
     public RegisterViewModel() {
-        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(REG_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     public void init() {
-        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, "init");
+        Log.d(REG_VIEW_MODEL, "init");
         countryRepo = new CountryRepo();
         regRepo = new RegRepo();
 
@@ -36,7 +37,7 @@ public class RegisterViewModel extends ViewModel {
     }
 
     public void getCountryResponse() {
-        Log.d(CONSTANTS.LOG_TAGS.REG_VIEW_MODEL, "getCountryResponse");
+        Log.d(REG_VIEW_MODEL, "getCountryResponse");
         countryRepo.getElements();
     }
     public void regUser(RegData regData) { regRepo.regUser(regData); }

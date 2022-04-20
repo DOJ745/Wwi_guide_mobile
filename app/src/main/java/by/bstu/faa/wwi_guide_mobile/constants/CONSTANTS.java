@@ -34,29 +34,7 @@ public class CONSTANTS {
 
     public static class HTTP_CODES { public final static int BAD_REQUEST = 400; }
 
-    public static class LOG_TAGS {
-        public static final String CONSTRUCTOR = "CONSTRUCTOR";
-        public static final String REPO = "REPOSITORY";
-        public static final String VIEW_MODEL = "VIEW MODEL";
-        public static final String FRAGMENT = "FRAGMENT";
-        public static final String ACTIVITY = "ACTIVITY";
-
-        private final static String REG = "REGISTER ";
-        private final static String MAIN = "MAIN ";
-        private final static String LOGIN = "LOGIN ";
-        private final static String YEARS = "YEARS ";
-
-        public final static String REG_REPO = REG + REPO;
-
-        public final static String REG_VIEW_MODEL = REG + VIEW_MODEL;
-        public final static String MAIN_VIEW_MODEL = MAIN + VIEW_MODEL;
-        public final static String LOGIN_VIEW_MODEL = LOGIN + VIEW_MODEL;
-
-        public final static String REG_FRAGMENT = REG + FRAGMENT;
-        public final static String YEARS_FRAGMENT = YEARS + FRAGMENT;
-        public final static String LOGIN_FRAGMENT = LOGIN + FRAGMENT;
-        public final static String MAIN_ACTIVITY = MAIN + ACTIVITY;
-    }
+    public static class LOG_TAGS { public static final String CONSTRUCTOR = "CONSTRUCTOR";}
 
     public static class URLS {
         public final static String API_URL = "/api.wwi-guide.by/";

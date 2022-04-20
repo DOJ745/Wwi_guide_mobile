@@ -23,7 +23,8 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
-public class YearsFragment extends Fragment implements FragmentMethods{
+public class YearsFragment extends Fragment implements FragmentNavigation {
+    private final String YEARS_FRAGMENT = "YEARS FRAGMENT";
 
     private YearViewModel yearViewModel;
     private YearRecyclerAdapter yearAdapter;
@@ -33,7 +34,7 @@ public class YearsFragment extends Fragment implements FragmentMethods{
 
     public YearsFragment() {
         // Required empty public constructor
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
@@ -51,7 +52,7 @@ public class YearsFragment extends Fragment implements FragmentMethods{
         });
 
         token = new TokenData();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Nullable
@@ -60,7 +61,7 @@ public class YearsFragment extends Fragment implements FragmentMethods{
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_years, container, false);
 
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -89,7 +90,7 @@ public class YearsFragment extends Fragment implements FragmentMethods{
                     navigateToFragment(view, "years");
                     return true;
                 case R.id.nav_action_weapons_and_technique:
-                    navigateToFragment(view, "wt");
+                    navigateToFragment(view, "armament");
                     return true;
             }
             return false;
@@ -101,74 +102,74 @@ public class YearsFragment extends Fragment implements FragmentMethods{
             getYearsButton.setVisibility(View.GONE);
         });
 
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(CONSTANTS.LOG_TAGS.YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     @Override
     public void navigateToFragment(View view, String fragmentName) {
         switch (fragmentName){
             case "years":
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+                Navigation.findNavController(view).navigate(R.id.yearsFragment, null);
                 break;
             case "user":
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+                Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_userFragment, null);
                 break;
             case "tests":
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+                Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_testsFragment, null);
                 break;
-            case "wt":
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+            case "armament":
+                Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_armamentFragment, null);
                 break;
             case "achievement":
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+                Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_achievementFragment, null);
                 break;
         }
     }

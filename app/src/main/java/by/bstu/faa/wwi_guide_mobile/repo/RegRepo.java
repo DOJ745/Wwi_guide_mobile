@@ -21,6 +21,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegRepo extends AuthRepo {
+    private final String REG_REPO = "REG REPO";
 
     public void regUser(RegData regData) {
 
@@ -41,7 +42,7 @@ public class RegRepo extends AuthRepo {
                             Type type = new TypeToken<AppMsgResponseDto>(){}.getType();
                             AppMsgResponseDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
 
-                            Log.d(CONSTANTS.LOG_TAGS.REG_REPO, "errorResponse:\n" + errorResponse.toString());
+                            Log.d(REG_REPO, "errorResponse:\n" + errorResponse.toString());
                             appResponse.postValue(errorResponse);
                         }
                     }

@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 // TODO: check for "Remember me" to navigate user to main fragment
 
 public class MainActivity extends AppCompatActivity {
+    private final String MAIN_ACTIVITY = "MAIN ACTIVITY";
 
     private String FIRST_LAUNCH;
     private boolean hasConnection = false;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             FIRST_LAUNCH = preferences.getString(FIRST_LAUNCH_KEY);
         else preferences.put(FIRST_LAUNCH_KEY, "1");
 
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "First launch check: " + FIRST_LAUNCH);
+        Log.d(MAIN_ACTIVITY, "First launch check: " + FIRST_LAUNCH);
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         if(hasConnection) {
             // Going to login, because it's home fragment
-            Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "We have internet connection!");
+            Log.d(MAIN_ACTIVITY, "We have internet connection!");
 
             FIRST_LAUNCH = "1";
             preferences.removeValue(FIRST_LAUNCH_KEY);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             exitButton.setEnabled(false);
         }
         else {
-            Log.e(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "No internet connection!");
+            Log.e(MAIN_ACTIVITY, "No internet connection!");
             if(FIRST_LAUNCH.equals("0")) {
                 makeElementsGone(textPrompt, img, retryButton, exitButton, false);
                 textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
@@ -93,39 +94,39 @@ public class MainActivity extends AppCompatActivity {
                 fragmentContainerView.setVisibility(View.GONE);
             }
         }
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESTART);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESTART);
     }
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
         mDisposable.clear();
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     private void makeElementsGone(TextView textView, ImageView imageView,
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                    Log.d(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "checkUserAndConnection");
+                    Log.d(MAIN_ACTIVITY, "checkUserAndConnection");
                     hasConnection = RetrofitService.hasConnection(this);
                     if(hasConnection && user.size() > 0) {
                         fragmentContainerView.setVisibility(View.VISIBLE);
@@ -167,6 +168,6 @@ public class MainActivity extends AppCompatActivity {
                         makeElementsGone(textPrompt, img, retryButton, exitButton, true);
                         navHostFragment.getNavController().navigate(R.id.registerFragment, null);
                     }
-                }, throwable -> Log.e(CONSTANTS.LOG_TAGS.MAIN_ACTIVITY, "Unable to get user", throwable)));
+                }, throwable -> Log.e(MAIN_ACTIVITY, "Unable to get user", throwable)));
     }
 }

@@ -2,13 +2,16 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +19,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
  * create an instance of this fragment.
  */
 public class UserFragment extends Fragment {
+    private final String USER_FRAGMENT = "USER FRAGMENT";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,12 +59,62 @@ public class UserFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return inflater.inflate(R.layout.fragment_user, container, false);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.d(USER_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 }

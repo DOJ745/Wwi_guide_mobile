@@ -29,16 +29,16 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentMethods;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
 
-public class RegisterFragment extends Fragment implements FragmentMethods {
+public class RegisterFragment extends Fragment implements FragmentNavigation {
+    private final String REG_FRAGMENT = "REG FRAGMENT";
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private RegisterViewModel registerViewModel;
-
     private CountrySpinnerAdapter countrySpinnerAdapter;
 
     private RegData userRegData;
@@ -52,7 +52,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
 
     public RegisterFragment() {
         // Required empty public constructor
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(REG_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     public static RegisterFragment newInstance(String param1, String param2) {
@@ -75,7 +75,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
         dataToTransfer = new ArrayList<>();
         registerViewModel.getCountryResponse();
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Nullable
@@ -103,7 +103,7 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             if (countryResponse != null) { countrySpinnerAdapter.setItems(countryResponse); }
         });
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -187,55 +187,55 @@ public class RegisterFragment extends Fragment implements FragmentMethods {
             else { regMsgResponse.setText(R.string.err_mismatch_data); }
         });
 
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(CONSTANTS.LOG_TAGS.REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField,

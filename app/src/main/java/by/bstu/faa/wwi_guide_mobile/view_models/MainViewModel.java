@@ -14,7 +14,6 @@ import io.reactivex.Flowable;
 public class MainViewModel extends ViewModel {
     private final UserDao userDao;
     public MainViewModel() {
-        Log.d(CONSTANTS.LOG_TAGS.MAIN_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
         userDao = AppInstance.getInstance().getDatabase().userDao();
     }
 
