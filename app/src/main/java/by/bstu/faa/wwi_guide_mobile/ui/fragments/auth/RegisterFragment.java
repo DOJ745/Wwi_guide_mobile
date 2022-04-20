@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.auth;
 
 import android.os.Bundle;
 
@@ -29,6 +29,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentMethods;
 import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
 
 public class RegisterFragment extends Fragment implements FragmentMethods {

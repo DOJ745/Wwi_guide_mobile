@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.auth;
 
 import android.os.Bundle;
 
@@ -24,6 +24,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentMethods;
 import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;

@@ -9,11 +9,24 @@
         android:id="@+id/yearsFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.YearsFragment"
         android:label="years_fragment"
-        tools:layout="@layout/fragment_years" />
+        tools:layout="@layout/fragment_years" >
+        <action
+            android:id="@+id/action_yearsFragment_to_testsFragment"
+            app:destination="@id/testsFragment" />
+        <action
+            android:id="@+id/action_yearsFragment_to_armamentFragment"
+            app:destination="@id/armamentFragment" />
+        <action
+            android:id="@+id/action_yearsFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_yearsFragment_to_achievementFragment"
+            app:destination="@id/achievementFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.LoginFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.auth.LoginFragment"
         android:label="login_fragment"
         tools:layout="@layout/fragment_login" >
         <action
@@ -28,12 +41,84 @@
 
     <fragment
         android:id="@+id/registerFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.RegisterFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.auth.RegisterFragment"
         android:label="register_fragment"
         tools:layout="@layout/fragment_register" >
         <action
             android:id="@+id/action_registerFragment_to_loginFragment2"
             app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/achievementFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.AchievementFragment"
+        android:label="fragment_achievement"
+        tools:layout="@layout/fragment_achievement" >
+        <action
+            android:id="@+id/action_achievementFragment_to_armamentFragment"
+            app:destination="@id/armamentFragment" />
+        <action
+            android:id="@+id/action_achievementFragment_to_testsFragment"
+            app:destination="@id/testsFragment" />
+        <action
+            android:id="@+id/action_achievementFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_achievementFragment_to_yearsFragment"
+            app:destination="@id/yearsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/testsFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.TestsFragment"
+        android:label="fragment_tests"
+        tools:layout="@layout/fragment_tests" >
+        <action
+            android:id="@+id/action_testsFragment_to_achievementFragment"
+            app:destination="@id/achievementFragment" />
+        <action
+            android:id="@+id/action_testsFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_testsFragment_to_armamentFragment"
+            app:destination="@id/armamentFragment" />
+        <action
+            android:id="@+id/action_testsFragment_to_yearsFragment"
+            app:destination="@id/yearsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/armamentFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.ArmamentFragment"
+        android:label="fragment_armament"
+        tools:layout="@layout/fragment_armament" >
+        <action
+            android:id="@+id/action_armamentFragment_to_achievementFragment"
+            app:destination="@id/achievementFragment" />
+        <action
+            android:id="@+id/action_armamentFragment_to_yearsFragment"
+            app:destination="@id/yearsFragment" />
+        <action
+            android:id="@+id/action_armamentFragment_to_userFragment"
+            app:destination="@id/userFragment" />
+        <action
+            android:id="@+id/action_armamentFragment_to_testsFragment"
+            app:destination="@id/testsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_achievementFragment"
+            app:destination="@id/achievementFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_armamentFragment"
+            app:destination="@id/armamentFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_testsFragment"
+            app:destination="@id/testsFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_yearsFragment"
+            app:destination="@id/yearsFragment" />
     </fragment>
 
 </navigation>
