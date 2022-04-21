@@ -20,13 +20,6 @@
         android:layout_height="wrap_content"
         android:text="@string/test" />
 
-    <!--
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignTop="@id/years_fragment_button">
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>         -->
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/years_fragment_year_list"
         android:layout_alignParentStart="true"
