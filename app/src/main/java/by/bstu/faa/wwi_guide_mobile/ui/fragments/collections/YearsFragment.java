@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.collections;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,14 +19,18 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
+import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
 
 public class YearsFragment extends Fragment implements FragmentBottomNav {
     private final String YEARS_FRAGMENT = "YEARS FRAGMENT";
 
     private YearViewModel yearViewModel;
-    private YearRecyclerAdapter yearAdapter;
+    private YearsRecyclerAdapter yearAdapter;
+    private EventsRecyclerAdapter eventsAdapter;
 
     private TokenData token;
 
@@ -38,7 +43,13 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        yearAdapter = new YearRecyclerAdapter();
+        yearAdapter = new YearsRecyclerAdapter();
+        EventsRecyclerAdapter.OnEventClickListener eventClickListener =
+                (event, position) -> Toast.makeText(requireContext().getApplicationContext(),
+                        "You chose event with title " + event.getTitle(),
+                        Toast.LENGTH_SHORT).show();
+        // создаем адаптер
+        eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
         yearViewModel.init();
 
@@ -56,6 +67,7 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        yearViewModel.getElements(token);
         View view = inflater.inflate(R.layout.fragment_years, container, false);
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
@@ -66,17 +78,20 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView yearRecyclerView = view.findViewById(R.id.years_fragment_year_list);
-        yearRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        yearRecyclerView.setAdapter(yearAdapter);
+        RecyclerView recyclerView = view.findViewById(R.id.years_fragment_recycle_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(yearAdapter);
 
         Button getYearsButton = view.findViewById(R.id.years_fragment_button);
         showBottomNav(MainActivity.BottomNavigationView, true);
 
         token.setToken("");
         getYearsButton.setOnClickListener(v -> {
-            yearViewModel.getElements(token);
-            getYearsButton.setVisibility(View.GONE);
+
+            getYearsButton.setVisibility(View.VISIBLE);
+            // устанавливаем для списка адаптер
+            recyclerView.setAdapter(eventsAdapter);
+
         });
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);

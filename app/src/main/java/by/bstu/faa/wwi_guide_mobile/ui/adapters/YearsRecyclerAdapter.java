@@ -18,7 +18,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
-public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapter.YearResultHolder> {
+public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder> {
 
     private List<YearDto> items = new ArrayList<>();
 
@@ -29,7 +29,7 @@ public class YearRecyclerAdapter extends RecyclerView.Adapter<YearRecyclerAdapte
     public YearResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_year, parent, false);
+                .inflate(R.layout.collection_item_year, parent, false);
         return new YearResultHolder(itemView);
     }
 

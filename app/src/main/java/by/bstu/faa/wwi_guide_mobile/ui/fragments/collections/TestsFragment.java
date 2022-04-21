@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.ui.fragments;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.collections;
 
 import android.os.Bundle;
 
@@ -11,10 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 
 /**
  * A simple {@link Fragment} subclass.

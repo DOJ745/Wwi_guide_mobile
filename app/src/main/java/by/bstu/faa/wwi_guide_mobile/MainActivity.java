@@ -178,12 +178,18 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(user -> {
                     Log.d(MAIN_ACTIVITY, "checkUserAndConnection");
                     hasConnection = RetrofitService.hasConnection(this);
+
                     if(hasConnection && user.size() > 0) {
                         fragmentContainerView.setVisibility(View.VISIBLE);
                         makeElementsGone(textPrompt, img, retryButton, exitButton, true);
                         navHostFragment.getNavController().navigate(R.id.loginFragment, null);
                     }
-                    else if (!hasConnection && user.size() == 0) {
+                    else if(!hasConnection && user.size() > 0) {
+                        fragmentContainerView.setVisibility(View.VISIBLE);
+                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
+                        navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
+                    }
+                    else if (!hasConnection) {
                         if(FIRST_LAUNCH.equals("1"))
                             textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
                         else

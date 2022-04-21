@@ -129,8 +129,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
 
         setTextFieldListeners(loginField, passwordField, rememberMeBox);
 
-        // TODO: Save user in database only when he pressed "Remember me"
-
         rememberMeBox.setChecked(checkboxParam.equals("true"));
 
         rememberMeBox.setOnClickListener(v -> {
@@ -148,6 +146,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                     Log.d(LOGIN_FRAGMENT,
                             "\tDecrypted password:" + password +
                                     "\n Decrypted username: " + username);
+                    loginMsgResponse.setText(R.string.prompt_remember_me_info);
                 }
                 catch (Exception e) { e.printStackTrace(); }
             }

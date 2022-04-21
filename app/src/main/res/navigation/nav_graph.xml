@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/yearsFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.YearsFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.YearsFragment"
         android:label="years_fragment"
         tools:layout="@layout/fragment_years" />
 
@@ -37,22 +37,22 @@
     </fragment>
     <fragment
         android:id="@+id/achievementsFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.AchievementsFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.AchievementsFragment"
         android:label="fragment_achievement"
         tools:layout="@layout/fragment_achievements" />
     <fragment
         android:id="@+id/testsFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.TestsFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.TestsFragment"
         android:label="fragment_tests"
         tools:layout="@layout/fragment_tests" />
     <fragment
         android:id="@+id/armamentFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.ArmamentFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.ArmamentFragment"
         android:label="fragment_armament"
         tools:layout="@layout/fragment_armament" />
     <fragment
         android:id="@+id/userFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.UserFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
 
