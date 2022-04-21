@@ -43,17 +43,17 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     @Override
     public void onBindViewHolder(@NonNull EventsRecyclerAdapter.EventResultHolder holder, int position) {
 
-        EventDto event = items.get(position);
-        holder.eventTitleTextView.setText(event.getTitle());
+        EventDto item = items.get(position);
+        holder.eventTitleTextView.setText(item.getTitle());
 
-        if (event.getImages() != null) {
-            Glide.with(holder.itemView).load(event.getImages().get(0)).into(holder.eventImageView);
+        if (item.getImages() != null) {
+            Glide.with(holder.itemView).load(item.getImages().get(0)).into(holder.eventImageView);
         }
         else {
             Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.eventImageView);
         }
 
-        holder.itemView.setOnClickListener(v -> onClickListener.onEventClick(event, position));
+        holder.itemView.setOnClickListener(v -> onClickListener.onEventClick(item, position));
     }
 
     @Override
