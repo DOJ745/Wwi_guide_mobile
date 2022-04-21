@@ -4,16 +4,17 @@ import androidx.room.ColumnInfo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
-public class BaseAnswerEntity {
-    @ColumnInfo
-    private String text;
-    @ColumnInfo
-    private int points;
+public abstract class BaseAnswerEntity extends BaseId {
+    @ColumnInfo@NonNull
+    protected String text;
+    @ColumnInfo@NonNull
+    protected int points;
 }

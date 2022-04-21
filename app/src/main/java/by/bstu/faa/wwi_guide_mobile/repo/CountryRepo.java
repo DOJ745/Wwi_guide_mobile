@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.repo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -13,6 +15,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CountryRepo {
+    private final String COUNTRY_REPO = "COUNTRY REPO";
 
     protected MutableLiveData<List<CountryDto>> elementsDtoResponse;
     public CountryRepo() { elementsDtoResponse = new MutableLiveData<>(); }
@@ -23,12 +26,12 @@ public class CountryRepo {
                 .getAppApi()
                 .getCountries()
                 .enqueue(new Callback<List<CountryDto>>() {
-
                     @Override
                     public void onResponse(
                             @NonNull Call<List<CountryDto>> call,
                             @NonNull Response<List<CountryDto>> response) {
                         if(response.body() != null) {
+                            Log.d(COUNTRY_REPO, "Receiving COUNTRY DATA");
                             elementsDtoResponse.postValue(response.body());
                         }
                     }

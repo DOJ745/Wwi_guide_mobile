@@ -62,15 +62,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         Log.d(LOGIN_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_LOGIN, param1);
-        args.putString(ARG_PASSWORD, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,7 +166,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                    () -> Log.d(LOGIN_FRAGMENT, "User has been written into database"),
+                                    () -> Log.d(LOGIN_FRAGMENT, "DB: User has been written into database"),
                                     throwable -> Log.e(LOGIN_FRAGMENT, "Unable to get username", throwable))
                             );
                             break;

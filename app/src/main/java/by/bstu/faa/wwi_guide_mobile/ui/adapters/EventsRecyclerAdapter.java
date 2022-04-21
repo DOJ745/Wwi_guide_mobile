@@ -19,15 +19,16 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
 
-public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.EventResultHolder> {
+public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.EventResultHolder>
+        implements AdapterSetItems<EventDto> {
 
-    public interface OnEventClickListener { void onEventClick(EventDto event, int position); }
+    public interface OnItemClickListener { void onItemClick(EventDto item, int position); }
+    private final OnItemClickListener onClickListener;
 
-    private final OnEventClickListener onClickListener;
     private List<EventDto> items = new ArrayList<>();
     private final LayoutInflater inflater;
 
-    public EventsRecyclerAdapter(Context context, OnEventClickListener onClickListener) {
+    public EventsRecyclerAdapter(Context context, OnItemClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.inflater = LayoutInflater.from(context);
     }
@@ -53,7 +54,7 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
             Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.eventImageView);
         }
 
-        holder.itemView.setOnClickListener(v -> onClickListener.onEventClick(item, position));
+        holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
 
     @Override

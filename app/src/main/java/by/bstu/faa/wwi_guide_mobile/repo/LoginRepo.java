@@ -37,6 +37,7 @@ public class LoginRepo {
                             @NonNull Call<UserDto> call,
                             @NonNull Response<UserDto> response) {
                         if(response.body() != null && response.isSuccessful()) {
+                            Log.d(LOGIN_REPO, "Receiving USER DATA");
                             userResponse.postValue(response.body());
                         }
                         if (response.errorBody()!= null && response.code() == CONSTANTS.HTTP_CODES.BAD_REQUEST){

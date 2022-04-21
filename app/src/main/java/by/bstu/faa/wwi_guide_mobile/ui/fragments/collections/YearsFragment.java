@@ -15,24 +15,33 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class YearsFragment extends Fragment implements FragmentBottomNav {
     private final String YEARS_FRAGMENT = "YEARS FRAGMENT";
 
+    private RecyclerView recyclerView;
     private YearViewModel yearViewModel;
     private YearsRecyclerAdapter yearAdapter;
     private EventsRecyclerAdapter eventsAdapter;
 
     private TokenData token;
+    private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public YearsFragment() {
         // Required empty public constructor
@@ -43,13 +52,31 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        yearAdapter = new YearsRecyclerAdapter();
-        EventsRecyclerAdapter.OnEventClickListener eventClickListener =
+
+        EventsRecyclerAdapter.OnItemClickListener eventClickListener =
                 (event, position) -> Toast.makeText(requireContext().getApplicationContext(),
                         "You chose event with title " + event.getTitle(),
                         Toast.LENGTH_SHORT).show();
-        // создаем адаптер
         eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
+
+
+        YearsRecyclerAdapter.OnItemClickListener yearClickListener =
+                (year, position) -> {
+                    Toast.makeText(requireContext().getApplicationContext(),
+                            "You chose year with title " + year.getTitle(),
+                            Toast.LENGTH_SHORT).show();
+
+                    mDisposable.add(yearViewModel.getYearEvents(year.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(yearEvents -> {
+                                Log.d(YEARS_FRAGMENT, "DB: getYearEvents" + yearEvents.get(0).toString());
+                            }, throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));
+
+                };
+
+        yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
+
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
         yearViewModel.init();
 
@@ -78,7 +105,7 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = view.findViewById(R.id.years_fragment_recycle_view);
+        recyclerView = view.findViewById(R.id.years_fragment_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(yearAdapter);
 
@@ -87,7 +114,6 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
 
         token.setToken("");
         getYearsButton.setOnClickListener(v -> {
-
             getYearsButton.setVisibility(View.VISIBLE);
             // устанавливаем для списка адаптер
             recyclerView.setAdapter(eventsAdapter);

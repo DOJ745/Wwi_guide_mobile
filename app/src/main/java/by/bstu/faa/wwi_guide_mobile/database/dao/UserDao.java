@@ -17,7 +17,4 @@ public interface UserDao extends BaseDao<UserEntity> {
 
     @Query("SELECT score FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
     int getUserScore();
-
-    @Query("DELETE FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
-    void deleteTempData();
 }

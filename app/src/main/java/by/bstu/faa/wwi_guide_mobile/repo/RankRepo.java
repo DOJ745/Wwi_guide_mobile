@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.repo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -14,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RankRepo extends DataRepo<RankDto> {
+    private final String RANK_REPO = "RANK REPO";
 
     @Override
     public void getElements(TokenData token) {
@@ -28,6 +31,7 @@ public class RankRepo extends DataRepo<RankDto> {
                             @NonNull Call<List<RankDto>> call,
                             @NonNull Response<List<RankDto>> response) {
                         if(response.body() != null) {
+                            Log.d(RANK_REPO, "Receiving RANK DATA");
                             elementsDtoMutableLiveData.postValue(response.body());
                         }
                     }

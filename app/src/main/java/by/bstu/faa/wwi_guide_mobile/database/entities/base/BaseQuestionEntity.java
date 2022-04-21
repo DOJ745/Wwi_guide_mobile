@@ -5,16 +5,17 @@ import androidx.room.ColumnInfo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
-public class BaseQuestionEntity {
-    @ColumnInfo
-    private String text;
+public abstract class BaseQuestionEntity extends BaseId {
+    @ColumnInfo@NonNull
+    protected String text;
     @ColumnInfo@Nullable
-    private String img;
+    protected String img;
 }

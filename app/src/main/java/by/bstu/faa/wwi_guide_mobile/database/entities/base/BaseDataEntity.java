@@ -1,23 +1,25 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities.base;
 
 import androidx.room.ColumnInfo;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
-public class BaseDataEntity {
+public abstract class BaseDataEntity extends BaseId {
+    @ColumnInfo@NonNull
+    protected String title;
+    @ColumnInfo@NonNull
+    protected String text;
     @ColumnInfo
-    private String title;
-    @ColumnInfo
-    private String text;
-    @ColumnInfo
-    private ArrayList<String> images;
+    protected ArrayList<String> images;
 }

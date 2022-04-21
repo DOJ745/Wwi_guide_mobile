@@ -1,5 +1,6 @@
 package by.bstu.faa.wwi_guide_mobile.ui.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,22 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 
-public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder> {
+public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder>
+        implements AdapterSetItems<YearDto> {
+
+    public interface OnItemClickListener { void onItemClick(YearDto item, int position); }
+    private final YearsRecyclerAdapter.OnItemClickListener onClickListener;
 
     private List<YearDto> items = new ArrayList<>();
+    private final LayoutInflater inflater;
+
+    public YearsRecyclerAdapter(Context context, YearsRecyclerAdapter.OnItemClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+        this.inflater = LayoutInflater.from(context);
+    }
 
     // Layout for item
 
@@ -28,8 +40,7 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     @Override
     public YearResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.collection_item_year, parent, false);
+        View itemView = inflater.inflate(R.layout.collection_item_year, parent, false);
         return new YearResultHolder(itemView);
     }
 
@@ -38,17 +49,19 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
 
-        YearDto year = items.get(position);
+        YearDto item = items.get(position);
 
-        holder.yearDateTextView.setText(String.valueOf(year.getDate()));
-        holder.yearTitleTextView.setText(year.getTitle());
+        holder.yearDateTextView.setText(String.valueOf(item.getDate()));
+        holder.yearTitleTextView.setText(item.getTitle());
 
-        if (year.getImgUrl() != null) {
-            Glide.with(holder.itemView).load(year.getImgUrl()).into(holder.yearImageView);
+        if (item.getImgUrl() != null) {
+            Glide.with(holder.itemView).load(item.getImgUrl()).into(holder.yearImageView);
         }
         else {
             Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.yearImageView);
         }
+
+        holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
 
     @Override

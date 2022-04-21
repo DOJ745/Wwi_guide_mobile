@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.repo;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
@@ -14,6 +16,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class YearRepo extends DataRepo<YearDto> {
+    private final String YEAR_REPO = "YEAR REPO";
 
     @Override
     public void getElements(TokenData token) {
@@ -28,6 +31,7 @@ public class YearRepo extends DataRepo<YearDto> {
                             @NonNull Call<List<YearDto>> call,
                             @NonNull Response<List<YearDto>> response) {
                         if(response.body() != null) {
+                            Log.d(YEAR_REPO, "Receiving YEAR DATA");
                             elementsDtoMutableLiveData.postValue(response.body());
                         }
                     }

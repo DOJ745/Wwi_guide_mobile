@@ -24,22 +24,16 @@ public class UserEntity {
     @PrimaryKey
     @NonNull
     private String login;
-
     @ColumnInfo
     private String password;
-
     @ColumnInfo
     private String rankId;
-
     @ColumnInfo
     private String countryId;
-
     @ColumnInfo
     private int score;
-
     @ColumnInfo
     private String roles;
-
     @ColumnInfo
     private String achievements;
 }

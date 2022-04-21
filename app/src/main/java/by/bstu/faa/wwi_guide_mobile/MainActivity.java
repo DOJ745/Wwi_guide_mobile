@@ -26,7 +26,6 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 // TODO: set timer for automatic token refresh if we have internet connection
-// TODO: check for "Remember me" to navigate user to years fragment
 
 public class MainActivity extends AppCompatActivity {
 
@@ -176,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                    Log.d(MAIN_ACTIVITY, "checkUserAndConnection");
+                    Log.d(MAIN_ACTIVITY, "DB: checkUserAndConnection");
                     hasConnection = RetrofitService.hasConnection(this);
 
                     if(hasConnection && user.size() > 0) {

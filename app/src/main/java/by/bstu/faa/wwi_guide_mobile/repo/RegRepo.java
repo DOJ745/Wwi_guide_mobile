@@ -34,6 +34,7 @@ public class RegRepo extends AuthRepo {
                             @NonNull Call<AppMsgResponseDto> call,
                             @NonNull Response<AppMsgResponseDto> response) {
                         if(response.body() != null && response.isSuccessful()) {
+                            Log.d(REG_REPO, "Receiving REG DATA");
                             appResponse.postValue(response.body());
                         }
                         if (response.errorBody()!= null && response.code() == CONSTANTS.HTTP_CODES.BAD_REQUEST){

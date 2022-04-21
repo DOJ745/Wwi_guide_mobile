@@ -20,7 +20,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AchievementDto;
 
 public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<AchievementsRecyclerAdapter.AchievementResultHolder>
-        implements AdapterSetItem<AchievementDto> {
+        implements AdapterSetItems<AchievementDto> {
 
     private List<AchievementDto> items = new ArrayList<>();
     private final LayoutInflater inflater;

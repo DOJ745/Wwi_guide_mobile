@@ -16,7 +16,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 
-public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> {
+public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> implements AdapterSetItems<CountryDto> {
 
     private List<CountryDto> items;
 
