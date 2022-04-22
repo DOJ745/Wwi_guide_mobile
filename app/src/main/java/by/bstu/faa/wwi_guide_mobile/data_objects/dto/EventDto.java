@@ -1,10 +1,13 @@
 package by.bstu.faa.wwi_guide_mobile.data_objects.dto;
 
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.base.BaseDataDto;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-@EqualsAndHashCode(callSuper = true)
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.base_dto.BaseDataDto;
+import lombok.Data;
+
 @Data
 public class EventDto extends BaseDataDto {
+    @SerializedName("yearId")@Expose
+    private String yearId;
 }

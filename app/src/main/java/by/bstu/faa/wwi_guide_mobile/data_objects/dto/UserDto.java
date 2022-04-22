@@ -7,22 +7,23 @@ import java.util.ArrayList;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class UserDto extends AppMsgResponseDto {
-    @SerializedName("login")@Expose
+    @SerializedName("login")@Expose@NonNull
     private String login;
-    @SerializedName("password")@Expose
+    @SerializedName("password")@Expose@NonNull
     private String password;
-    @SerializedName("roles")@Expose
+    @SerializedName("roles")@Expose@NonNull
     private ArrayList<String> roles;
     @SerializedName("achievements")@Expose
     private ArrayList<String> achievements;
-    @SerializedName("score")@Expose
+    @SerializedName("score")@Expose@NonNull
     private int score;
-    @SerializedName("rankId")@Expose
+    @SerializedName("rankId")@Expose@NonNull
     private String rankId;
-    @SerializedName("countryId")@Expose
+    @SerializedName("countryId")@Expose@NonNull
     private String countryId;
 }

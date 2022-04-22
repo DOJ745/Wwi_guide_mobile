@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.data_objects.dto.base;
+package by.bstu.faa.wwi_guide_mobile.data_objects.dto.base_dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,9 +6,11 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class BaseDataDto {
+public abstract class BaseDataDto extends IdDto {
     @SerializedName("title")@Expose
     private String title;
     @SerializedName("text")@Expose

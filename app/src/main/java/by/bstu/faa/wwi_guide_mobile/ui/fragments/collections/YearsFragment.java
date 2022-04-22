@@ -15,15 +15,10 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
@@ -69,10 +64,9 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
                     mDisposable.add(yearViewModel.getYearEvents(year.getId())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(yearEvents -> {
-                                Log.d(YEARS_FRAGMENT, "DB: getYearEvents" + yearEvents.get(0).toString());
-                            }, throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));
-
+                            .subscribe(yearEvents ->
+                                    Log.d(YEARS_FRAGMENT, "DB: getYearEvents" + yearEvents.get(0).toString()),
+                                    throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));
                 };
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
@@ -115,9 +109,7 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
         token.setToken("");
         getYearsButton.setOnClickListener(v -> {
             getYearsButton.setVisibility(View.VISIBLE);
-            // устанавливаем для списка адаптер
-            recyclerView.setAdapter(eventsAdapter);
-
+            //recyclerView.setAdapter(eventsAdapter);
         });
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
