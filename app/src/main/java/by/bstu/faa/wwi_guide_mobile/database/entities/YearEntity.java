@@ -2,25 +2,25 @@ package by.bstu.faa.wwi_guide_mobile.database.entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.YEARS_TABLE)
-public class YearEntity {
-    @PrimaryKey@NonNull
+public class YearEntity extends BaseId {
+    @ColumnInfo@NonNull
     private int date;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String title;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String img;
 }

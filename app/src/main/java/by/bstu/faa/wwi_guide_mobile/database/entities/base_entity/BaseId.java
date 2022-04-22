@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.database.entities.base;
+package by.bstu.faa.wwi_guide_mobile.database.entities.base_entity;
 
 import androidx.room.PrimaryKey;
 
