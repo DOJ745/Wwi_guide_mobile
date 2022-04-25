@@ -19,14 +19,14 @@ import by.bstu.faa.wwi_guide_mobile.repo.YearRepo;
 import io.reactivex.Flowable;
 
 public class YearViewModel extends ViewModel implements ViewModelDataMethods<YearDto> {
-
+    private final String YEAR_VIEW_MODEL = "YEAR VIEW MODEL";
     private final EventDao eventDao;
     private YearRepo yearRepo;
     private LiveData<List<YearDto>> yearsDtoResponseLiveData;
 
     public YearViewModel() {
         eventDao = AppInstance.getInstance().getDatabase().eventDao();
-        Log.d("YearViewModel", CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(YEAR_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     public void init() {
@@ -35,7 +35,7 @@ public class YearViewModel extends ViewModel implements ViewModelDataMethods<Yea
     }
 
     public void getElements(TokenData token){ yearRepo.getElements(token); }
-    public LiveData<List<YearDto>> getElementsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
 
+    public LiveData<List<YearDto>> getElementsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
     public Flowable<List<EventEntity>> getYearEvents(String yearId) { return eventDao.getYearEvents(yearId); }
 }

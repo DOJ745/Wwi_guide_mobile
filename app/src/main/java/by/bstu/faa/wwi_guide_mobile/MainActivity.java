@@ -201,4 +201,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }, throwable -> Log.e(MAIN_ACTIVITY, "Unable to get user", throwable)));
     }
+
+    private void loadAchievements(){}
 }

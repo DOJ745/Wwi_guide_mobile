@@ -20,7 +20,6 @@ public class YearRepo extends DataRepo<YearDto> {
 
     @Override
     public void getElements(TokenData token) {
-
         RetrofitService.getInstance()
                 .getAppApi()
                 .getYears(CONSTANTS.URLS.BEARER + token.getToken())
