@@ -1,7 +1,11 @@
 package by.bstu.faa.wwi_guide_mobile.view_models;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
+import org.modelmapper.ModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,7 @@ import io.reactivex.Completable;
 import io.reactivex.Flowable;
 
 public class MainViewModel extends ViewModel {
+    private final String MAIN_VIEW_MODEL = "MAIN VIEW MODEL";
     private final UserDao userDao;
     private final AchievementDao achievementDao;
 
@@ -42,8 +47,15 @@ public class MainViewModel extends ViewModel {
 
     public Flowable<List<UserEntity>> getUser() { return userDao.getUser(); }
     public Flowable<List<AchievementEntity>> getAchievements() { return achievementDao.getAll(); }
-    public Completable insertOrUpdateAchievements(List<AchievementDto> data) {
+
+    public void insertOrUpdateAchievements(List<AchievementDto> data) {
+        ModelMapper modelMapper = new ModelMapper();
         List<AchievementEntity> temp = new ArrayList<>();
-        return achievementDao.insertMany(temp);
+        for (AchievementDto achievementDto: data) {
+            AchievementEntity achievementEntity = modelMapper.map(achievementDto, AchievementEntity.class);
+            Log.d(MAIN_VIEW_MODEL, achievementEntity.getDescription() + "\n" + achievementEntity.getName());
+        }
+
+        //return achievementDao.insertMany(temp);
     }
 }
