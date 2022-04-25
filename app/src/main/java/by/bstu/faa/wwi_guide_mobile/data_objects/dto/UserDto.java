@@ -26,4 +26,6 @@ public class UserDto extends AppMsgResponseDto {
     private String rankId;
     @SerializedName("countryId")@Expose@NonNull
     private String countryId;
+
+    public UserDto() { }
 }

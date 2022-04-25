@@ -18,8 +18,10 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginViewModel;
 import by.bstu.faa.wwi_guide_mobile.view_models.MainViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d(MAIN_ACTIVITY, "First launch check: " + FIRST_LAUNCH);
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        LoginViewModel loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        loginViewModel.init();
+
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
 
@@ -96,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         exitButton.setOnClickListener(view -> finish());
 
         if(hasConnection) {
-            // Going to login, because it's home fragment
             Log.d(MAIN_ACTIVITY, "We have internet connection!");
 
             FIRST_LAUNCH = "1";
@@ -105,6 +110,16 @@ public class MainActivity extends AppCompatActivity {
 
             retryButton.setEnabled(false);
             exitButton.setEnabled(false);
+            /*if(preferences.getString("login") != null &&
+                    preferences.getString("password") != null)
+            {
+                LoginData data = new LoginData();
+                data.setLogin(preferences.getString("login"));
+                data.setPassword(preferences.getString("password"));
+                loginViewModel.loginUser(data);
+                navHostFragment.getNavController().navigate(R.id.yearsFragment);
+            }*/
+            checkUserAndConnection();
         }
         else {
             Log.e(MAIN_ACTIVITY, "No internet connection!");
@@ -181,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     if(hasConnection && user.size() > 0) {
                         fragmentContainerView.setVisibility(View.VISIBLE);
                         makeElementsGone(textPrompt, img, retryButton, exitButton, true);
-                        navHostFragment.getNavController().navigate(R.id.loginFragment, null);
+                        navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
                     }
                     else if(!hasConnection && user.size() > 0) {
                         fragmentContainerView.setVisibility(View.VISIBLE);
@@ -197,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         fragmentContainerView.setVisibility(View.VISIBLE);
                         makeElementsGone(textPrompt, img, retryButton, exitButton, true);
-                        navHostFragment.getNavController().navigate(R.id.registerFragment, null);
+                        navHostFragment.getNavController().navigate(R.id.loginFragment, null);
                     }
                 }, throwable -> Log.e(MAIN_ACTIVITY, "Unable to get user", throwable)));
     }

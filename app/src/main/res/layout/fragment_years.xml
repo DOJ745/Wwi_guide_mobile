@@ -10,16 +10,6 @@
     android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
     android:layout_marginBottom="60dp">
 
-    <Button
-        android:visibility="visible"
-        android:id="@+id/years_fragment_button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/test" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/years_fragment_recycle_view"
         android:layout_alignParentStart="true"

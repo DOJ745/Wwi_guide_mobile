@@ -19,14 +19,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
-import by.bstu.faa.wwi_guide_mobile.view_models.LoginViewModel;
+import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -194,6 +193,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                 loginData.setLogin(loginField.getText().toString());
                 loginData.setPassword(passwordField.getText().toString());
                 loginViewModel.loginUser(loginData);
+                navigateToFragment(v, "year");
             }
             else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
         });
@@ -296,6 +296,8 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
     public void navigateToFragment(View view, String fragmentName) {
         if ("login".equals(fragmentName))
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
+        if("year".equals(fragmentName))
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
     }
 
     private void setUserData(@NonNull UserDto userData, UserDto loginResponse) {

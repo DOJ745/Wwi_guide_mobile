@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +21,7 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
-import by.bstu.faa.wwi_guide_mobile.view_models.YearViewModel;
+import by.bstu.faa.wwi_guide_mobile.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -103,14 +102,9 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(yearAdapter);
 
-        Button getYearsButton = view.findViewById(R.id.years_fragment_button);
         showBottomNav(MainActivity.BottomNavigationView, true);
 
         token.setToken("");
-        getYearsButton.setOnClickListener(v -> {
-            getYearsButton.setVisibility(View.VISIBLE);
-            //recyclerView.setAdapter(eventsAdapter);
-        });
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }

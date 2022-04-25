@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.view_models;
+package by.bstu.faa.wwi_guide_mobile.view_models.collections;
 
 import android.util.Log;
 
@@ -12,10 +12,9 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.YearRepo;
+import by.bstu.faa.wwi_guide_mobile.view_models.ViewModelDataMethods;
 import io.reactivex.Flowable;
 
 public class YearViewModel extends ViewModel implements ViewModelDataMethods<YearDto> {

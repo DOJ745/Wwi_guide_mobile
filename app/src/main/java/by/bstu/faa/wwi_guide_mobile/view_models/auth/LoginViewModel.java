@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.view_models;
+package by.bstu.faa.wwi_guide_mobile.view_models.auth;
 
 import android.util.Log;
 

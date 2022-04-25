@@ -1,10 +1,10 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities.base_entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.PrimaryKey;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 

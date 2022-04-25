@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
-import by.bstu.faa.wwi_guide_mobile.view_models.RegisterViewModel;
+import by.bstu.faa.wwi_guide_mobile.view_models.auth.RegisterViewModel;
 
 public class RegisterFragment extends Fragment implements FragmentNavigation {
     private final String REG_FRAGMENT = "REG FRAGMENT";

@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.view_models;
+package by.bstu.faa.wwi_guide_mobile.view_models.auth;
 
 import android.util.Log;
 
@@ -15,7 +15,7 @@ import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
 
 public class RegisterViewModel extends ViewModel {
-    private final String REG_VIEW_MODEL = "REG VIEW_MODEL";
+    private final String REG_VIEW_MODEL = "REG VIEW MODEL";
 
     private CountryRepo countryRepo;
     private RegRepo regRepo;

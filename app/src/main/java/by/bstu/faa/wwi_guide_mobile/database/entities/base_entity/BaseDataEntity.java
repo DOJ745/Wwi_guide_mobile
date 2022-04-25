@@ -2,8 +2,6 @@ package by.bstu.faa.wwi_guide_mobile.database.entities.base_entity;
 
 import androidx.room.ColumnInfo;
 
-import java.util.ArrayList;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
@@ -20,5 +18,5 @@ public abstract class BaseDataEntity extends BaseId {
     @ColumnInfo@NonNull
     protected String text;
     @ColumnInfo
-    protected ArrayList<String> images;
+    protected String images;
 }
