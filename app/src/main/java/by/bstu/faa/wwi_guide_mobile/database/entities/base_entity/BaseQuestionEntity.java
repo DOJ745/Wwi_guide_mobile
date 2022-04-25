@@ -1,11 +1,11 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities.base_entity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,8 +14,10 @@ import lombok.ToString;
 @Setter
 @ToString
 public abstract class BaseQuestionEntity extends BaseId {
-    @ColumnInfo@NonNull
+    @ColumnInfo
+    @NonNull
     protected String text;
-    @ColumnInfo@Nullable
+    @ColumnInfo
+    @Nullable
     protected String img;
 }

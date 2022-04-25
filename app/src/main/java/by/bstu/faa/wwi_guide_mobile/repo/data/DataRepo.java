@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.repo;
+package by.bstu.faa.wwi_guide_mobile.repo.data;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

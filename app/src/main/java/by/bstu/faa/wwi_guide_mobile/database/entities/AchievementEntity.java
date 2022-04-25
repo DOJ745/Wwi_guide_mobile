@@ -17,13 +17,12 @@ import lombok.ToString;
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.ACHIEVEMENTS_TABLE)
 public class AchievementEntity {
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey@NonNull
     private String name;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String description;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String img;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private int points;
 }

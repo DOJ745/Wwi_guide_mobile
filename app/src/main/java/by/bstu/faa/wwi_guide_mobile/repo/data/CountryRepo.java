@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.repo;
+package by.bstu.faa.wwi_guide_mobile.repo.data;
 
 import android.util.Log;
 

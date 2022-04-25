@@ -3,6 +3,7 @@ package by.bstu.faa.wwi_guide_mobile.app;
 import android.app.Application;
 
 import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;

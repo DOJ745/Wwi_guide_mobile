@@ -19,10 +19,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.modelmapper.ModelMapper;
+
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginViewModel;
@@ -76,18 +79,12 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
             passwordParam = "";
         }
 
-        if (preferences.containsKey(ARG_CHECKBOX) &&
-                preferences.containsKey(ARG_LOGIN) &&
-                preferences.containsKey(ARG_PASSWORD)) {
+        if (preferences.containsKey(ARG_CHECKBOX)) {
             checkboxParam = preferences.getString(ARG_CHECKBOX);
             loginParam = preferences.getString(ARG_LOGIN);
             passwordParam = preferences.getString(ARG_PASSWORD);
         }
-        else {
-            checkboxParam = "";
-            loginParam = "";
-            passwordParam = "";
-        }
+        else checkboxParam = "";
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         loginViewModel.init();
@@ -130,12 +127,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                     preferences.put(ARG_LOGIN, loginField.getText().toString());
                     preferences.put(ARG_PASSWORD, passwordField.getText().toString());
 
-                    String username = preferences.getString(ARG_LOGIN);
-                    String password = preferences.getString(ARG_PASSWORD);
-
-                    Log.d(LOGIN_FRAGMENT,
-                            "\tDecrypted password:" + password +
-                                    "\n Decrypted username: " + username);
                     loginMsgResponse.setText(R.string.prompt_remember_me_info);
                 }
                 catch (Exception e) { e.printStackTrace(); }
@@ -160,12 +151,16 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                             setUserData(userData, loginResponse);
                             token = loginResponse.getToken();
                             preferences.put(ARG_TOKEN, token);
+                            Log.d(LOGIN_FRAGMENT, "Token has been saved: " + token);
 
                             mDisposable.add(loginViewModel.insertOrUpdateUser(userData)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
-                                    () -> Log.d(LOGIN_FRAGMENT, "DB: User has been written into database"),
+                                    () -> {
+                                        navigateToFragment(view, "year");
+                                        Log.d(LOGIN_FRAGMENT, "DB: User has been written into database");
+                                    },
                                     throwable -> Log.e(LOGIN_FRAGMENT, "Unable to get username", throwable))
                             );
                             break;
@@ -193,7 +188,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                 loginData.setLogin(loginField.getText().toString());
                 loginData.setPassword(passwordField.getText().toString());
                 loginViewModel.loginUser(loginData);
-                navigateToFragment(v, "year");
             }
             else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
         });

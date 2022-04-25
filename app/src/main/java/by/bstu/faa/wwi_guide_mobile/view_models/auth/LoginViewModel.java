@@ -11,10 +11,10 @@ import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
-import by.bstu.faa.wwi_guide_mobile.repo.LoginRepo;
+import by.bstu.faa.wwi_guide_mobile.repo.auth.LoginRepo;
 import io.reactivex.Completable;
 
-public class LoginViewModel extends ViewModel {
+public class LoginViewModel extends ViewModel implements LoginUserMethods {
     private final String LOGIN_VIEW_MODEL = "LOGIN VIEW_MODEL";
 
     private final UserDao userDao;
@@ -33,7 +33,7 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void loginUser(LoginData loginData) {
-        Log.d(LOGIN_VIEW_MODEL, "loginUser");
+        Log.d(LOGIN_VIEW_MODEL, "Login user...");
         loginRepo.loginUser(loginData);
     }
     public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }

@@ -11,8 +11,8 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
-import by.bstu.faa.wwi_guide_mobile.repo.CountryRepo;
-import by.bstu.faa.wwi_guide_mobile.repo.RegRepo;
+import by.bstu.faa.wwi_guide_mobile.repo.data.CountryRepo;
+import by.bstu.faa.wwi_guide_mobile.repo.auth.RegRepo;
 
 public class RegisterViewModel extends ViewModel {
     private final String REG_VIEW_MODEL = "REG VIEW MODEL";

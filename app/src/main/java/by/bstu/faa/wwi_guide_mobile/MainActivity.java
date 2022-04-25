@@ -17,8 +17,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.modelmapper.ModelMapper;
+
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginViewModel;
@@ -27,17 +30,15 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-// TODO: set timer for automatic token refresh if we have internet connection
-
 public class MainActivity extends AppCompatActivity {
+    private final String MAIN_ACTIVITY = "MAIN ACTIVITY";
 
     public static BottomNavigationView BottomNavigationView;
 
-    private final String MAIN_ACTIVITY = "MAIN ACTIVITY";
-
+    private SecurePreferences preferences;
     private String FIRST_LAUNCH;
-    private boolean hasConnection = false;
     private MainViewModel mainViewModel;
+    //private LoginViewModel loginViewModel;
 
     private NavHostFragment navHostFragment;
     private TextView textPrompt;
@@ -50,14 +51,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        hasConnection = RetrofitService.hasConnection(this);
+        boolean hasConnection = RetrofitService.hasConnection(this);
 
         setTheme(R.style.Theme_Wwi_guide_mobile);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SecurePreferences preferences = SecurePreferences.getInstance(this);
+        preferences = SecurePreferences.getInstance(this);
         String FIRST_LAUNCH_KEY = "FIRST_LAUNCH";
+
         if(preferences.getString(FIRST_LAUNCH_KEY) == null )
             FIRST_LAUNCH = "0";
         else if (preferences.getString(FIRST_LAUNCH_KEY) != null)
@@ -67,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(MAIN_ACTIVITY, "First launch check: " + FIRST_LAUNCH);
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        LoginViewModel loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        loginViewModel.init();
+        mainViewModel.init();
+        //loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        //loginViewModel.init();
 
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         assert navHostFragment != null;
@@ -98,7 +100,37 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(BottomNavigationView, navController);
 
-        retryButton.setOnClickListener(view -> checkUserAndConnection());
+        /*mainViewModel.getLoginRepoResponse().observe(this, loginResponse -> {
+
+            if (loginResponse != null) {
+                if (!loginResponse.getMsgStatus().equals("") && loginResponse.getMsgError() == null) {
+                    if (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.LOGIN_SUCCESS.equals(loginResponse.getMsgStatus())) {
+                        //UserDto userData = new UserDto();
+                        //setUserData(userData, loginResponse);
+                        ModelMapper mapper = new ModelMapper();
+                        UserDto userData = mapper.map(loginResponse, UserDto.class);
+                        String token = loginResponse.getToken();
+                        preferences.put("token", token);
+                        Log.d(MAIN_ACTIVITY, "Token has been saved: " + token);
+
+                        mDisposable.add(mainViewModel.insertOrUpdateUser(userData)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        () -> {
+                                            navHostFragment.getNavController().navigate(R.id.yearsFragment);
+                                            Log.d(MAIN_ACTIVITY, "DB: User has been written into database");
+                                        },
+                                        throwable -> Log.e(MAIN_ACTIVITY, "Unable to get username", throwable))
+                        );
+                    }
+                }
+                else
+                    Log.e(MAIN_ACTIVITY, "Error!");
+            }
+        });*/
+
+        retryButton.setOnClickListener(view -> checkUserAndConnection(false));
         exitButton.setOnClickListener(view -> finish());
 
         if(hasConnection) {
@@ -110,36 +142,18 @@ public class MainActivity extends AppCompatActivity {
 
             retryButton.setEnabled(false);
             exitButton.setEnabled(false);
-            /*if(preferences.getString("login") != null &&
-                    preferences.getString("password") != null)
-            {
-                LoginData data = new LoginData();
-                data.setLogin(preferences.getString("login"));
-                data.setPassword(preferences.getString("password"));
-                loginViewModel.loginUser(data);
-                navHostFragment.getNavController().navigate(R.id.yearsFragment);
-            }*/
-            checkUserAndConnection();
+
+            checkUserAndConnection(true);
         }
-        else {
-            Log.e(MAIN_ACTIVITY, "No internet connection!");
-            if(FIRST_LAUNCH.equals("0")) {
-                makeElementsGone(textPrompt, img, retryButton, exitButton, false);
-                textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                fragmentContainerView.setVisibility(View.GONE);
-            }
-            else {
-                makeElementsGone(textPrompt, img, retryButton, exitButton, false);
-                textPrompt.setText(R.string.prompt_no_internet_connection);
-                fragmentContainerView.setVisibility(View.GONE);
-            }
-        }
+        else checkUserAndConnection(false);
+
         Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
     @Override
@@ -185,35 +199,44 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void checkUserAndConnection() {
-        mDisposable.add(mainViewModel.getUser()
+    private void loginWithSavedUser() {
+        LoginData data = new LoginData();
+        data.setLogin(this.preferences.getString("login"));
+        data.setPassword(this.preferences.getString("password"));
+        this.mainViewModel.loginUser(data);
+        navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
+    }
+
+    private void checkUserAndConnection(boolean hasConnection) {
+        mDisposable.add(mainViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
                     Log.d(MAIN_ACTIVITY, "DB: checkUserAndConnection");
-                    hasConnection = RetrofitService.hasConnection(this);
+                    if(hasConnection) {
+                        fragmentContainerView.setVisibility(View.VISIBLE);
+                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
 
-                    if(hasConnection && user.size() > 0) {
-                        fragmentContainerView.setVisibility(View.VISIBLE);
-                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
-                        navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
-                    }
-                    else if(!hasConnection && user.size() > 0) {
-                        fragmentContainerView.setVisibility(View.VISIBLE);
-                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
-                        navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
-                    }
-                    else if (!hasConnection) {
-                        if(FIRST_LAUNCH.equals("1"))
-                            textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                        else
-                            textPrompt.setText(R.string.prompt_no_internet_connection);
+                        if(user.size() > 0) {
+                            Log.d(MAIN_ACTIVITY, "DB: checkUserAndConnection");
+                            loginWithSavedUser();
+                        }
+                        else navHostFragment.getNavController().navigate(R.id.loginFragment, null);
                     }
                     else {
-                        fragmentContainerView.setVisibility(View.VISIBLE);
-                        makeElementsGone(textPrompt, img, retryButton, exitButton, true);
-                        navHostFragment.getNavController().navigate(R.id.loginFragment, null);
+                        if(user.size() > 0) {
+                            fragmentContainerView.setVisibility(View.VISIBLE);
+                            makeElementsGone(textPrompt, img, retryButton, exitButton, true);
+                            navHostFragment.getNavController().navigate(R.id.yearsFragment, null);
+                        }
+                        else {
+                            if(FIRST_LAUNCH.equals("1"))
+                                textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                            else
+                                textPrompt.setText(R.string.prompt_no_internet_connection);
+                        }
                     }
+
                 }, throwable -> Log.e(MAIN_ACTIVITY, "Unable to get user", throwable)));
     }
 

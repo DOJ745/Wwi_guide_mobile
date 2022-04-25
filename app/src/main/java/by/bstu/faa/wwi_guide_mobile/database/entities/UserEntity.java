@@ -5,15 +5,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.Value;
 
 @EqualsAndHashCode
 @Getter
@@ -21,19 +17,18 @@ import lombok.Value;
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.USER_TABLE)
 public class UserEntity {
-    @PrimaryKey
-    @NonNull
+    @PrimaryKey@NonNull
     private String login;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String password;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String rankId;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String countryId;
     @ColumnInfo
     private int score;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String roles;
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String achievements;
 }

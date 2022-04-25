@@ -1,10 +1,8 @@
-package by.bstu.faa.wwi_guide_mobile.repo;
+package by.bstu.faa.wwi_guide_mobile.repo.auth;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

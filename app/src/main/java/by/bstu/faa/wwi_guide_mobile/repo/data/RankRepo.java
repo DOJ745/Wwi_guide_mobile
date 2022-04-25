@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.repo;
+package by.bstu.faa.wwi_guide_mobile.repo.data;
 
 import android.util.Log;
 
@@ -11,6 +11,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.repo.data.DataRepo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
