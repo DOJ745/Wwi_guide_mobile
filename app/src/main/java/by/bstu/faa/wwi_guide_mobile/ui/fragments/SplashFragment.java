@@ -80,6 +80,7 @@ public class SplashFragment extends Fragment {
 
         splashViewModel.getAchievementsRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
+                splashViewModel.setResAchievements(res);
                 mDisposable.add(splashViewModel.insertOrUpdateAchievements(res)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -96,7 +97,6 @@ public class SplashFragment extends Fragment {
                                                     data -> {
                                                         Log.d(SPLASH_FRAGMENT, "DB: Received current achievements");
                                                         splashViewModel.setCurrentAchievements(data);
-                                                        splashViewModel.setResAchievements(res);
                                                     },
                                                     // On error
                                                     err -> Log.e(SPLASH_FRAGMENT, "Unable to get achievements", err))
@@ -141,9 +141,6 @@ public class SplashFragment extends Fragment {
                                 .subscribe(
                                         // On complete
                                         () -> {
-                                            /*Navigation.findNavController(view).navigate
-                                                    (R.id.action_splashFragment_to_loginFragment, null);*/
-                                            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                                             Log.d(SPLASH_FRAGMENT, "DB: User has been written into database");
 
                                             mDisposable.add(splashViewModel.deleteOldAchievements(
@@ -161,7 +158,7 @@ public class SplashFragment extends Fragment {
                                         // On error
                                         err -> Log.e(SPLASH_FRAGMENT, "Unable to insert user", err))
                         );
-                        //Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
+                        Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                     }
                 }
                 else
@@ -275,7 +272,7 @@ public class SplashFragment extends Fragment {
                             Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                         }
                         else {
-                            if(FIRST_LAUNCH.equals("1"))
+                            if(preferences.getString("FIRST_LAUNCH").equals("1"))
                                 textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
                             else
                                 textPrompt.setText(R.string.prompt_no_internet_connection);
