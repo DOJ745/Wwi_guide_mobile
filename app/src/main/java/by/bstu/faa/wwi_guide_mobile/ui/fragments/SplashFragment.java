@@ -16,6 +16,7 @@ import androidx.navigation.Navigation;
 
 import org.modelmapper.ModelMapper;
 
+
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
@@ -84,7 +85,23 @@ public class SplashFragment extends Fragment {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 // On complete
-                                () -> Log.d(SPLASH_FRAGMENT, "DB: Achievements has been written into database"),
+                                () -> {
+                                    Log.d(SPLASH_FRAGMENT, "DB: Achievements has been written into database");
+
+                                    mDisposable.add(splashViewModel.getAchievementsFromDB()
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                    // On complete
+                                                    data -> {
+                                                        Log.d(SPLASH_FRAGMENT, "DB: Received current achievements");
+                                                        splashViewModel.setCurrentAchievements(data);
+                                                        splashViewModel.setResAchievements(res);
+                                                    },
+                                                    // On error
+                                                    err -> Log.e(SPLASH_FRAGMENT, "Unable to get achievements", err))
+                                    );
+                                },
                                 // On error
                                 err -> Log.e(SPLASH_FRAGMENT, "Unable to insert achievements", err))
                 );
@@ -124,14 +141,27 @@ public class SplashFragment extends Fragment {
                                 .subscribe(
                                         // On complete
                                         () -> {
-                                            Navigation.findNavController(view).navigate
-                                                    (R.id.action_splashFragment_to_loginFragment, null);
+                                            /*Navigation.findNavController(view).navigate
+                                                    (R.id.action_splashFragment_to_loginFragment, null);*/
+                                            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                                             Log.d(SPLASH_FRAGMENT, "DB: User has been written into database");
+
+                                            mDisposable.add(splashViewModel.deleteOldAchievements(
+                                                    splashViewModel.getCurrentAchievements(),
+                                                    splashViewModel.getResAchievements())
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(
+                                                            // On complete
+                                                            () -> Log.d(SPLASH_FRAGMENT, "DB: Deleted old achievements"),
+                                                            // On error
+                                                            err -> Log.e(SPLASH_FRAGMENT, "Unable to delete achievements", err))
+                                            );
                                         },
                                         // On error
                                         err -> Log.e(SPLASH_FRAGMENT, "Unable to insert user", err))
                         );
-                        Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
+                        //Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                     }
                 }
                 else
@@ -232,7 +262,6 @@ public class SplashFragment extends Fragment {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(user -> {
-                    Log.d(SPLASH_FRAGMENT, "DB: checkUserAndConnection");
                     if(hasConnection) {
                         if(user.size() > 0) {
                             Log.d(SPLASH_FRAGMENT, "DB ONLINE: user has been found");

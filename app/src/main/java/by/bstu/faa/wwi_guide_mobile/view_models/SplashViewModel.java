@@ -30,6 +30,10 @@ import by.bstu.faa.wwi_guide_mobile.repo.data.RankRepo;
 import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginUserMethods;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import lombok.Getter;
+import lombok.Setter;
 
 public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final String SPLASH_VIEW_MODEL = "SPLASH VIEW MODEL";
@@ -47,6 +51,11 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final LiveData<List<CountryDto>> countriesRepoResponse;
     private final LiveData<List<RankDto>> rankRepoResponse;
     private final LiveData<UserDto> loginRepoResponse;
+
+    @Getter@Setter
+    private List<AchievementDto> resAchievements;
+    @Getter@Setter
+    private List<AchievementEntity> currentAchievements;
 
     public SplashViewModel() {
         userDao = AppInstance.getInstance().getDatabase().userDao();
@@ -116,6 +125,24 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
             temp.add(entity);
         }
         return achievementDao.insertMany(temp);
+    }
+
+    public Completable deleteOldAchievements(List<AchievementEntity> currentData, List<AchievementDto> newData) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<AchievementEntity> mappedNewData = new ArrayList<>();
+        for (AchievementDto dto: newData) {
+            AchievementEntity entity = modelMapper.map(dto, AchievementEntity.class);
+            mappedNewData.add(entity);
+        }
+        if(currentData == null) {
+            return achievementDao.insertMany(mappedNewData);
+        }
+        if(mappedNewData.size() < currentData.size()) {
+            for(int i = 0; i < newData.size(); i++) {
+                currentData.remove(mappedNewData.get(i));
+            }
+        }
+        return achievementDao.deleteMany(currentData);
     }
 
     public Completable insertOrUpdateRanks(List<RankDto> data) {

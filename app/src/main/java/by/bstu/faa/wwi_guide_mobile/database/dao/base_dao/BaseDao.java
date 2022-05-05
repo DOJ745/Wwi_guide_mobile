@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -25,5 +26,5 @@ public interface BaseDao<T> {
     @Delete
     void delete(T data);
     @Delete
-    void deleteMany(List<T> data);
+    Completable deleteMany(List<T> data);
 }
