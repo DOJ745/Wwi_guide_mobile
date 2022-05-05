@@ -19,13 +19,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.modelmapper.ModelMapper;
-
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.LoginData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginViewModel;
@@ -291,7 +288,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         if ("login".equals(fragmentName))
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registerFragment, null);
         if("year".equals(fragmentName))
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_yearsFragment);
     }
 
     private void setUserData(@NonNull UserDto userData, UserDto loginResponse) {

@@ -14,7 +14,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
 
 public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> implements AdapterSetItems<CountryDto> {
 
@@ -56,8 +56,8 @@ public class CountrySpinnerAdapter extends ArrayAdapter<CountryDto> implements A
 
         ImageView flag = itemView.findViewById(R.id.icon);
 
-        if (items.get(position).getFlagUrl() != null) {
-            Glide.with(itemView).load(items.get(position).getFlagUrl()).into(flag);
+        if (items.get(position).getImg() != null) {
+            Glide.with(itemView).load(items.get(position).getImg()).into(flag);
         }
         else {
             Glide.with(itemView).load(CONSTANTS.URLS.NO_IMG).into(flag);

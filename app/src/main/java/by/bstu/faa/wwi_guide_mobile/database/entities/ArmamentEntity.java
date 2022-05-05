@@ -12,6 +12,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = CONSTANTS.APP_DATABASE.WEAPONS_TECHNOLOGIES_TABLE)
+@Entity(tableName = CONSTANTS.APP_DATABASE.ARMAMENT_TABLE)
 public class ArmamentEntity {
 }

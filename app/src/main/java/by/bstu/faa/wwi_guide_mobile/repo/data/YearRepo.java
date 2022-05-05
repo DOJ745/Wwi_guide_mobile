@@ -7,11 +7,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-import by.bstu.faa.wwi_guide_mobile.repo.data.DataRepo;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,10 +17,10 @@ public class YearRepo extends DataRepo<YearDto> {
     private final String YEAR_REPO = "YEAR REPO";
 
     @Override
-    public void getElements(TokenData token) {
+    public void callApi() {
         RetrofitService.getInstance()
                 .getAppApi()
-                .getYears(CONSTANTS.URLS.BEARER + token.getToken())
+                .getYears()
                 .enqueue(new Callback<List<YearDto>>() {
 
                     @Override
@@ -31,8 +28,8 @@ public class YearRepo extends DataRepo<YearDto> {
                             @NonNull Call<List<YearDto>> call,
                             @NonNull Response<List<YearDto>> response) {
                         if(response.body() != null) {
-                            Log.d(YEAR_REPO, "Receiving YEAR DATA");
-                            elementsDtoMutableLiveData.postValue(response.body());
+                            apiRes.postValue(response.body());
+                            Log.d(YEAR_REPO, "Received YEAR DATA");
                         }
                     }
 
@@ -40,11 +37,11 @@ public class YearRepo extends DataRepo<YearDto> {
                     public void onFailure(
                             @NonNull Call<List<YearDto>> call,
                             @NonNull Throwable t) {
-                        elementsDtoMutableLiveData.postValue(null);
+                        apiRes.postValue(null);
                     }
                 });
     }
 
     @Override
-    public LiveData<List<YearDto>> getElementsLiveData() { return elementsDtoMutableLiveData; }
+    public LiveData<List<YearDto>> getApiRes() { return apiRes; }
 }

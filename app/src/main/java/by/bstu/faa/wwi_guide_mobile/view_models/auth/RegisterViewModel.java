@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.RegData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AppMsgResponseDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.repo.data.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.auth.RegRepo;
 
@@ -32,13 +32,13 @@ public class RegisterViewModel extends ViewModel {
         countryRepo = new CountryRepo();
         regRepo = new RegRepo();
 
-        countryDtoResponse = countryRepo.getResponse();
+        countryDtoResponse = countryRepo.getApiRes();
         regRepoResponse = regRepo.getResponse();
     }
 
     public void getCountryResponse() {
         Log.d(REG_VIEW_MODEL, "getCountryResponse");
-        countryRepo.getElements();
+        countryRepo.callApi();
     }
     public void regUser(RegData regData) { regRepo.regUser(regData); }
 

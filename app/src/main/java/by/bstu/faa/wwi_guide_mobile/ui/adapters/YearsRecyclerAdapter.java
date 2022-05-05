@@ -11,14 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 
 public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder>
         implements AdapterSetItems<YearDto> {
@@ -55,10 +54,23 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
         holder.yearTitleTextView.setText(item.getTitle());
 
         if (item.getImgUrl() != null) {
-            Glide.with(holder.itemView).load(item.getImgUrl()).into(holder.yearImageView);
+           Glide
+                   .with(holder.itemView)
+                   .asBitmap()
+                   .load(item.getImgUrl())
+                   .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                   .placeholder(R.drawable.test_icon)
+                   .error(R.drawable.ic_launcher_background)
+                   .into(holder.yearImageView);
         }
         else {
-            Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.yearImageView);
+            //Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.yearImageView);
+            /*Glide
+                    .with(holder.itemView)
+                    .asBitmap()
+                    .load(ImageUrl)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(holder.yearImageView);*/
         }
 
         holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));

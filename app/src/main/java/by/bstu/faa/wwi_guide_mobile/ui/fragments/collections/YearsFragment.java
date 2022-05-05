@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.TokenData;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
@@ -73,10 +73,8 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
         yearViewModel.init();
 
-        yearViewModel.getElementsDtoResponseLiveData().observe(this, yearsResponse -> {
-            if (yearsResponse != null) {
-                yearAdapter.setItems(yearsResponse);
-            }
+        yearViewModel.getElementsDtoResponseLiveData().observe(this, res -> {
+            if (res != null) { yearAdapter.setItems(res); }
         });
 
         token = new TokenData();
@@ -87,7 +85,7 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        yearViewModel.getElements(token);
+        yearViewModel.getElements();
         View view = inflater.inflate(R.layout.fragment_years, container, false);
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);

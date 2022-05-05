@@ -7,9 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AchievementDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AchievementDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,10 +17,10 @@ public class AchievementRepo extends DataRepo<AchievementDto> {
     private final String ACHIEVEMENT_REPO = "ACHIEVEMENT REPO";
 
     @Override
-    public void getElements(TokenData token) {
+    public void callApi() {
         RetrofitService.getInstance()
                 .getAppApi()
-                .getAchievements(CONSTANTS.URLS.BEARER + token.getToken())
+                .getAchievements()
                 .enqueue(new Callback<List<AchievementDto>>() {
 
                     @Override
@@ -30,8 +28,8 @@ public class AchievementRepo extends DataRepo<AchievementDto> {
                             @NonNull Call<List<AchievementDto>> call,
                             @NonNull Response<List<AchievementDto>> response) {
                         if(response.body() != null && response.isSuccessful()) {
-                            Log.d(ACHIEVEMENT_REPO, "Receiving ACHIEVEMENT DATA");
-                            elementsDtoMutableLiveData.postValue(response.body());
+                            apiRes.postValue(response.body());
+                            Log.d(ACHIEVEMENT_REPO, "Received ACHIEVEMENT DATA");
                         }
                     }
 
@@ -39,11 +37,11 @@ public class AchievementRepo extends DataRepo<AchievementDto> {
                     public void onFailure(
                             @NonNull Call<List<AchievementDto>> call,
                             @NonNull Throwable t) {
-                        elementsDtoMutableLiveData.postValue(null);
+                        apiRes.postValue(null);
                     }
                 });
     }
 
     @Override
-    public LiveData<List<AchievementDto>> getElementsLiveData() { return elementsDtoMutableLiveData; }
+    public LiveData<List<AchievementDto>> getApiRes() { return apiRes; }
 }

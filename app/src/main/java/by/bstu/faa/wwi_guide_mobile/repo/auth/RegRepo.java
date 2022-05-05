@@ -10,8 +10,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AppMsgResponseDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.RegData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 
 import retrofit2.Call;

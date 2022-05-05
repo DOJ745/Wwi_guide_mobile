@@ -16,7 +16,7 @@ public class CONSTANTS {
         public final static String TESTS_QUESTIONS_TABLE = "tests_questions";
         public final static String TESTS_ANSWERS_TABLE = "tests_answers";
         public final static String YEARS_TABLE = "years";
-        public final static String WEAPONS_TECHNOLOGIES_TABLE = "weapons_technologies";
+        public final static String ARMAMENT_TABLE = "armament";
 
         public final static String ELEMENT_DIVIDER = "*";
     }

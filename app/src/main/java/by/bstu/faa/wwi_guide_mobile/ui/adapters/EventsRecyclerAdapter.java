@@ -17,7 +17,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.EventDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.EventDto;
 
 public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.EventResultHolder>
         implements AdapterSetItems<EventDto> {

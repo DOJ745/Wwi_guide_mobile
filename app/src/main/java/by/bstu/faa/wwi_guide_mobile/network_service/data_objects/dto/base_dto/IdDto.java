@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.data_objects.dto.base_dto;
+package by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.base_dto;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

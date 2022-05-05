@@ -9,8 +9,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.YearDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
@@ -30,10 +29,10 @@ public class YearViewModel extends ViewModel implements ViewModelDataMethods<Yea
 
     public void init() {
         yearRepo = new YearRepo();
-        yearsDtoResponseLiveData = yearRepo.getElementsLiveData();
+        yearsDtoResponseLiveData = yearRepo.getApiRes();
     }
 
-    public void getElements(TokenData token){ yearRepo.getElements(token); }
+    public void getElements(){ yearRepo.callApi(); }
 
     public LiveData<List<YearDto>> getElementsDtoResponseLiveData() { return yearsDtoResponseLiveData; }
     public Flowable<List<EventEntity>> getYearEvents(String yearId) { return eventDao.getYearEvents(yearId); }

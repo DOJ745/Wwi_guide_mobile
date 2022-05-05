@@ -26,8 +26,8 @@ import java.util.regex.Pattern;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.RegData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.view_models.auth.RegisterViewModel;
@@ -90,7 +90,7 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
         for (int i = 0; i < 1; i++){
             CountryDto testCountry = new CountryDto();
             testCountry.setName("PLEASE, WAIT..." );
-            testCountry.setFlagUrl("EMPTY");
+            testCountry.setImg("EMPTY");
             temp.add(testCountry);
         }
 

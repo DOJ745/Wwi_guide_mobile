@@ -17,7 +17,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.AchievementDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AchievementDto;
 
 public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<AchievementsRecyclerAdapter.AchievementResultHolder>
         implements AdapterSetItems<AchievementDto> {

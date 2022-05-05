@@ -1,8 +1,8 @@
-package by.bstu.faa.wwi_guide_mobile.data_objects.dto;
+package by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-import by.bstu.faa.wwi_guide_mobile.data_objects.dto.base_dto.BaseQuestionDto;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.base_dto.BaseQuestionDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

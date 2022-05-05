@@ -4,10 +4,8 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-
 public interface ViewModelDataMethods<T> {
     void init();
-    void getElements(TokenData token);
+    void getElements();
     LiveData<List<T>> getElementsDtoResponseLiveData();
 }

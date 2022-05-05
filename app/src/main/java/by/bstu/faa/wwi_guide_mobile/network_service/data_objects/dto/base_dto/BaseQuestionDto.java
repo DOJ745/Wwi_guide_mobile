@@ -1,4 +1,6 @@
-package by.bstu.faa.wwi_guide_mobile.data_objects.dto.base_dto;
+package by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.base_dto;
+
+import androidx.annotation.Nullable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,9 +10,9 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
-public abstract class BaseAnswerDto extends IdDto {
+public abstract class BaseQuestionDto extends IdDto {
     @SerializedName("text")@Expose
     private String text;
-    @SerializedName("points")@Expose
-    private int points;
+    @SerializedName("img")@Expose@Nullable
+    private String img;
 }

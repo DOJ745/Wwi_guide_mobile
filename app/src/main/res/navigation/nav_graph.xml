@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/yearsFragment"
@@ -17,7 +17,7 @@
         android:label="login_fragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mainFragment"
+            android:id="@+id/action_loginFragment_to_yearsFragment"
             app:destination="@id/yearsFragment" />
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
@@ -55,5 +55,22 @@
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" />
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_yearsFragment"
+            app:destination="@id/yearsFragment" />
+    </fragment>
 
 </navigation>

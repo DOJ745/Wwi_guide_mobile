@@ -5,13 +5,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.data_objects.TokenData;
-
 public abstract class DataRepo<T> {
 
-    protected final MutableLiveData<List<T>> elementsDtoMutableLiveData;
-    public DataRepo() { elementsDtoMutableLiveData = new MutableLiveData<>(); }
+    protected final MutableLiveData<List<T>> apiRes;
+    public DataRepo() { apiRes = new MutableLiveData<>(); }
 
-    abstract void getElements(TokenData token);
-    abstract LiveData<List<T>> getElementsLiveData();
+    abstract void callApi();
+    abstract LiveData<List<T>> getApiRes();
 }

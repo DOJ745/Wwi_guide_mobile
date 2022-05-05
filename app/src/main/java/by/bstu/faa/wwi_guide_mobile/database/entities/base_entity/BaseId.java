@@ -14,5 +14,5 @@ import lombok.ToString;
 @ToString
 public abstract class BaseId {
     @PrimaryKey@NonNull
-    protected String _id;
+    protected String id;
 }
