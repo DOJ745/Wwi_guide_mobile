@@ -39,8 +39,7 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final String SPLASH_VIEW_MODEL = "SPLASH VIEW MODEL";
 
     private final UserDao userDao;
-    //private final AchievementDao achievementDao;
-    private final RankDao rankDao;
+    //private final RankDao rankDao;
     private final CountryDao countryDao;
 
     private final RankRepo rankRepo;
@@ -48,20 +47,16 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final AchievementRepo achievementRepo;
     private final LoginRepo loginRepo;
     private final CountryRepo countryRepo;
-    //private final LiveData<List<AchievementDto>> achievementRepoResponse;
     private final LiveData<List<CountryDto>> countriesRepoResponse;
     private final LiveData<List<RankDto>> rankRepoResponse;
     private final LiveData<UserDto> loginRepoResponse;
 
     @Getter@Setter
     private List<AchievementDto> resAchievements;
-    //@Getter@Setter
-    //private List<AchievementEntity> currentAchievements;
 
     public SplashViewModel() {
         userDao = AppInstance.getInstance().getDatabase().userDao();
-        //achievementDao = AppInstance.getInstance().getDatabase().achievementDao();
-        rankDao = AppInstance.getInstance().getDatabase().rankDao();
+        //rankDao = AppInstance.getInstance().getDatabase().rankDao();
         countryDao = AppInstance.getInstance().getDatabase().countryDao();
 
         achievementRepo = new AchievementRepo();
@@ -69,7 +64,6 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
         rankRepo = new RankRepo();
         countryRepo = new CountryRepo();
 
-        //achievementRepoResponse = achievementRepo.getApiRes();
         loginRepoResponse = loginRepo.getUserResponse();
         rankRepoResponse = rankRepo.getApiRes();
         countriesRepoResponse = countryRepo.getApiRes();
@@ -80,15 +74,11 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     public void getCountries() { countryRepo.callApi(); }
 
     public LiveData<List<CountryDto>> getCountriesRepoResponse() { return countriesRepoResponse; }
-    //public LiveData<List<AchievementDto>> getAchievementsRepoResponse() { return achievementRepoResponse; }
-    public LiveData<List<AchievementDto>> getAchievementsRepoResponse() { return achievementRepo.getApiRes(); }
+    //public LiveData<List<AchievementDto>> getAchievementsRepoResponse() { return achievementRepo.getApiRes(); }
     public LiveData<List<RankDto>> getRanksRepoResponse() { return rankRepoResponse; }
     public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }
 
-
     public Flowable<List<UserEntity>> getUserFromDB() { return userDao.getUser(); }
-    //public Flowable<List<AchievementEntity>> getAchievementsFromDB() { return achievementDao.getAll(); }
-
     public void loginUser(LoginData loginData) { loginRepo.loginUser(loginData); }
 
     @Override
@@ -120,35 +110,7 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
         return userDao.insert(loggedUser);
     }
 
-    /*public Completable insertOrUpdateAchievements(List<AchievementDto> data) {
-        ModelMapper modelMapper = new ModelMapper();
-        List<AchievementEntity> temp = new ArrayList<>();
-        for (AchievementDto dto: data) {
-            AchievementEntity entity = modelMapper.map(dto, AchievementEntity.class);
-            temp.add(entity);
-        }
-        return achievementDao.insertMany(temp);
-    }
-
-    public Completable deleteOldAchievements(List<AchievementEntity> currentData, List<AchievementDto> newData) {
-        ModelMapper modelMapper = new ModelMapper();
-        List<AchievementEntity> mappedNewData = new ArrayList<>();
-        for (AchievementDto dto: newData) {
-            AchievementEntity entity = modelMapper.map(dto, AchievementEntity.class);
-            mappedNewData.add(entity);
-        }
-        if(currentData == null) {
-            return achievementDao.insertMany(mappedNewData);
-        }
-        if(mappedNewData.size() < currentData.size()) {
-            for(int i = 0; i < newData.size(); i++) {
-                currentData.remove(mappedNewData.get(i));
-            }
-        }
-        return achievementDao.deleteMany(currentData);
-    }*/
-
-    public Completable insertOrUpdateRanks(List<RankDto> data) {
+    /*public Completable insertOrUpdateRanks(List<RankDto> data) {
         ModelMapper modelMapper = new ModelMapper();
         List<RankEntity> temp = new ArrayList<>();
         for (RankDto dto: data) {
@@ -156,7 +118,7 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
             temp.add(entity);
         }
         return rankDao.insertMany(temp);
-    }
+    }*/
 
     public Completable insertOrUpdateCountries(List<CountryDto> data) {
         ModelMapper modelMapper = new ModelMapper();

@@ -78,37 +78,7 @@ public class SplashFragment extends Fragment {
             }
         });
 
-        /*splashViewModel.getAchievementsRepoResponse().observe(getViewLifecycleOwner(), res -> {
-            if (res != null) {
-                splashViewModel.setResAchievements(res);
-                mDisposable.add(splashViewModel.insertOrUpdateAchievements(res)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                // On complete
-                                () -> {
-                                    Log.d(SPLASH_FRAGMENT, "DB: Achievements has been written into database");
-
-                                    mDisposable.add(splashViewModel.getAchievementsFromDB()
-                                            .subscribeOn(Schedulers.io())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(
-                                                    // On complete
-                                                    data -> {
-                                                        Log.d(SPLASH_FRAGMENT, "DB: Received current achievements");
-                                                        splashViewModel.setCurrentAchievements(data);
-                                                    },
-                                                    // On error
-                                                    err -> Log.e(SPLASH_FRAGMENT, "Unable to get achievements", err))
-                                    );
-                                },
-                                // On error
-                                err -> Log.e(SPLASH_FRAGMENT, "Unable to insert achievements", err))
-                );
-            }
-        });*/
-
-        splashViewModel.getRanksRepoResponse().observe(getViewLifecycleOwner(), res -> {
+        /*splashViewModel.getRanksRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
                 mDisposable.add(splashViewModel.insertOrUpdateRanks(res)
                         .subscribeOn(Schedulers.io())
@@ -120,7 +90,7 @@ public class SplashFragment extends Fragment {
                                 err -> Log.e(SPLASH_FRAGMENT, "Unable to insert ranks", err))
                 );
             }
-        });
+        });*/
 
         splashViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
@@ -142,18 +112,6 @@ public class SplashFragment extends Fragment {
                                         // On complete
                                         () -> {
                                             Log.d(SPLASH_FRAGMENT, "DB: User has been written into database");
-
-                                            /*mDisposable.add(splashViewModel.deleteOldAchievements(
-                                                    splashViewModel.getCurrentAchievements(),
-                                                    splashViewModel.getResAchievements())
-                                                    .subscribeOn(Schedulers.io())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(
-                                                            // On complete
-                                                            () -> Log.d(SPLASH_FRAGMENT, "DB: Deleted old achievements"),
-                                                            // On error
-                                                            err -> Log.e(SPLASH_FRAGMENT, "Unable to delete achievements", err))
-                                            );*/
                                         },
                                         // On error
                                         err -> Log.e(SPLASH_FRAGMENT, "Unable to insert user", err))

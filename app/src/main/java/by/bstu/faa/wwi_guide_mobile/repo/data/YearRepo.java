@@ -7,16 +7,19 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import by.bstu.faa.wwi_guide_mobile.database.dao.YearDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import io.reactivex.Flowable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class YearRepo extends DataRepo<YearDto> {
+public class YearRepo extends DataRepo<YearDto, YearDao, YearEntity> {
     private final String YEAR_REPO = "YEAR REPO";
 
-    @Override
+    //@Override
     public void callApi() {
         RetrofitService.getInstance()
                 .getAppApi()
@@ -42,6 +45,8 @@ public class YearRepo extends DataRepo<YearDto> {
                 });
     }
 
+    @Override
+    Flowable<List<YearEntity>> getEntitiesFromDB() { return dataDao.getAll(); }
     @Override
     public LiveData<List<YearDto>> getApiRes() { return apiRes; }
 }
