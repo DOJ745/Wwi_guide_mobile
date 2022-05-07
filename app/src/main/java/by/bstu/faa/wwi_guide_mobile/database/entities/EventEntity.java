@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.EVENTS_TABLE,
         foreignKeys = {

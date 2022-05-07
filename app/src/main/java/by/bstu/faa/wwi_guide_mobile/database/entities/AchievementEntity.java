@@ -3,10 +3,9 @@ package by.bstu.faa.wwi_guide_mobile.database.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseId;
+import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseEntityId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +16,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.ACHIEVEMENTS_TABLE)
-public class AchievementEntity extends BaseId {
+public class AchievementEntity extends BaseEntityId {
     @ColumnInfo@NonNull
     private String name;
     @ColumnInfo@NonNull

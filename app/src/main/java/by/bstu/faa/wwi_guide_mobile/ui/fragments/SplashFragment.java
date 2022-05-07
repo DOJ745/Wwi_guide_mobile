@@ -23,17 +23,17 @@ import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
-import by.bstu.faa.wwi_guide_mobile.view_models.SplashViewModel;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.SplashViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
+import lombok.SneakyThrows;
 
 public class SplashFragment extends Fragment {
     private final String SPLASH_FRAGMENT = "SPLASH FRAGMENT";
 
     private SecurePreferences preferences;
     private SplashViewModel splashViewModel;
-    private String FIRST_LAUNCH;
     private boolean hasConnection;
 
     private TextView textPrompt;
@@ -54,6 +54,7 @@ public class SplashFragment extends Fragment {
         preferences = SecurePreferences.getInstance(requireContext().getApplicationContext());
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
+        splashViewModel.getYears();
         splashViewModel.getCountries();
         splashViewModel.getAchievement();
         splashViewModel.getRanks();
@@ -63,34 +64,6 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_splash, container, false);
-
-        splashViewModel.getCountriesRepoResponse().observe(getViewLifecycleOwner(), res -> {
-            if (res != null) {
-                mDisposable.add(splashViewModel.insertOrUpdateCountries(res)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                // On complete
-                                () -> Log.d(SPLASH_FRAGMENT, "DB: Countries has been written into database"),
-                                // On error
-                                err -> Log.e(SPLASH_FRAGMENT, "Unable to insert countries", err))
-                );
-            }
-        });
-
-        /*splashViewModel.getRanksRepoResponse().observe(getViewLifecycleOwner(), res -> {
-            if (res != null) {
-                mDisposable.add(splashViewModel.insertOrUpdateRanks(res)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                // On complete
-                                () -> Log.d(SPLASH_FRAGMENT, "DB: Ranks has been written into database"),
-                                // On error
-                                err -> Log.e(SPLASH_FRAGMENT, "Unable to insert ranks", err))
-                );
-            }
-        });*/
 
         splashViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
@@ -127,7 +100,7 @@ public class SplashFragment extends Fragment {
         if(hasConnection) {
             Log.d(SPLASH_FRAGMENT, "We have internet connection");
 
-            FIRST_LAUNCH = "1";
+            String FIRST_LAUNCH = "1";
             String FIRST_LAUNCH_KEY = "FIRST_LAUNCH";
             preferences.removeValue(FIRST_LAUNCH_KEY);
             preferences.put(FIRST_LAUNCH_KEY, FIRST_LAUNCH);
@@ -162,6 +135,7 @@ public class SplashFragment extends Fragment {
         Log.d(SPLASH_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
+    @SneakyThrows
     @Override
     public void onStart() {
         super.onStart();
@@ -183,8 +157,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        //mDisposable.clear();
-        splashViewModel.getAchievementRepo().getMDisposable().clear();
+        mDisposable.clear();
         Log.d(SPLASH_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 

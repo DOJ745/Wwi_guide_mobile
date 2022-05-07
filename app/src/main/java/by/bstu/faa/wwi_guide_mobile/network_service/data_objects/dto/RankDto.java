@@ -15,7 +15,7 @@ public class RankDto extends IdDto {
     @SerializedName("points")@Expose
     private int points;
     @SerializedName("img")@Expose
-    private String imgUrl;
+    private String img;
     @SerializedName("countryId")@Expose
     private String countryId;
 }

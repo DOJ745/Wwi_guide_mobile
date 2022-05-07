@@ -10,9 +10,11 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.base_dao.BaseDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface YearDao extends BaseDao<YearEntity> {
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.YEARS_TABLE)
-    Flowable<List<YearEntity>> getAll();
+    //Flowable<List<YearEntity>> getAll();
+    Maybe<List<YearEntity>> getAll();
 }

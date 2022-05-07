@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.database;
 
 import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
+import by.bstu.faa.wwi_guide_mobile.database.dao.ArmamentDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.CountryDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
@@ -44,6 +45,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract RankDao rankDao();
     public abstract YearDao yearDao();
     public abstract AchievementDao achievementDao();
+    public abstract ArmamentDao armamentDao();
     public abstract TestAnswerDao testAnswerDao();
     public abstract TestQuestionDao testQuestionDao();
     public abstract SurveyAnswerDao surveyAnswerDao();

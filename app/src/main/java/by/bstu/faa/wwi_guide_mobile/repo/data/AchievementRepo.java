@@ -17,6 +17,7 @@ import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.Achievement
 import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -26,9 +27,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AchievementRepo extends DataRepo<AchievementDto, AchievementDao, AchievementEntity>
-        implements DataRepoMethods<AchievementEntity> {
-    private final String ACHIEVEMENT_REPO = "ACHIEVEMENT REPO";
+public class AchievementRepo extends DataRepo<AchievementDto, AchievementDao, AchievementEntity> implements DataRepoMethods {
+    private final String TAG = ArmamentRepo.class.getSimpleName();
 
     @Override
     public void callApi() {
@@ -41,10 +41,10 @@ public class AchievementRepo extends DataRepo<AchievementDto, AchievementDao, Ac
                             @NonNull Call<List<AchievementDto>> call,
                             @NonNull Response<List<AchievementDto>> res) {
                         if(res.body() != null && res.isSuccessful()) {
-                            //apiRes.postValue(response.body());
+                            //apiRes.postValue(res.body());
                             dataDao = AppInstance.getInstance().getDatabase().achievementDao();
-                            Log.d(ACHIEVEMENT_REPO, "Received ACHIEVEMENT DATA");
-                            addDisposableEvents(ACHIEVEMENT_REPO, res.body(), AchievementEntity.class);
+                            Log.d(TAG, "Received ACHIEVEMENT DATA");
+                            addDisposableEvents(TAG, res.body(), AchievementEntity.class);
                         }
                     }
                     @Override
@@ -55,7 +55,5 @@ public class AchievementRepo extends DataRepo<AchievementDto, AchievementDao, Ac
                     }
                 });
     }
-
-    @Override
-    public Flowable<List<AchievementEntity>> getEntitiesFromDB() { return dataDao.getAll(); }
+    public Maybe<List<AchievementEntity>> getEntitiesFromDB() { return dataDao.getAll(); }
 }

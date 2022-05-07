@@ -14,16 +14,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.modelmapper.ModelMapper;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.TokenData;
+import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
-import by.bstu.faa.wwi_guide_mobile.view_models.collections.YearViewModel;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class YearsFragment extends Fragment implements FragmentBottomNav {
@@ -46,13 +54,11 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         EventsRecyclerAdapter.OnItemClickListener eventClickListener =
                 (event, position) -> Toast.makeText(requireContext().getApplicationContext(),
                         "You chose event with title " + event.getTitle(),
                         Toast.LENGTH_SHORT).show();
         eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
-
 
         YearsRecyclerAdapter.OnItemClickListener yearClickListener =
                 (year, position) -> {
@@ -69,13 +75,33 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
                 };
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
-
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
         yearViewModel.init();
 
-        yearViewModel.getElementsDtoResponseLiveData().observe(this, res -> {
+        /*yearViewModel.getElementsDtoResponseLiveData().observe(this, res -> {
             if (res != null) { yearAdapter.setItems(res); }
-        });
+        });*/
+
+        yearViewModel.getYearRepo().getEntitiesFromDB()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableMaybeObserver<List<YearEntity>>() {
+                    @Override
+                    public void onSuccess(List<YearEntity> yearEntities) {
+                        ModelMapper modelMapper = new ModelMapper();
+                        List<YearDto> mappedData = new ArrayList<>();
+                        for (YearEntity entity: yearEntities) {
+                            YearDto dto = modelMapper.map(entity, YearDto.class);
+                            mappedData.add(dto);
+                        }
+                        yearAdapter.setItems(mappedData);
+                        Log.d(YEARS_FRAGMENT, "Set years to adapter");
+                    }
+                    @Override
+                    public void onError(Throwable e) { }
+                    @Override
+                    public void onComplete() { Log.d(YEARS_FRAGMENT, "onComplete"); }
+                });
 
         token = new TokenData();
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
@@ -85,7 +111,8 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        yearViewModel.getElements();
+
+        //yearViewModel.getElements();
         View view = inflater.inflate(R.layout.fragment_years, container, false);
 
         Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);

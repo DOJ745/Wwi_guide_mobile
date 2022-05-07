@@ -30,7 +30,7 @@ import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.RegData;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.ui.adapters.CountrySpinnerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
-import by.bstu.faa.wwi_guide_mobile.view_models.auth.RegisterViewModel;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.auth.RegisterViewModel;
 
 public class RegisterFragment extends Fragment implements FragmentNavigation {
     private final String REG_FRAGMENT = "REG FRAGMENT";

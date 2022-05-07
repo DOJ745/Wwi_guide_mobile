@@ -5,18 +5,18 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseId;
+import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseEntityId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Getter
 @Setter
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.YEARS_TABLE)
-public class YearEntity extends BaseId {
+public class YearEntity extends BaseEntityId {
     @ColumnInfo@NonNull
     private int date;
     @ColumnInfo@NonNull

@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public abstract class BaseDataEntity extends BaseId {
+public abstract class BaseDataEntity extends BaseEntityId {
     @ColumnInfo
     @NonNull
     protected String title;

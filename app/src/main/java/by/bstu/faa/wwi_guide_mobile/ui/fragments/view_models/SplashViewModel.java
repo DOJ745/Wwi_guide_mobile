@@ -1,37 +1,25 @@
-package by.bstu.faa.wwi_guide_mobile.view_models;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import org.modelmapper.ModelMapper;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AchievementDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.CountryDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
-import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.CountryEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.auth.LoginRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.AchievementRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.RankRepo;
-import by.bstu.faa.wwi_guide_mobile.view_models.auth.LoginUserMethods;
+import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.auth.LoginUserMethods;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,46 +27,40 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final String SPLASH_VIEW_MODEL = "SPLASH VIEW MODEL";
 
     private final UserDao userDao;
-    //private final RankDao rankDao;
-    private final CountryDao countryDao;
-
+    @Getter
     private final RankRepo rankRepo;
     @Getter
     private final AchievementRepo achievementRepo;
-    private final LoginRepo loginRepo;
+    @Getter
     private final CountryRepo countryRepo;
-    private final LiveData<List<CountryDto>> countriesRepoResponse;
-    private final LiveData<List<RankDto>> rankRepoResponse;
-    private final LiveData<UserDto> loginRepoResponse;
+    @Getter
+    private final YearRepo yearRepo;
 
+    private final LoginRepo loginRepo;
+    @Getter
+    private final LiveData<UserDto> loginRepoResponse;
     @Getter@Setter
     private List<AchievementDto> resAchievements;
 
     public SplashViewModel() {
         userDao = AppInstance.getInstance().getDatabase().userDao();
-        //rankDao = AppInstance.getInstance().getDatabase().rankDao();
-        countryDao = AppInstance.getInstance().getDatabase().countryDao();
 
         achievementRepo = new AchievementRepo();
         loginRepo = new LoginRepo();
         rankRepo = new RankRepo();
         countryRepo = new CountryRepo();
+        yearRepo = new YearRepo();
 
         loginRepoResponse = loginRepo.getUserResponse();
-        rankRepoResponse = rankRepo.getApiRes();
-        countriesRepoResponse = countryRepo.getApiRes();
     }
 
     public void getRanks() { rankRepo.callApi(); }
     public void getAchievement(){ achievementRepo.callApi(); }
     public void getCountries() { countryRepo.callApi(); }
-
-    public LiveData<List<CountryDto>> getCountriesRepoResponse() { return countriesRepoResponse; }
-    //public LiveData<List<AchievementDto>> getAchievementsRepoResponse() { return achievementRepo.getApiRes(); }
-    public LiveData<List<RankDto>> getRanksRepoResponse() { return rankRepoResponse; }
-    public LiveData<UserDto> getLoginRepoResponse() { return loginRepoResponse; }
+    public void getYears() { yearRepo.callApi(); }
 
     public Flowable<List<UserEntity>> getUserFromDB() { return userDao.getUser(); }
+
     public void loginUser(LoginData loginData) { loginRepo.loginUser(loginData); }
 
     @Override
@@ -108,25 +90,5 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
         else loggedUser.setAchievements("none");
 
         return userDao.insert(loggedUser);
-    }
-
-    /*public Completable insertOrUpdateRanks(List<RankDto> data) {
-        ModelMapper modelMapper = new ModelMapper();
-        List<RankEntity> temp = new ArrayList<>();
-        for (RankDto dto: data) {
-            RankEntity entity = modelMapper.map(dto, RankEntity.class);
-            temp.add(entity);
-        }
-        return rankDao.insertMany(temp);
-    }*/
-
-    public Completable insertOrUpdateCountries(List<CountryDto> data) {
-        ModelMapper modelMapper = new ModelMapper();
-        List<CountryEntity> temp = new ArrayList<>();
-        for (CountryDto dto: data) {
-            CountryEntity entity = modelMapper.map(dto, CountryEntity.class);
-            temp.add(entity);
-        }
-        return countryDao.insertMany(temp);
     }
 }

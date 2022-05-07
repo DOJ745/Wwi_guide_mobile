@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,18 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
         holder.achievementItemName.setText(item.getName());
         holder.achievementItemDescription.setText(item.getDescription());
         if (item.getImg() != null) {
-            Glide.with(holder.itemView).load(item.getImg()).into(holder.achievementImageView);
+            if (item.getImg() != null) {
+                Glide
+                        .with(holder.itemView)
+                        .asBitmap()
+                        .load(item.getImg())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .placeholder(R.drawable.test_icon)
+                        .error(R.drawable.ic_launcher_background)
+                        .into(holder.achievementImageView);
+            }
         }
-        else {
-            Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.achievementImageView);
-        }
+
     }
 
     @Override
@@ -64,9 +72,9 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
 
         public AchievementResultHolder(@NonNull View itemView) {
             super(itemView);
-            achievementItemName = itemView.findViewById(R.id.achievement_item_name);
-            achievementItemDescription = itemView.findViewById(R.id.achievement_item_description);
-            achievementImageView = itemView.findViewById(R.id.achievement_item_img);
+            achievementItemName = itemView.findViewById(R.id.item_achievement_name);
+            achievementItemDescription = itemView.findViewById(R.id.item_achievement_description);
+            achievementImageView = itemView.findViewById(R.id.item_achievement_img);
         }
     }
 }

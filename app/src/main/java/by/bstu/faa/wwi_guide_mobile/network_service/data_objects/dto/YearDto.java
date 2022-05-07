@@ -16,5 +16,7 @@ public class YearDto extends IdDto {
     @SerializedName("title")@Expose@NonNull
     private String title;
     @SerializedName("img")@Expose@NonNull
-    private String imgUrl;
+    private String img;
+
+    public YearDto(){}
 }

@@ -1,4 +1,4 @@
-package by.bstu.faa.wwi_guide_mobile.view_models.collections;
+package by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections;
 
 import android.util.Log;
 
@@ -13,21 +13,21 @@ import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
-import by.bstu.faa.wwi_guide_mobile.view_models.ViewModelDataMethods;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.ViewModelDataMethods;
 import io.reactivex.Flowable;
+import lombok.Getter;
 
 public class YearViewModel extends ViewModel implements ViewModelDataMethods<YearDto> {
     private final String YEAR_VIEW_MODEL = "YEAR VIEW MODEL";
     private final EventDao eventDao;
+    @Getter
     private YearRepo yearRepo;
     private LiveData<List<YearDto>> yearsDtoResponseLiveData;
 
     public YearViewModel() {
         eventDao = AppInstance.getInstance().getDatabase().eventDao();
         Log.d(YEAR_VIEW_MODEL, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
-    }
 
-    public void init() {
         yearRepo = new YearRepo();
         yearsDtoResponseLiveData = yearRepo.getApiRes();
     }

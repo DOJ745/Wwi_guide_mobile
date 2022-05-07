@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
 
 public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder>
@@ -53,24 +54,15 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
         holder.yearDateTextView.setText(String.valueOf(item.getDate()));
         holder.yearTitleTextView.setText(item.getTitle());
 
-        if (item.getImgUrl() != null) {
+        if (item.getImg() != null) {
            Glide
                    .with(holder.itemView)
                    .asBitmap()
-                   .load(item.getImgUrl())
+                   .load(item.getImg())
                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                    .placeholder(R.drawable.test_icon)
                    .error(R.drawable.ic_launcher_background)
                    .into(holder.yearImageView);
-        }
-        else {
-            //Glide.with(holder.itemView).load(CONSTANTS.URLS.NO_IMG).into(holder.yearImageView);
-            /*Glide
-                    .with(holder.itemView)
-                    .asBitmap()
-                    .load(ImageUrl)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                    .into(holder.yearImageView);*/
         }
 
         holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
