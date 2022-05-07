@@ -9,6 +9,7 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyQuestionDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestQuestionDao;
+import by.bstu.faa.wwi_guide_mobile.database.dao.TestThemeDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.YearDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
@@ -20,6 +21,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 
@@ -37,6 +39,7 @@ import androidx.room.RoomDatabase;
         SurveyQuestionEntity.class,
         TestAnswerEntity.class,
         TestQuestionEntity.class,
+        TestThemeEntity.class,
         LogEntity.class
 }, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
@@ -51,4 +54,5 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract SurveyAnswerDao surveyAnswerDao();
     public abstract SurveyQuestionDao surveyQuestionDao();
     public abstract CountryDao countryDao();
+    public abstract TestThemeDao testThemeDao();
 }
