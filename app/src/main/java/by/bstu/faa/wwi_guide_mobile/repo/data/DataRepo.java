@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 public abstract class DataRepo<T> {
-
     protected final MutableLiveData<List<T>> apiRes;
     public DataRepo() { apiRes = new MutableLiveData<>(); }
 

@@ -78,7 +78,7 @@ public class SplashFragment extends Fragment {
             }
         });
 
-        splashViewModel.getAchievementsRepoResponse().observe(getViewLifecycleOwner(), res -> {
+        /*splashViewModel.getAchievementsRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
                 splashViewModel.setResAchievements(res);
                 mDisposable.add(splashViewModel.insertOrUpdateAchievements(res)
@@ -106,7 +106,7 @@ public class SplashFragment extends Fragment {
                                 err -> Log.e(SPLASH_FRAGMENT, "Unable to insert achievements", err))
                 );
             }
-        });
+        });*/
 
         splashViewModel.getRanksRepoResponse().observe(getViewLifecycleOwner(), res -> {
             if (res != null) {
@@ -143,7 +143,7 @@ public class SplashFragment extends Fragment {
                                         () -> {
                                             Log.d(SPLASH_FRAGMENT, "DB: User has been written into database");
 
-                                            mDisposable.add(splashViewModel.deleteOldAchievements(
+                                            /*mDisposable.add(splashViewModel.deleteOldAchievements(
                                                     splashViewModel.getCurrentAchievements(),
                                                     splashViewModel.getResAchievements())
                                                     .subscribeOn(Schedulers.io())
@@ -153,7 +153,7 @@ public class SplashFragment extends Fragment {
                                                             () -> Log.d(SPLASH_FRAGMENT, "DB: Deleted old achievements"),
                                                             // On error
                                                             err -> Log.e(SPLASH_FRAGMENT, "Unable to delete achievements", err))
-                                            );
+                                            );*/
                                         },
                                         // On error
                                         err -> Log.e(SPLASH_FRAGMENT, "Unable to insert user", err))
@@ -225,7 +225,8 @@ public class SplashFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        mDisposable.clear();
+        //mDisposable.clear();
+        splashViewModel.getAchievementRepo().getMDisposable().clear();
         Log.d(SPLASH_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
