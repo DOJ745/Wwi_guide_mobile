@@ -15,7 +15,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 
 public class MainActivity extends AppCompatActivity {
-    private final String MAIN_ACTIVITY = "MAIN ACTIVITY";
+    private final String TAG = MainActivity.class.getSimpleName();
     public static BottomNavigationView BottomNavigationView;
 
     @Override
@@ -56,37 +56,37 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(BottomNavigationView, navController);
 
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESTART);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESTART);
     }
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(MAIN_ACTIVITY, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 }

@@ -7,10 +7,11 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestQuestionDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.TestQuestionDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.TestQuestionDto;
 import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +19,11 @@ import retrofit2.Response;
 
 public class TestsQuestionsRepo extends DataRepo<TestQuestionDto, TestQuestionDao, TestQuestionEntity> implements DataRepoMethods {
     private final String TAG = TestsQuestionsRepo.class.getSimpleName();
+
+    public TestsQuestionsRepo() {
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        dataDao = AppInstance.getInstance().getDatabase().testQuestionDao();
+    }
 
     @Override
     public void callApi() {

@@ -11,9 +11,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.UserDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import lombok.Getter;
 import retrofit2.Call;
 import retrofit2.Callback;

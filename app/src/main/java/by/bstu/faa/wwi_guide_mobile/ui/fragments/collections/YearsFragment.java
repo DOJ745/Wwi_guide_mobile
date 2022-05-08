@@ -14,50 +14,46 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.modelmapper.ModelMapper;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.TokenData;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.YearDto;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.EventsRecyclerAdapter;
-import by.bstu.faa.wwi_guide_mobile.ui.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventsRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class YearsFragment extends Fragment implements FragmentBottomNav {
-    private final String YEARS_FRAGMENT = "YEARS FRAGMENT";
+    private final String TAG = YearsFragment.class.getSimpleName();
 
-    private RecyclerView recyclerView;
-    private YearViewModel yearViewModel;
     private YearsRecyclerAdapter yearAdapter;
     private EventsRecyclerAdapter eventsAdapter;
-
-    private TokenData token;
-    private final CompositeDisposable mDisposable = new CompositeDisposable();
+    private YearViewModel yearViewModel;
+    private RecyclerView recyclerView;
 
     public YearsFragment() {
         // Required empty public constructor
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
+
         EventsRecyclerAdapter.OnItemClickListener eventClickListener =
                 (event, position) -> Toast.makeText(requireContext().getApplicationContext(),
                         "You chose event with title " + event.getTitle(),
                         Toast.LENGTH_SHORT).show();
+
         eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
 
         YearsRecyclerAdapter.OnItemClickListener yearClickListener =
@@ -66,17 +62,29 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
                             "You chose year with title " + year.getTitle(),
                             Toast.LENGTH_SHORT).show();
 
-                    mDisposable.add(yearViewModel.getYearEvents(year.getId())
+                    yearViewModel.getYearEvents(year.getId())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
+                                @Override
+                                public void onSuccess(List<EventEntity> entities) {
+                                    eventsAdapter.setItems(entities);
+                                    recyclerView.setAdapter(eventsAdapter);
+                                }
+
+                                @Override
+                                public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                            });
+
+                    /*mDisposable.add(yearViewModel.getYearEvents(year.getId())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(yearEvents ->
                                     Log.d(YEARS_FRAGMENT, "DB: getYearEvents" + yearEvents.get(0).toString()),
-                                    throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));
+                                    throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));*/
                 };
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
-        yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
-        yearViewModel.init();
 
         /*yearViewModel.getElementsDtoResponseLiveData().observe(this, res -> {
             if (res != null) { yearAdapter.setItems(res); }
@@ -87,35 +95,25 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableMaybeObserver<List<YearEntity>>() {
                     @Override
-                    public void onSuccess(List<YearEntity> yearEntities) {
-                        ModelMapper modelMapper = new ModelMapper();
-                        List<YearDto> mappedData = new ArrayList<>();
-                        for (YearEntity entity: yearEntities) {
-                            YearDto dto = modelMapper.map(entity, YearDto.class);
-                            mappedData.add(dto);
-                        }
-                        yearAdapter.setItems(mappedData);
-                        Log.d(YEARS_FRAGMENT, "Set years to adapter");
+                    public void onSuccess(List<YearEntity> entities) {
+                        yearAdapter.setItems(entities);
+                        Log.d(TAG, "Set items to adapter");
                     }
                     @Override
                     public void onError(Throwable e) { }
                     @Override
-                    public void onComplete() { Log.d(YEARS_FRAGMENT, "onComplete"); }
+                    public void onComplete() { Log.d(TAG, "onComplete"); }
                 });
 
-        token = new TokenData();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
-        //yearViewModel.getElements();
         View view = inflater.inflate(R.layout.fragment_years, container, false);
-
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -123,62 +121,60 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.years_fragment_recycle_view);
+        recyclerView = view.findViewById(R.id.fragment_years_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(yearAdapter);
 
         showBottomNav(MainActivity.BottomNavigationView, true);
 
-        token.setToken("");
-
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(YEARS_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 }

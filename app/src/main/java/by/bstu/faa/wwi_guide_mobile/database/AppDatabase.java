@@ -13,6 +13,7 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.TestThemeDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.YearDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.CountryEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.LogEntity;
@@ -33,6 +34,7 @@ import androidx.room.RoomDatabase;
         EventEntity.class,
         YearEntity.class,
         AchievementEntity.class,
+        ArmamentEntity.class,
         RankEntity.class,
         CountryEntity.class,
         SurveyAnswerEntity.class,

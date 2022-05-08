@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.YEARS_TABLE)
 public class YearEntity extends BaseEntityId {
-    @ColumnInfo@NonNull
+    @ColumnInfo
     private int date;
     @ColumnInfo@NonNull
     private String title;

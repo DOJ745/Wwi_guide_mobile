@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.RegData;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AppMsgResponseDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.CountryDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.RegData;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.AppMsgResponseDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.repo.data.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.auth.RegRepo;
 

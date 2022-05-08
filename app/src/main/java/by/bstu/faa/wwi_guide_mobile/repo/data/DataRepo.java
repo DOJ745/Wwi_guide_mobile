@@ -13,7 +13,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.database.dao.base_dao.BaseDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseEntityId;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.base_dto.IdDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.base_dto.IdDto;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -122,7 +122,7 @@ public abstract class DataRepo<T extends IdDto, B extends BaseDao<C>, C extends 
                                         Log.e(repoTag, "DB: Error occurred!\n" + e.getMessage());
                                     }
                                     @Override
-                                    public void onComplete() { Log.d(repoTag, "onComplete getting data"); }
+                                    public void onComplete() { Log.d(repoTag, "onComplete getting data (empty)"); }
                                 });
                     }
                     @Override

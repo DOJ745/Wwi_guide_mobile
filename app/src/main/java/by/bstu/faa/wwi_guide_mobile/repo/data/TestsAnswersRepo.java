@@ -7,10 +7,11 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.TestAnswerDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.TestAnswerDto;
 import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,6 +19,11 @@ import retrofit2.Response;
 
 public class TestsAnswersRepo extends DataRepo<TestAnswerDto, TestAnswerDao, TestAnswerEntity> implements DataRepoMethods {
     private final String TAG = TestsAnswersRepo.class.getSimpleName();
+
+    public TestsAnswersRepo() {
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        dataDao = AppInstance.getInstance().getDatabase().testAnswerDao();
+    }
 
     @Override
     public void callApi() {
@@ -31,7 +37,6 @@ public class TestsAnswersRepo extends DataRepo<TestAnswerDto, TestAnswerDao, Tes
                             @NonNull Response<List<TestAnswerDto>> res) {
                         if(res.body() != null && res.isSuccessful()) {
                             //apiRes.postValue(res.body());
-                            dataDao = AppInstance.getInstance().getDatabase().testAnswerDao();
                             Log.d(TAG, "Received ACHIEVEMENT DATA");
                             addDisposableEvents(TAG, res.body(), TestAnswerEntity.class);
                         }

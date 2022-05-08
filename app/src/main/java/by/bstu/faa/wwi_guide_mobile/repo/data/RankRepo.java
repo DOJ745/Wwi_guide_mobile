@@ -8,17 +8,23 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.RankDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.RankDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RankRepo extends DataRepo<RankDto, RankDao, RankEntity> implements DataRepoMethods {
-    private final String TAG = "RANK REPO";
+    private final String TAG = RankRepo.class.getSimpleName();
+
+    public RankRepo() {
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        dataDao = AppInstance.getInstance().getDatabase().rankDao();
+    }
 
     @Override
     public void callApi() {

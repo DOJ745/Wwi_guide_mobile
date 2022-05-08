@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.LoginData;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.UserDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.auth.LoginRepo;

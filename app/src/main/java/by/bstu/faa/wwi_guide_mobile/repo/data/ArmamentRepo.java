@@ -7,13 +7,11 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
-import by.bstu.faa.wwi_guide_mobile.database.AppDatabase;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.ArmamentDao;
-import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
-import by.bstu.faa.wwi_guide_mobile.network_service.RetrofitService;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.AchievementDto;
-import by.bstu.faa.wwi_guide_mobile.network_service.data_objects.dto.ArmamentDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.ArmamentDto;
 import io.reactivex.Maybe;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,6 +19,12 @@ import retrofit2.Response;
 
 public class ArmamentRepo extends DataRepo<ArmamentDto, ArmamentDao, ArmamentEntity> implements DataRepoMethods {
     private final String TAG = ArmamentRepo.class.getSimpleName();
+
+    public ArmamentRepo() {
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        dataDao = AppInstance.getInstance().getDatabase().armamentDao();
+    }
+
     @Override
     public void callApi() {
         RetrofitService.getInstance()
@@ -33,7 +37,6 @@ public class ArmamentRepo extends DataRepo<ArmamentDto, ArmamentDao, ArmamentEnt
                             @NonNull Response<List<ArmamentDto>> res) {
                         if(res.body() != null && res.isSuccessful()) {
                             //apiRes.postValue(res.body());
-                            dataDao = AppInstance.getInstance().getDatabase().armamentDao();
                             Log.d(TAG, "Received ACHIEVEMENT DATA");
                             addDisposableEvents(TAG, res.body(), ArmamentEntity.class);
                         }

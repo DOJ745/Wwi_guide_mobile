@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/year_item_image"
+            android:id="@+id/item_year_img"
             android:layout_width="match_parent"
             android:layout_height="192dp"
             android:contentDescription="@string/img_description"
@@ -26,25 +26,25 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/year_date_value"
+            android:id="@+id/item_year_date"
             android:textAlignment="center"
             android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="@id/year_item_image"
-            app:layout_constraintStart_toStartOf="@id/year_item_image"
-            app:layout_constraintTop_toTopOf="@id/year_item_image" />
+            app:layout_constraintEnd_toEndOf="@id/item_year_img"
+            app:layout_constraintStart_toStartOf="@id/item_year_img"
+            app:layout_constraintTop_toTopOf="@id/item_year_img" />
 
         <TextView
-            android:id="@+id/year_title_value"
+            android:id="@+id/item_year_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/year_date_value" />
+            app:layout_constraintTop_toBottomOf="@id/item_year_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
