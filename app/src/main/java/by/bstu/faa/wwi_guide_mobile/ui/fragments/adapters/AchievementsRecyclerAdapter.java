@@ -44,8 +44,8 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
                 .asBitmap()
                 .load(item.getImg())
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .placeholder(R.drawable.test_icon)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
                 .into(holder.achievementImageView);
 
     }

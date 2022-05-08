@@ -62,7 +62,6 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     private final LiveData<UserDto> loginRepoResponse;
 
     public SplashViewModel() {
-
         initRepos();
         this.loginRepoResponse = loginRepo.getUserResponse();
 
@@ -107,27 +106,13 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     public Completable insertOrUpdateUser(UserDto data) {
         UserEntity loggedUser = new UserEntity();
 
-        StringBuilder tempRoles = new StringBuilder();
-        StringBuilder tempAchievements = new StringBuilder();
-
         loggedUser.setLogin(data.getLogin());
         loggedUser.setPassword(data.getPassword());
         loggedUser.setCountryId(data.getCountryId());
         loggedUser.setRankId(data.getRankId());
         loggedUser.setScore(data.getScore());
-
-        for (String item : data.getRoles()) {
-            tempRoles.append(CONSTANTS.APP_DATABASE.ELEMENT_DIVIDER).append(item);
-        }
-        loggedUser.setRoles(tempRoles.toString());
-
-        if(data.getAchievements() != null && !data.getAchievements().isEmpty()) {
-            for (String item: data.getAchievements()) {
-                tempAchievements.append(CONSTANTS.APP_DATABASE.ELEMENT_DIVIDER).append(item);
-            }
-            loggedUser.setAchievements(tempAchievements.toString());
-        }
-        else loggedUser.setAchievements("none");
+        loggedUser.setAchievements(data.getAchievements());
+        loggedUser.setRoles(data.getRoles());
 
         return userDao.insert(loggedUser);
     }

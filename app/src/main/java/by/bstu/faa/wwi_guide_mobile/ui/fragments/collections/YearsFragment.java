@@ -86,10 +86,6 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
 
-        /*yearViewModel.getElementsDtoResponseLiveData().observe(this, res -> {
-            if (res != null) { yearAdapter.setItems(res); }
-        });*/
-
         yearViewModel.getYearRepo().getEntitiesFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

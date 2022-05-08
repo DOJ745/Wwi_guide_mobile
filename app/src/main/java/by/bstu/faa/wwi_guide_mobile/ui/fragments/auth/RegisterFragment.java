@@ -33,10 +33,7 @@ import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.auth.RegisterViewModel;
 
 public class RegisterFragment extends Fragment implements FragmentNavigation {
-    private final String REG_FRAGMENT = "REG FRAGMENT";
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private final String TAG = RegisterFragment.class.getSimpleName();
 
     private RegisterViewModel registerViewModel;
     private CountrySpinnerAdapter countrySpinnerAdapter;
@@ -52,16 +49,7 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
 
     public RegisterFragment() {
         // Required empty public constructor
-        Log.d(REG_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
-    }
-
-    public static RegisterFragment newInstance(String param1, String param2) {
-        RegisterFragment fragment = new RegisterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
@@ -75,7 +63,7 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
         dataToTransfer = new ArrayList<>();
         registerViewModel.getCountryResponse();
 
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Nullable
@@ -103,7 +91,7 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
             if (countryResponse != null) { countrySpinnerAdapter.setItems(countryResponse); }
         });
 
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -187,55 +175,55 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
             else { regMsgResponse.setText(R.string.err_mismatch_data); }
         });
 
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(REG_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField,

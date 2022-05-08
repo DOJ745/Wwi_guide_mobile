@@ -20,7 +20,9 @@ import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.YearDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface AppApi {
 
@@ -29,6 +31,12 @@ public interface AppApi {
 
     @POST("auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
+
+    @PUT("users")
+    Call<AppMsgResponseDto> updateUserInfo(@Header("Authorization") String token);
+
+    @POST("logs")
+    Call<AppMsgResponseDto> sendLog(@Header("Authorization") String token);
 
     @GET("years")
     Call<List<YearDto>> getYears();

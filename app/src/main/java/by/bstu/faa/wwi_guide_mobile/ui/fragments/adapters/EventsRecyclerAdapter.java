@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 
 public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.EventResultHolder>
@@ -52,10 +50,10 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         Glide
                 .with(holder.itemView)
                 .asBitmap()
-                .load(item.getImages())
+                .load(item.getImages().get(0))
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .placeholder(R.drawable.test_icon)
-                .error(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error)
                 .into(holder.eventImageView);
 
         holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));

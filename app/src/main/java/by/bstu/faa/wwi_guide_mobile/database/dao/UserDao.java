@@ -9,6 +9,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.base_dao.BaseDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface UserDao extends BaseDao<UserEntity> {
@@ -16,5 +17,5 @@ public interface UserDao extends BaseDao<UserEntity> {
     Flowable<List<UserEntity>> getUser();
 
     @Query("SELECT score FROM " + CONSTANTS.APP_DATABASE.USER_TABLE)
-    int getUserScore();
+    Single<Integer> getUserScore();
 }

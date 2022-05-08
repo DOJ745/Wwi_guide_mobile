@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LoginFragment extends Fragment implements FragmentNavigation {
-    private final String LOGIN_FRAGMENT = "LOGIN FRAGMENT";
+    private final String TAG = LoginFragment.class.getSimpleName();
 
     private static final String ARG_TOKEN = "token";
     private static final String ARG_LOGIN = "login";
@@ -58,7 +58,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
 
     public LoginFragment() {
         // Required empty public constructor
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
+        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
@@ -84,11 +84,10 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         else checkboxParam = "";
 
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
-        loginViewModel.init();
         loginData = new LoginData();
         userData = new UserDto();
 
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
@@ -96,7 +95,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
 
@@ -132,7 +131,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                 preferences.removeValue(ARG_CHECKBOX);
                 preferences.removeValue(ARG_LOGIN);
                 preferences.removeValue(ARG_PASSWORD);
-                Log.d(LOGIN_FRAGMENT, "checkBox unchecked");
+                Log.d(TAG, "checkBox unchecked");
             }
         });
 
@@ -148,7 +147,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                             setUserData(userData, loginResponse);
                             token = loginResponse.getToken();
                             preferences.put(ARG_TOKEN, token);
-                            Log.d(LOGIN_FRAGMENT, "Token has been saved: " + token);
+                            Log.d(TAG, "Token has been saved: " + token);
 
                             mDisposable.add(loginViewModel.insertOrUpdateUser(userData)
                             .subscribeOn(Schedulers.io())
@@ -156,9 +155,9 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                             .subscribe(
                                     () -> {
                                         navigateToFragment(view, "year");
-                                        Log.d(LOGIN_FRAGMENT, "DB: User has been written into database");
+                                        Log.d(TAG, "DB: User has been written into database");
                                     },
-                                    throwable -> Log.e(LOGIN_FRAGMENT, "Unable to get username", throwable))
+                                    throwable -> Log.e(TAG, "Unable to get username", throwable))
                             );
                             break;
 
@@ -191,56 +190,56 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
 
         regFragmentButton.setOnClickListener(view1 -> navigateToFragment(view1, "login"));
 
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_STATE_RESTORED);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_START);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_START);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_PAUSE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
         mDisposable.clear();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY_VIEW);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(LOGIN_FRAGMENT, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
     private void setTextFieldListeners(EditText loginField, EditText passwordField, CheckBox rememberMeBox) {

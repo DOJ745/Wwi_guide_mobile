@@ -18,8 +18,6 @@ public class CONSTANTS {
         public final static String YEARS_TABLE = "years";
         public final static String ARMAMENT_TABLE = "armament";
         public final static String TEST_THEME_TABLE = "tests_themes";
-
-        public final static String ELEMENT_DIVIDER = "*";
     }
 
     public static class WEB_APP_SUCCESS_RESPONSES {

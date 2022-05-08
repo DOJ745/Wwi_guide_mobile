@@ -21,6 +21,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.ArrayListConverter;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
@@ -28,6 +29,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 @Database(entities = {
         UserEntity.class,
@@ -44,6 +46,7 @@ import androidx.room.RoomDatabase;
         TestThemeEntity.class,
         LogEntity.class
 }, version = 1)
+@TypeConverters({ArrayListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract EventDao eventDao();

@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +30,7 @@ public class UserEntity {
     @ColumnInfo
     private int score;
     @ColumnInfo@NonNull
-    private String roles;
+    private ArrayList<String> roles;
     @ColumnInfo@NonNull
-    private String achievements;
+    private ArrayList<String> achievements;
 }

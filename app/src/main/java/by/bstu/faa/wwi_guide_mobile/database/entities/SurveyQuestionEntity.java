@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import java.util.ArrayList;
+
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseQuestionEntity;
 import lombok.EqualsAndHashCode;
@@ -23,7 +25,7 @@ import lombok.ToString;
 })
 public class SurveyQuestionEntity extends BaseQuestionEntity {
     @ColumnInfo@NonNull
-    private String eventId;
+    private ArrayList<String> eventId;
     @ColumnInfo@NonNull
-    private String armamentId;
+    private ArrayList<String> armamentId;
 }
