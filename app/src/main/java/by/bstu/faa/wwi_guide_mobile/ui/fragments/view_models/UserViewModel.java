@@ -4,15 +4,25 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
+import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.UserRepo;
+import io.reactivex.Maybe;
+import io.reactivex.MaybeObserver;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
 import lombok.Getter;
@@ -24,61 +34,22 @@ public class UserViewModel extends ViewModel {
     @Getter
     private final RankDao rankDao;
     @Getter
+    private final UserDao userDao;
+    @Getter
+    private final AchievementDao achievementDao;
+    @Getter
     private final UserRepo userRepo;
-    @Getter@Setter
-    private UserEntity userEntity;
     @Getter@Setter
     private String userRankImg;
 
     public UserViewModel() {
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
-        userEntity = new UserEntity();
         userRepo = new UserRepo();
         rankDao = AppInstance.getInstance().getDatabase().rankDao();
-        //getUserDataFromDB();
+        userDao = AppInstance.getInstance().getDatabase().userDao();
+        achievementDao = AppInstance.getInstance().getDatabase().achievementDao();
     }
 
-    public String getUserImgRankFromDB() {
-
-        /*rankDao.getRankImg(getUserEntity().getRankId()).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        setUserRankImg(s);
-                    }
-                    @Override
-                    public void onError(Throwable e) { Log.d(TAG, "onError\n" + e.getMessage()); }
-                });*/
-
-        return rankDao.getRankImg(this.userEntity.getRankId());
-    }
-
-    public void getUserDataFromDB() {
-        /*CompositeDisposable mDisposable = new CompositeDisposable();
-        mDisposable.add(userRepo.getUser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data -> {
-                            this.userEntity = data.get(0);
-                            Log.d(TAG, "DB: user data - " + this.userEntity.getRankId());
-                }, throwable -> Log.e(TAG, "Unable to get user", throwable))
-        );*/
-
-        //mDisposable.clear();
-        /*DisposableSubscriber<List<UserEntity>> disposableSubscriber =
-                userRepo.getUser().subscribeWith(new DisposableSubscriber<List<UserEntity>>() {
-            @Override
-            public void onStart() { Log.d(TAG, "Start getting user data"); }
-            @Override
-            public void onNext(List<UserEntity> data) {
-                Log.d(TAG, "onNext");
-                userEntity = data.get(0);
-            }
-            @Override
-            public void onError(Throwable t) { t.printStackTrace(); }
-            @Override
-            public void onComplete() { Log.d(TAG, "done getting user"); }
-        });*/
-    }
+    public Single<RankEntity> getUserRankByIdFromDB(String id) { return rankDao.getRankById(id); }
+    public Maybe<UserEntity> getUserDataFromDB() { return userDao.getUser(); }
 }

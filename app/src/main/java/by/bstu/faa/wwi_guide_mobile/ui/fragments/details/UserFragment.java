@@ -14,16 +14,29 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.AchievementsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.UserViewModel;
+import io.reactivex.MaybeObserver;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -31,8 +44,16 @@ public class UserFragment extends Fragment implements FragmentBottomNav {
     private final String TAG = UserFragment.class.getSimpleName();
 
     private UserViewModel userViewModel;
-    private TextView loginView;
-    private TextView achievementView;
+    private TextView rankName;
+    private TextView loginTextView;
+    private AchievementsRecyclerAdapter achievementsRecyclerAdapter;
+    private RecyclerView achievementRecyclerView;
+    private ImageView rankImg;
+    private ProgressBar rankProgress;
+    private TextView rankProgressPoints;
+    private ProgressBar achievementProgress;
+    private TextView achievementProgressEarned;
+    private Button logOutBtn;
 
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
@@ -47,15 +68,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav {
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        mDisposable.add(userViewModel.getUserRepo().getUser()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(data -> {
-                    userViewModel.setUserEntity(data.get(0));
-                    loginView.setText(userViewModel.getUserEntity().getLogin());
-                    Log.d(TAG, "DB: user data - " + userViewModel.getUserEntity().getRankId());
-                }, throwable -> Log.e(TAG, "Unable to get user", throwable))
-        );
+        achievementsRecyclerAdapter = new AchievementsRecyclerAdapter(requireContext().getApplicationContext());
     }
 
     @Override
@@ -70,25 +83,87 @@ public class UserFragment extends Fragment implements FragmentBottomNav {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        Button logOutBtn = view.findViewById(R.id.fragment_user_logout_btn);
-        ImageView rankImg = view.findViewById(R.id.fragment_user_rank_img);
-        loginView = view.findViewById(R.id.fragment_user_login);
-        achievementView = view.findViewById(R.id.fragment_user_earned_achievement);
-        ProgressBar rankProgress = view.findViewById(R.id.fragment_user_rank_progress);
-        ProgressBar achievementProgress = view.findViewById(R.id.fragment_user_achievements_progress);
+        logOutBtn = view.findViewById(R.id.fragment_user_logout_btn);
+        rankImg = view.findViewById(R.id.fragment_user_rank_img);
+        rankName = view.findViewById(R.id.fragment_user_rank_name);
+        rankProgressPoints = view.findViewById(R.id.fragment_user_rank_points);
+        loginTextView = view.findViewById(R.id.fragment_user_login);
+        rankProgress = view.findViewById(R.id.fragment_user_rank_progress);
+        achievementProgress = view.findViewById(R.id.fragment_user_achievements_progress);
+        achievementProgressEarned = view.findViewById(R.id.fragment_user_achievements_earned);
+        achievementRecyclerView = view.findViewById(R.id.fragment_user_achievement);
+        achievementRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //Log.d(TAG, userViewModel.getUserEntity().toString());
+        userViewModel.getUserDataFromDB()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableMaybeObserver<UserEntity>() {
+                    @Override
+                    public void onSuccess(UserEntity userEntity) {
+                        loginTextView.setText(userEntity.getLogin());
 
-        loginView.setText(userViewModel.getUserEntity().getLogin());
+                        userViewModel.getAchievementDao().getAll().subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new MaybeObserver<List<AchievementEntity>>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) { }
+                                    @Override
+                                    public void onSuccess(List<AchievementEntity> entities) {
+                                        achievementProgress.setMax(entities.size());
+                                        achievementProgress.setProgress(userEntity.getAchievements().size());
 
-        Glide
-                .with(view)
-                .asBitmap()
-                .load(userViewModel.getUserImgRankFromDB())
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.error)
-                .into(rankImg);
+                                        ArrayList<AchievementEntity> userAchievements = new ArrayList<>();
+                                        for (AchievementEntity entity: entities) {
+                                            if(userEntity.getAchievements().contains(entity.getId()))
+                                                userAchievements.add(entity);
+                                        }
+
+                                        achievementProgressEarned.setText(userAchievements.size() + "/" + entities.size());
+                                        achievementsRecyclerAdapter.setItems(userAchievements);
+                                        achievementRecyclerView.setAdapter(achievementsRecyclerAdapter);
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                    @Override
+                                    public void onComplete() { }
+                                });
+
+
+                        userViewModel.getUserRankByIdFromDB(userEntity.getRankId())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new SingleObserver<RankEntity>() {
+                                    @Override
+                                    public void onSubscribe(Disposable d) { Log.d(TAG, "subscribed"); }
+                                    @Override
+                                    public void onSuccess(RankEntity rankEntity) {
+                                        Glide
+                                                .with(view)
+                                                .asBitmap()
+                                                .load(rankEntity.getImg())
+                                                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                                                .placeholder(R.drawable.placeholder)
+                                                .error(R.drawable.error)
+                                                .into(rankImg);
+
+                                        rankName.setText(rankEntity.getName());
+                                        rankProgressPoints.setText(userEntity.getScore() + "/" + rankEntity.getPoints() + "xp");
+                                        rankProgress.setMax(rankEntity.getPoints());
+                                        rankProgress.setProgress(userEntity.getScore());
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                });
+
+                        //achievementsRecyclerAdapter.setItems(userViewModel.getUserAchievements(userEntity));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+
+                    @Override
+                    public void onComplete() { }
+                });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }

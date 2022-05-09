@@ -16,16 +16,17 @@ import androidx.navigation.Navigation;
 
 import org.modelmapper.ModelMapper;
 
-
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.LoginData;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.UserDto;
-import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
+import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.SplashViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 import lombok.SneakyThrows;
 
@@ -181,30 +182,42 @@ public class SplashFragment extends Fragment {
     }
 
     private void checkUserAndConnection(boolean hasConnection, View view) {
-        mDisposable.add(splashViewModel.getUserFromDB()
+        splashViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(user -> {
-                    if(hasConnection) {
-                        if(user.size() > 0) {
-                            Log.d(TAG, "DB ONLINE: user has been found");
-                            loginWithSavedUser();
-                        }
-                        else Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
-                    }
-                    else {
-                        if(user.size() > 0) {
-                            Log.d(TAG, "DB OFFLINE: user has been found");
-                            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
+                .subscribe(new DisposableMaybeObserver<UserEntity>() {
+                    @Override
+                    public void onSuccess(UserEntity userEntity) {
+                        if(hasConnection) {
+                            if(userEntity != null) {
+                                Log.d(TAG, "DB ONLINE: user has been found");
+                                loginWithSavedUser();
+                            }
+                            else Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
                         }
                         else {
-                            if(preferences.getString("FIRST_LAUNCH").equals("1"))
-                                textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                            else
-                                textPrompt.setText(R.string.prompt_no_internet_connection);
+                            if(userEntity != null) {
+                                Log.d(TAG, "DB OFFLINE: user has been found");
+                                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
+                            }
+                            else {
+                                if(preferences.getString("FIRST_LAUNCH").equals("1"))
+                                    textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                                else
+                                    textPrompt.setText(R.string.prompt_no_internet_connection);
+                            }
                         }
                     }
-
-                }, throwable -> Log.e(TAG, "Unable to get user", throwable)));
+                    @Override
+                    public void onError(Throwable e) { Log.e(TAG, "Unable to get user", e); }
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "No user has been found");
+                        if(preferences.getString("FIRST_LAUNCH").equals("1"))
+                            textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                        else
+                            textPrompt.setText(R.string.prompt_no_internet_connection);
+                    }
+                });
     }
 }

@@ -28,6 +28,7 @@ import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.auth.LoginUserMethods;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import lombok.Getter;
 
 public class SplashViewModel extends ViewModel implements LoginUserMethods {
@@ -83,11 +84,11 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
         surveysQuestionsRepo.callApi();
     }
 
-    public Flowable<List<UserEntity>> getUserFromDB() { return userDao.getUser(); }
+    public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
 
     public void loginUser(LoginData loginData) { loginRepo.loginUser(loginData); }
 
-    private void initRepos(){
+    private void initRepos() {
         this.testsThemesRepo = new TestsThemesRepo();
         this.testsQuestionsRepo = new TestsQuestionsRepo();
         this.testsAnswersRepo = new TestsAnswersRepo();

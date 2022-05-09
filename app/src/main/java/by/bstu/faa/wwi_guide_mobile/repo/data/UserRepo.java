@@ -13,6 +13,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 import lombok.Getter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,13 +21,8 @@ import retrofit2.Response;
 
 public class UserRepo {
     private final String TAG = UserRepo.class.getSimpleName();
-    @Getter
-    private UserDao userDao;
 
-    public UserRepo(){
-        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
-        userDao = AppInstance.getInstance().getDatabase().userDao();
-    }
+    public UserRepo() { Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR); }
 
     public void updateUserInfo(String token) {
         RetrofitService.getInstance()
@@ -50,6 +46,4 @@ public class UserRepo {
                     }
                 });
     }
-
-    public Flowable<List<UserEntity>> getUser() { return userDao.getUser(); }
 }

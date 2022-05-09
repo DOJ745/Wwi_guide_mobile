@@ -55,40 +55,6 @@ public abstract class DataRepo<T extends IdDto, B extends BaseDao<C>, C extends 
     }
 
     public void addDisposableEvents(String repoTag, List<T> resBody, Class<C> entityClass) {
-        /*mDisposable.add(insertOrUpdateEntities(resBody, entityClass)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        // On complete
-                        () -> {
-                            Log.d(repoTag, "DB: Items has been written into database");
-                            mDisposable.add(getEntitiesFromDB()
-                                    .subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(
-                                            // On complete
-                                            data -> {
-                                                Log.d(repoTag, "DB: Received current items");
-                                                setCurrentEntities(data);
-
-                                                mDisposable.add(deleteOldEntities(getCurrentEntities(), resBody, entityClass)
-                                                        .subscribeOn(Schedulers.io())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(
-                                                                // On complete
-                                                                () -> Log.d(repoTag, "DB: Deleted old items"),
-                                                                // On error
-                                                                err -> Log.e(repoTag, "Unable to delete items", err))
-                                                );
-                                            },
-                                            // On error
-                                            err -> Log.e(repoTag, "Unable to get items", err))
-                            );
-                        },
-                        // On error
-                        err -> Log.e(repoTag, "Unable to insert items", err))
-        );*/
-
         insertOrUpdateEntities(resBody, entityClass)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -75,13 +75,6 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
                                 @Override
                                 public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
                             });
-
-                    /*mDisposable.add(yearViewModel.getYearEvents(year.getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(yearEvents ->
-                                    Log.d(YEARS_FRAGMENT, "DB: getYearEvents" + yearEvents.get(0).toString()),
-                                    throwable -> Log.e(YEARS_FRAGMENT, "Unable to get events", throwable)));*/
                 };
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
