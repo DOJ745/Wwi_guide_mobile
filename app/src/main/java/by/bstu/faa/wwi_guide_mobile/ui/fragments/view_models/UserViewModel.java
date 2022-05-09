@@ -16,6 +16,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.UserRepo;
+import io.reactivex.Completable;
 import io.reactivex.Maybe;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Single;
@@ -40,7 +41,7 @@ public class UserViewModel extends ViewModel {
     @Getter
     private final UserRepo userRepo;
     @Getter@Setter
-    private String userRankImg;
+    private UserEntity userEntity;
 
     public UserViewModel() {
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
@@ -52,4 +53,5 @@ public class UserViewModel extends ViewModel {
 
     public Single<RankEntity> getUserRankByIdFromDB(String id) { return rankDao.getRankById(id); }
     public Maybe<UserEntity> getUserDataFromDB() { return userDao.getUser(); }
+    public Completable logoutUser(UserEntity userEntity) { return userDao.delete(userEntity); }
 }

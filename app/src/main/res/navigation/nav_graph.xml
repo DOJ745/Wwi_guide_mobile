@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/yearsFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.YearsFragment"
-        android:label="years_fragment"
+        android:label="fragment_years"
         tools:layout="@layout/fragment_years" />
 
     <fragment
@@ -54,7 +54,11 @@
         android:id="@+id/userFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.UserFragment"
         android:label="fragment_user"
-        tools:layout="@layout/fragment_user" />
+        tools:layout="@layout/fragment_user" >
+        <action
+            android:id="@+id/action_userFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/eventFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.EventFragment"

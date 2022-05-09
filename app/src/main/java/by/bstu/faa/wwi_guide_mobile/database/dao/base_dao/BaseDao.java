@@ -4,16 +4,11 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 
 @Dao
 public interface BaseDao<T> {
@@ -28,7 +23,7 @@ public interface BaseDao<T> {
     void updateMany(List<T> dataList);
 
     @Delete
-    void delete(T data);
+    Completable delete(T data);
     @Delete
     Completable deleteMany(List<T> data);
 }

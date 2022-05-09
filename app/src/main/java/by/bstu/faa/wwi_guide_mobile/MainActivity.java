@@ -1,5 +1,6 @@
 package by.bstu.faa.wwi_guide_mobile;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
     public static BottomNavigationView BottomNavigationView;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Wwi_guide_mobile);
@@ -34,27 +36,40 @@ public class MainActivity extends AppCompatActivity {
         }
         else preferences.put(FIRST_LAUNCH_KEY, "1");
 
-        NavHostFragment navHostFragment1 = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        assert navHostFragment1 != null;
-
         BottomNavigationView = findViewById(R.id.main_bottom_nav_view);
-
-        // Passing each menu ID as a set of IDs because each
-        // menu should be considered as top level destinations.
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.achievementsFragment,
                 R.id.testsFragment,
                 R.id.yearsFragment,
                 R.id.armamentFragment,
                 R.id.userFragment).build();
-
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
-                findFragmentById(R.id.nav_host_fragment);
-
-        assert navHostFragment != null;
-        NavController navController = navHostFragment.getNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(BottomNavigationView, navController);
+
+        BottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()){
+                case R.id.achievementsFragment:
+                    navController.navigate(R.id.achievementsFragment);
+                    return true;
+                case R.id.yearsFragment:
+                    navController.navigate(R.id.yearsFragment);
+                    return true;
+                case R.id.testsFragment:
+                    navController.navigate(R.id.testsFragment);
+                    return true;
+                case R.id.armamentFragment:
+                    navController.navigate(R.id.armamentFragment);
+                    return true;
+                case R.id.userFragment:
+                    navController.navigate(R.id.userFragment);
+                    return true;
+                default:
+                    return false;
+            }
+        });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }

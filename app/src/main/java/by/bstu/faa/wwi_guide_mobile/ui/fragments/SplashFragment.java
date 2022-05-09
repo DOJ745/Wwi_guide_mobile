@@ -189,23 +189,12 @@ public class SplashFragment extends Fragment {
                     @Override
                     public void onSuccess(UserEntity userEntity) {
                         if(hasConnection) {
-                            if(userEntity != null) {
-                                Log.d(TAG, "DB ONLINE: user has been found");
-                                loginWithSavedUser();
-                            }
-                            else Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
+                            Log.d(TAG, "DB ONLINE: user has been found");
+                            loginWithSavedUser();
                         }
                         else {
-                            if(userEntity != null) {
-                                Log.d(TAG, "DB OFFLINE: user has been found");
-                                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
-                            }
-                            else {
-                                if(preferences.getString("FIRST_LAUNCH").equals("1"))
-                                    textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                                else
-                                    textPrompt.setText(R.string.prompt_no_internet_connection);
-                            }
+                            Log.d(TAG, "DB OFFLINE: user has been found");
+                            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                         }
                     }
                     @Override
@@ -213,10 +202,15 @@ public class SplashFragment extends Fragment {
                     @Override
                     public void onComplete() {
                         Log.d(TAG, "No user has been found");
-                        if(preferences.getString("FIRST_LAUNCH").equals("1"))
-                            textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                        else
-                            textPrompt.setText(R.string.prompt_no_internet_connection);
+                        if(hasConnection) {
+                            Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
+                        }
+                        else {
+                            if(preferences.getString("FIRST_LAUNCH").equals("1"))
+                                textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                            else
+                                textPrompt.setText(R.string.prompt_no_internet_connection);
+                        }
                     }
                 });
     }

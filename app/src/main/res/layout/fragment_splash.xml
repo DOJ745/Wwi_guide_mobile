@@ -7,50 +7,54 @@
     tools:context=".ui.fragments.SplashFragment"
     android:layout_marginHorizontal="@dimen/fragment_horizontal_margin"
     android:layout_marginVertical="@dimen/fragment_vertical_margin">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal|center_vertical">
 
         <ImageView
             android:id="@+id/fragment_splash_img"
-            android:src="@drawable/test_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="150dp"
+            android:contentDescription="@string/img_description"
+            android:src="@drawable/test_icon"
+            app:layout_constraintBottom_toTopOf="@id/fragment_splash_text_prompt"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fragment_splash_text_prompt"
-            android:contentDescription="@string/img_description" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/fragment_splash_text_prompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/default_font_size"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_splash_retry_button"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_splash_img"
-            android:textSize="@dimen/default_font_size"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+            app:layout_constraintTop_toBottomOf="@id/fragment_splash_img" />
 
         <Button
             android:id="@+id/fragment_splash_retry_button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_splash_text_prompt"
             android:layout_width="@dimen/main_button_width"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_retry" />
+            android:text="@string/prompt_retry"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_splash_exit_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_splash_text_prompt" />
 
         <Button
             android:id="@+id/fragment_splash_exit_button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_splash_retry_button"
             android:layout_width="@dimen/main_button_width"
             android:layout_height="wrap_content"
-            android:text="@string/prompt_exit" />
+            android:text="@string/prompt_exit"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_splash_retry_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
