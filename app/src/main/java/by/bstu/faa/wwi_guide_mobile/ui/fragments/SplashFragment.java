@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -49,6 +50,7 @@ public class SplashFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         hasConnection = RetrofitService.hasConnection(requireContext().getApplicationContext());
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
 

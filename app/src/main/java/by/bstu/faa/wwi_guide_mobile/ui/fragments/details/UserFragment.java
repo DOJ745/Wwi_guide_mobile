@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -33,6 +34,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.AchievementsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.UserViewModel;
 import io.reactivex.MaybeObserver;
@@ -44,7 +46,7 @@ import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
 
-public class UserFragment extends Fragment implements FragmentBottomNav {
+public class UserFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
     private final String TAG = UserFragment.class.getSimpleName();
 
     private UserViewModel userViewModel;
@@ -182,9 +184,9 @@ public class UserFragment extends Fragment implements FragmentBottomNav {
                         .subscribe(new DisposableCompletableObserver() {
                             @Override
                             public void onComplete() {
-                                MainActivity.BottomNavigationView.setVisibility(View.GONE);
+                                showBottomNav(MainActivity.BottomNavigationView, false);
                                 preferences.clear();
-                                Navigation.findNavController(view).navigate(R.id.action_userFragment_to_loginFragment, null);
+                                navigateToFragment(view, "login");
                             }
                             @Override
                             public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
@@ -240,5 +242,11 @@ public class UserFragment extends Fragment implements FragmentBottomNav {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    @Override
+    public void navigateToFragment(View view, String fragmentName) {
+        if ("login".equals(fragmentName))
+            Navigation.findNavController(view).navigate(R.id.action_userFragment_to_loginFragment, null);
     }
 }

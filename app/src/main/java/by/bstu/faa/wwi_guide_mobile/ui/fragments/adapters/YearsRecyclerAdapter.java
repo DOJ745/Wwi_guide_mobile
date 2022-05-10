@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.YearDto;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 
 public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdapter.YearResultHolder>
@@ -49,10 +49,14 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
 
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
+        holder.dateTextView.setTypeface(typeface);
+        holder.titleTextView.setTypeface(typeface);
+
         YearEntity item = items.get(position);
 
-        holder.yearDateTextView.setText(String.valueOf(item.getDate()));
-        holder.yearTitleTextView.setText(item.getTitle());
+        holder.dateTextView.setText(String.valueOf(item.getDate()));
+        holder.titleTextView.setText(item.getTitle());
 
         Glide
                 .with(holder.itemView)
@@ -61,7 +65,7 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
-                .into(holder.yearImageView);
+                .into(holder.imgView);
 
         holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
@@ -80,15 +84,15 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
 
     static class YearResultHolder extends RecyclerView.ViewHolder {
 
-        private final TextView yearDateTextView;
-        private final TextView yearTitleTextView;
-        private final ImageView yearImageView;
+        private final TextView dateTextView;
+        private final TextView titleTextView;
+        private final ImageView imgView;
 
         public YearResultHolder(@NonNull View itemView) {
             super(itemView);
-            yearDateTextView = itemView.findViewById(R.id.item_year_date);
-            yearTitleTextView = itemView.findViewById(R.id.item_year_title);
-            yearImageView = itemView.findViewById(R.id.item_year_img);
+            dateTextView = itemView.findViewById(R.id.item_year_date);
+            titleTextView = itemView.findViewById(R.id.item_year_title);
+            imgView = itemView.findViewById(R.id.item_year_img);
         }
     }
 }

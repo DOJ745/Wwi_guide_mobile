@@ -11,7 +11,9 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
+        <item name="android:fontFamily">@font/old_type_nr_regular</item>
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -19,7 +21,6 @@
     </style>
 
     <style name="AppTheme.AuthFragments" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
     </style>
 
 </resources>
