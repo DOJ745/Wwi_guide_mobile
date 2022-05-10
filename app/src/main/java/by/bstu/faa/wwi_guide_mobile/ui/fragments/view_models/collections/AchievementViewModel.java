@@ -8,7 +8,7 @@ import lombok.Getter;
 
 public class AchievementViewModel extends ViewModel {
     @Getter
-    private AchievementRepo achievementRepo;
+    private final AchievementRepo achievementRepo;
 
     public AchievementViewModel(){
         this.achievementRepo = new AchievementRepo();

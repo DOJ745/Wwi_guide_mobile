@@ -42,7 +42,7 @@
         tools:layout="@layout/fragment_achievements" />
     <fragment
         android:id="@+id/testsFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.TestsFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.TestsThemesFragment"
         android:label="fragment_tests"
         tools:layout="@layout/fragment_tests" />
     <fragment

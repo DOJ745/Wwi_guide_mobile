@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseAnswerEntity;
 import lombok.EqualsAndHashCode;
@@ -23,4 +26,6 @@ import lombok.ToString;
 public class TestAnswerEntity extends BaseAnswerEntity {
     @ColumnInfo@NonNull
     private String testQuestionId;
+    @ColumnInfo
+    private Boolean isTrue;
 }

@@ -35,17 +35,14 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     }
 
     // Layout for item
-
     @NonNull
     @Override
     public YearResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         View itemView = inflater.inflate(R.layout.collection_item_year, parent, false);
         return new YearResultHolder(itemView);
     }
 
     // Put data in elements of item's UI
-
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
@@ -80,9 +77,7 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     }
 
     // Define elements in view of our item
-
     static class YearResultHolder extends RecyclerView.ViewHolder {
-
         private final TextView dateTextView;
         private final TextView titleTextView;
         private final ImageView imgView;
