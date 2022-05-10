@@ -43,6 +43,7 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
 
         QuestionItem item = items.get(position);
 
+        holder.textView.setText(item.getQuestionText());
         if(item.getQuestionImg() != null){
             Glide
                     .with(holder.itemView)
@@ -55,9 +56,9 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
         }
         else holder.imgView.setVisibility(View.GONE);
 
-        holder.answerOne.setText(item.getAnswersText().get(0));
-        holder.answerTwo.setText(item.getAnswersText().get(1));
-        holder.answerThree.setText(item.getAnswersText().get(2));
+        holder.answerOne.setText(item.getAnswers().get(0).getText());
+        holder.answerTwo.setText(item.getAnswers().get(1).getText());
+        holder.answerThree.setText(item.getAnswers().get(2).getText());
     }
 
     @Override
@@ -68,7 +69,7 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
     @Override
     public void setItems(List<QuestionItem> items) {
         this.items = items;
-        //this.notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
 
     static class TestResultHolder extends RecyclerView.ViewHolder {

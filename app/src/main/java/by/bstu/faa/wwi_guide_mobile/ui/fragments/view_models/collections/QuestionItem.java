@@ -2,20 +2,14 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections;
 
 import java.util.ArrayList;
 
+import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import lombok.Data;
 
 @Data
 public class QuestionItem {
-    private String questionId;
     private String questionText;
     private String questionImg;
-    private ArrayList<String> answersText;
-    private ArrayList<Integer> answersPoints;
-    private ArrayList<String> answersIsTrue;
+    private ArrayList<TestAnswerEntity> answers;
 
-    public QuestionItem(){
-        answersText = new ArrayList<>();
-        answersPoints = new ArrayList<>();
-        answersIsTrue = new ArrayList<>();
-    }
+    public QuestionItem(){ answers = new ArrayList<>(); }
 }

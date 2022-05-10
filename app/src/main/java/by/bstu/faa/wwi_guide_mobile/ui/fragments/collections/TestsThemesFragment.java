@@ -29,11 +29,8 @@ import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestQuestionRecyclerAd
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestsThemesRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.QuestionItem;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.TestsThemesViewModel;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableMaybeObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
@@ -74,87 +71,12 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
                         public void onSuccess(List<TestThemeEntity> testThemeEntities) {
                             Log.d(TAG, "DB: set themes to collection");
                             testsThemesRecyclerAdapter.setItems(testThemeEntities);
-                            //themeEntities.addAll(testThemeEntities);
                         }
                         @Override
                         public void onError(Throwable e) { }
                         @Override
                         public void onComplete() { }
                     });
-
-            /*testsThemesViewModel.getQuestions().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableMaybeObserver<List<TestQuestionEntity>>() {
-                        @Override
-                        public void onSuccess(List<TestQuestionEntity> questions) {
-                            Log.d(TAG, "DB: set questions to collection");
-                            testQuestionEntities.addAll(questions);
-                        }
-                        @Override
-                        public void onError(Throwable e) { }
-                        @Override
-                        public void onComplete() { }
-                    });
-
-            testsThemesViewModel.getAnswers().subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableMaybeObserver<List<TestAnswerEntity>>() {
-                        @Override
-                        public void onSuccess(List<TestAnswerEntity> answers) {
-                            Log.d(TAG, "DB: set answers to collection");
-                            testAnswersEntities.addAll(answers);
-                        }
-                        @Override
-                        public void onError(Throwable e) { }
-                        @Override
-                        public void onComplete() { }
-                    });*/
-
-            /*testThemeClickListener = (testThemeEntity, position) -> {
-                Log.d(TAG, "themeId: " + testThemeEntity.getId());
-                testsThemesViewModel.getTestThemeQuestions(testThemeEntity.getId()).subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new SingleObserver<List<TestQuestionEntity>>() {
-                                       @Override
-                                       public void onSubscribe(Disposable d) { }
-                                       @Override
-                                       public void onSuccess(List<TestQuestionEntity> entities) {
-                                           for(TestQuestionEntity question: entities) {
-                                               QuestionItem temp = new QuestionItem();
-                                               temp.setQuestionId(question.getId());
-                                               temp.setQuestionText(question.getText());
-                                               temp.setQuestionImg(question.getImg());
-                                               questionItems.add(temp);
-                                           }
-
-                                           for(QuestionItem item: questionItems) {
-                                               testsThemesViewModel.getQuestionAnswers(item.getQuestionId()).subscribeOn(Schedulers.io())
-                                                       .observeOn(AndroidSchedulers.mainThread())
-                                                       .subscribe(new SingleObserver<List<TestAnswerEntity>>() {
-                                                           @Override
-                                                           public void onSubscribe(Disposable d) { }
-                                                           @Override
-                                                           public void onSuccess(List<TestAnswerEntity> entities) {
-                                                               for(int i = 0; i < entities.size(); i++){
-                                                                   item.getAnswersText().add(entities.get(i).getText());
-                                                                   item.getAnswersPoints().add(entities.get(i).getPoints());
-                                                                   item.getAnswersIsTrue().add(entities.get(i).getIsTrue());
-                                                               }
-                                                           }
-                                                           @Override
-                                                           public void onError(Throwable e) { }
-                                                       });
-                                           }
-                                       }
-                                       @Override
-                                       public void onError(Throwable e) { }
-                                   }
-                        );
-
-                Log.d(TAG, "First question: " + questionItems.get(0));
-                testQuestionRecyclerAdapter.setItems(questionItems);
-                recyclerView.setAdapter(testQuestionRecyclerAdapter);
-            };*/
         }
     }
 
@@ -176,68 +98,26 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         timerView = view.findViewById(R.id.fragment_tests_timer);
 
         if(hasConnection) {
+            testThemeClickListener = (theme, position) -> {
+                List<TestQuestionEntity> currentQuestions = new ArrayList<>(testsThemesViewModel.getTestThemeQuestions(theme.getId()));
 
-                /*for(int i = 0; i < testQuestionEntities.size(); i++){
-                    QuestionItem item = new QuestionItem();
-                    if(testQuestionEntities.get(i).getTestThemeId().equals(testThemeEntity.getId())){
-                        item.setQuestionText(testQuestionEntities.get(i).getText());
-                        item.setQuestionImg(testQuestionEntities.get(i).getImg());
-                        item.setQuestionId(testQuestionEntities.get(i).getId());
-                        questionItems.add(item);
-                    }
-                }*/
-                /*for(int i = 0; i < testAnswersEntities.size(); i++){
-                    if(questionItems.get(i).getQuestionId().equals(testAnswersEntities.get(i).getTestQuestionId())){
-                        questionItems.get(i).getAnswersText().add(currentAnswers.get(i).getText());
-                        questionItems.get(i).getAnswersPoints().add(currentAnswers.get(i).getPoints());
-                        questionItems.get(i).getAnswersIsTrue().add(currentAnswers.get(i).getIsTrue());
-                    }
-                }*/
-
-                /*for(int i = 0; i < testAnswersEntities.size(); i++){
-                    if(testQuestionEntities.get(i).getId().equals(testAnswersEntities.get(i).getTestQuestionId())){
-                        currentAnswers.add(testAnswersEntities.get(i));
-                    }
-                }*/
-
-                /*for(int i = 0; i < currentQuestions.size(); i++){
-                    QuestionItem item = new QuestionItem();
-                    if(currentQuestions.get(i).getId().equals(currentAnswers.get(i).getTestQuestionId())){
-                        item.setQuestionText(currentQuestions.get(i).getText());
-                        item.setQuestionImg(currentQuestions.get(i).getImg());
-                        item.setQuestionId(currentQuestions.get(i).getId());
-                        questionItems.add(item);
-                    }
-                }*/
-
-                /*for(int i = 0; i < currentAnswers.size(); i++){
-                    if(questionItems.get(i).getQuestionId().equals(currentAnswers.get(i).getTestQuestionId())){
-                        questionItems.get(i).getAnswersText().add(currentAnswers.get(i).getText());
-                        questionItems.get(i).getAnswersPoints().add(currentAnswers.get(i).getPoints());
-                        questionItems.get(i).getAnswersIsTrue().add(currentAnswers.get(i).getIsTrue());
-                    }
-                }*/
-
-                /*for (TestQuestionEntity entity: currentQuestions) {
-                    QuestionItem item = new QuestionItem();
-                    item.setQuestionImg(entity.getImg());
-                    item.setQuestionText(entity.getText());
-                    item.setQuestionId(entity.getId());
-                    questionItems.add(item);
+                for(TestQuestionEntity question: currentQuestions){
+                    QuestionItem temp = new QuestionItem();
+                    temp.setQuestionText(question.getText());
+                    temp.setQuestionImg(question.getImg());
+                    temp.setAnswers((ArrayList<TestAnswerEntity>) testsThemesViewModel.getQuestionAnswers(question.getId()));
+                    questionItems.add(temp);
                 }
-                for(int i = 0; i < questionItems.size(); i++){
-                    if(questionItems.get(i).getQuestionId().equals(currentAnswers.get(i).getTestQuestionId())){
-                        questionItems.get(i).getAnswersText().add(currentAnswers.get(i).getText());
-                        questionItems.get(i).getAnswersPoints().add(currentAnswers.get(i).getPoints());
-                        questionItems.get(i).getAnswersIsTrue().add(currentAnswers.get(i).getIsTrue());
-                    }
-                }*/
 
+                testQuestionRecyclerAdapter.setItems(questionItems);
+                recyclerView.setAdapter(testQuestionRecyclerAdapter);
+                finishTestBtn.setVisibility(View.VISIBLE);
+                timerView.setVisibility(View.VISIBLE);
+            };
             testsThemesRecyclerAdapter = new TestsThemesRecyclerAdapter(requireContext().getApplicationContext(), testThemeClickListener);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(testsThemesRecyclerAdapter);
-            //finishTestBtn.setVisibility(View.VISIBLE);
-            //timerView.setVisibility(View.VISIBLE);
+
         }
         else {
             recyclerView.setVisibility(View.GONE);
