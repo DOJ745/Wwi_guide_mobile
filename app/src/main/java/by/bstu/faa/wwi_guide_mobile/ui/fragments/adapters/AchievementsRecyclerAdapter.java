@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +37,13 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
 
     @Override
     public void onBindViewHolder(@NonNull AchievementResultHolder holder, int position) {
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
+        holder.nameTextView.setTypeface(typeface);
+        holder.descriptionTextView.setTypeface(typeface);
+
         AchievementEntity item = items.get(position);
-        holder.achievementItemName.setText(item.getName());
-        holder.achievementItemDescription.setText(item.getDescription());
+        holder.nameTextView.setText(item.getName());
+        holder.descriptionTextView.setText(item.getDescription());
         Glide
                 .with(holder.itemView)
                 .asBitmap()
@@ -46,7 +51,7 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
-                .into(holder.achievementImageView);
+                .into(holder.imgView);
 
     }
 
@@ -60,15 +65,15 @@ public class AchievementsRecyclerAdapter extends RecyclerView.Adapter<Achievemen
 
     static class AchievementResultHolder extends RecyclerView.ViewHolder {
 
-        private final TextView achievementItemName;
-        private final TextView achievementItemDescription;
-        private final ImageView achievementImageView;
+        private final TextView nameTextView;
+        private final TextView descriptionTextView;
+        private final ImageView imgView;
 
         public AchievementResultHolder(@NonNull View itemView) {
             super(itemView);
-            achievementItemName = itemView.findViewById(R.id.item_achievement_name);
-            achievementItemDescription = itemView.findViewById(R.id.item_achievement_description);
-            achievementImageView = itemView.findViewById(R.id.item_achievement_img);
+            nameTextView = itemView.findViewById(R.id.item_achievement_name);
+            descriptionTextView = itemView.findViewById(R.id.item_achievement_description);
+            imgView = itemView.findViewById(R.id.item_achievement_img);
         }
     }
 }

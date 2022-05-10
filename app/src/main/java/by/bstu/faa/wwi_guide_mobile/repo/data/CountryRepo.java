@@ -37,7 +37,7 @@ public class CountryRepo extends DataRepo<CountryDto, CountryDao, CountryEntity>
                             @NonNull Call<List<CountryDto>> call,
                             @NonNull Response<List<CountryDto>> res) {
                         if(res.body() != null) {
-                            //apiRes.postValue(response.body());
+                            apiRes.postValue(res.body());
                             Log.d(TAG, "Received COUNTRY DATA");
                             addDisposableEvents(TAG, res.body(), CountryEntity.class);
                         }

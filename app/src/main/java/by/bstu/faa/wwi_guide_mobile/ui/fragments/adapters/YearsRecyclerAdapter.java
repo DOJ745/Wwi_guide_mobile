@@ -48,7 +48,6 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
 
     @Override
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
-
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.dateTextView.setTypeface(typeface);
         holder.titleTextView.setTypeface(typeface);

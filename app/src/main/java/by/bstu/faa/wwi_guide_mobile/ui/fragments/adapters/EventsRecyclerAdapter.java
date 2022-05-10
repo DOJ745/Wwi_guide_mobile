@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,11 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull EventsRecyclerAdapter.EventResultHolder holder, int position) {
+        Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
+        holder.titleTextView.setTypeface(typeface);
 
         EventEntity item = items.get(position);
-        holder.eventTitleTextView.setText(item.getTitle());
+        holder.titleTextView.setText(item.getTitle());
 
         Glide
                 .with(holder.itemView)
@@ -54,7 +57,7 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                 .placeholder(R.drawable.placeholder)
                 .error(R.drawable.error)
-                .into(holder.eventImageView);
+                .into(holder.imgView);
 
         holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
@@ -71,13 +74,13 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
 
     static class EventResultHolder extends RecyclerView.ViewHolder {
 
-        private final TextView eventTitleTextView;
-        private final ImageView eventImageView;
+        private final TextView titleTextView;
+        private final ImageView imgView;
 
         public EventResultHolder(@NonNull View itemView) {
             super(itemView);
-            eventTitleTextView = itemView.findViewById(R.id.item_event_title);
-            eventImageView = itemView.findViewById(R.id.item_event_img);
+            titleTextView = itemView.findViewById(R.id.item_event_title);
+            imgView = itemView.findViewById(R.id.item_event_img);
         }
     }
 }
