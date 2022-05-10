@@ -16,8 +16,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_tests_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="590dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="500dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_tests_timer" />
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Button"
+            android:text="@string/prompt_answer"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

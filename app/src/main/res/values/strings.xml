@@ -60,6 +60,7 @@
     <!-- YEARS FRAGMENT -->
     <!-- TESTS FRAGMENT -->
     <string name="prompt_no_tests">Тесты можно проходить только с наличием связи со штабом (наличие интернет-соединения)!</string>
+    <string name="prompt_answer">Ответить</string>
     <!-- Armament FRAGMENT -->
 
     <!-- BOTTOM NAV BAR -->

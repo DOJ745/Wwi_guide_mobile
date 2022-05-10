@@ -108,16 +108,15 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
                     temp.setAnswers((ArrayList<TestAnswerEntity>) testsThemesViewModel.getQuestionAnswers(question.getId()));
                     questionItems.add(temp);
                 }
-
                 testQuestionRecyclerAdapter.setItems(questionItems);
                 recyclerView.setAdapter(testQuestionRecyclerAdapter);
                 finishTestBtn.setVisibility(View.VISIBLE);
                 timerView.setVisibility(View.VISIBLE);
             };
+
             testsThemesRecyclerAdapter = new TestsThemesRecyclerAdapter(requireContext().getApplicationContext(), testThemeClickListener);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             recyclerView.setAdapter(testsThemesRecyclerAdapter);
-
         }
         else {
             recyclerView.setVisibility(View.GONE);
