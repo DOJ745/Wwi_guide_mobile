@@ -1,7 +1,9 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseEntityId;
@@ -14,8 +16,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = CONSTANTS.APP_DATABASE.TEST_THEME_TABLE)
+@Entity(tableName = CONSTANTS.APP_DATABASE.TEST_THEME_TABLE, foreignKeys = {
+        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
+})
 public class TestThemeEntity extends BaseEntityId {
-    @ColumnInfo
+    @ColumnInfo@NonNull
     private String name;
+    @ColumnInfo@NonNull
+    private String achievementId;
 }

@@ -12,4 +12,6 @@ import lombok.EqualsAndHashCode;
 public class TestThemeDto extends IdDto {
     @SerializedName("name")@Expose
     private String name;
+    @SerializedName("achievementId")@Expose
+    private String achievementId;
 }
