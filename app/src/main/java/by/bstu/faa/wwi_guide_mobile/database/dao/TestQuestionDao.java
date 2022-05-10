@@ -17,5 +17,6 @@ public interface TestQuestionDao extends BaseDao<TestQuestionEntity> {
     Maybe<List<TestQuestionEntity>> getAll();
 
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.TESTS_QUESTIONS_TABLE + " WHERE testThemeId =:testThemeId")
-    Single<List<TestQuestionEntity>> getTestsQuestionsByThemeId(String testThemeId);
+    //Single<List<TestQuestionEntity>> getTestsQuestionsByThemeId(String testThemeId);
+    List<TestQuestionEntity>getTestsQuestionsByThemeId(String testThemeId);
 }

@@ -17,6 +17,7 @@ public class AppInstance extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        // TODO: if what, remove allowMainThreadQueries
         database = Room.databaseBuilder(this, AppDatabase.class, CONSTANTS.APP_DATABASE.DATABASE_NAME)
                 .allowMainThreadQueries()
                 .build();

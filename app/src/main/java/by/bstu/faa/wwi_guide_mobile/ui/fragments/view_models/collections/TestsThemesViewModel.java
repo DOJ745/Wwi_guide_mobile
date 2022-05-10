@@ -38,10 +38,17 @@ public class TestsThemesViewModel extends ViewModel {
     public Maybe<List<TestQuestionEntity>> getQuestions() { return testQuestionDao.getAll(); }
     public Maybe<List<TestAnswerEntity>> getAnswers() { return testAnswerDao.getAll(); }
 
-    public Single<List<TestQuestionEntity>> getTestThemeQuestions(String themeId) {
+    public List<TestQuestionEntity> getTestThemeQuestions(String themeId) {
+        return  testQuestionDao.getTestsQuestionsByThemeId(themeId);
+    }
+    public List<TestAnswerEntity> getQuestionAnswers(String questionId) {
+        return testAnswerDao.getQuestionAnswersByQuestionId(questionId);
+    }
+
+    /*public Single<List<TestQuestionEntity>> getTestThemeQuestions(String themeId) {
         return  testQuestionDao.getTestsQuestionsByThemeId(themeId);
     }
     public Single<List<TestAnswerEntity>> getQuestionAnswers(String questionId) {
         return testAnswerDao.getQuestionAnswersByQuestionId(questionId);
-    }
+    }*/
 }

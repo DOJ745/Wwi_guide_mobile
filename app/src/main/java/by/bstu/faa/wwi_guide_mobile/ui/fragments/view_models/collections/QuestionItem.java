@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class QuestionItem {
+    private String questionId;
     private String questionText;
     private String questionImg;
     private ArrayList<String> answersText;

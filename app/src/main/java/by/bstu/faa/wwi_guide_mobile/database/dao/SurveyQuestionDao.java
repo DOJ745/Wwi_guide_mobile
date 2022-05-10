@@ -8,7 +8,9 @@ import java.util.List;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.base_dao.BaseDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 
 @Dao
 public interface SurveyQuestionDao extends BaseDao<SurveyQuestionEntity> {
