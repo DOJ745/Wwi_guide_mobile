@@ -35,6 +35,9 @@ public class TestsThemesViewModel extends ViewModel {
     }
 
     public Maybe<List<TestThemeEntity>> getTestsThemes() { return testThemeDao.getAll(); }
+    public Maybe<List<TestQuestionEntity>> getQuestions() { return testQuestionDao.getAll(); }
+    public Maybe<List<TestAnswerEntity>> getAnswers() { return testAnswerDao.getAll(); }
+
     public Single<List<TestQuestionEntity>> getTestThemeQuestions(String themeId) {
         return  testQuestionDao.getTestsQuestionsByThemeId(themeId);
     }

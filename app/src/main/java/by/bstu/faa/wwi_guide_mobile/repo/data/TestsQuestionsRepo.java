@@ -38,7 +38,7 @@ public class TestsQuestionsRepo extends DataRepo<TestQuestionDto, TestQuestionDa
                         if(res.body() != null && res.isSuccessful()) {
                             //apiRes.postValue(res.body());
                             dataDao = AppInstance.getInstance().getDatabase().testQuestionDao();
-                            Log.d(TAG, "Received ACHIEVEMENT DATA");
+                            Log.d(TAG, "Received tests questions");
                             addDisposableEvents(TAG, res.body(), TestQuestionEntity.class);
                         }
                     }

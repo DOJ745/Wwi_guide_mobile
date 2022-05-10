@@ -10,7 +10,7 @@ public class QuestionItem {
     private String questionImg;
     private ArrayList<String> answersText;
     private ArrayList<Integer> answersPoints;
-    private ArrayList<Boolean> answersIsTrue;
+    private ArrayList<String> answersIsTrue;
 
     public QuestionItem(){
         answersText = new ArrayList<>();

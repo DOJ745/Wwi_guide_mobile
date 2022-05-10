@@ -8,6 +8,7 @@ import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.AchievementDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.AppMsgResponseDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.EventDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.LogDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.RankDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.SurveyAnswerDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.SurveyQuestionDto;
@@ -36,7 +37,7 @@ public interface AppApi {
     Call<AppMsgResponseDto> updateUserInfo(@Header("Authorization") String token);
 
     @POST("logs")
-    Call<AppMsgResponseDto> sendLog(@Header("Authorization") String token);
+    Call<Void> sendLog(@Header("Authorization") String token, @Body LogDto userLog);
 
     @GET("years")
     Call<List<YearDto>> getYears();

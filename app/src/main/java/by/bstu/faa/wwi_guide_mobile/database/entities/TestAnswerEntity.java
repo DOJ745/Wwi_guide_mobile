@@ -27,5 +27,5 @@ public class TestAnswerEntity extends BaseAnswerEntity {
     @ColumnInfo@NonNull
     private String testQuestionId;
     @ColumnInfo
-    private Boolean isTrue;
+    private String isTrue;
 }

@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 public class TestAnswerDto extends BaseAnswerDto {
     @SerializedName("isTrue")@Expose
-    private boolean isTrue;
+    private String isTrue;
     @SerializedName("testQuestionId")@Expose
     private String testQuestionId;
 }

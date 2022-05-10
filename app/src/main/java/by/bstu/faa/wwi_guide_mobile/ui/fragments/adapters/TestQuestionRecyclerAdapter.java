@@ -43,14 +43,17 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
 
         QuestionItem item = items.get(position);
 
-        Glide
-                .with(holder.itemView)
-                .asBitmap()
-                .load(item.getQuestionImg())
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.error)
-                .into(holder.imgView);
+        if(item.getQuestionImg() != null){
+            Glide
+                    .with(holder.itemView)
+                    .asBitmap()
+                    .load(item.getQuestionImg())
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .into(holder.imgView);
+        }
+        else holder.imgView.setVisibility(View.GONE);
 
         holder.answerOne.setText(item.getAnswersText().get(0));
         holder.answerTwo.setText(item.getAnswersText().get(1));
@@ -65,7 +68,7 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
     @Override
     public void setItems(List<QuestionItem> items) {
         this.items = items;
-        this.notifyDataSetChanged();
+        //this.notifyDataSetChanged();
     }
 
     static class TestResultHolder extends RecyclerView.ViewHolder {
