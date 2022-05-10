@@ -47,7 +47,7 @@ public class AchievementsFragment extends Fragment implements FragmentBottomNav 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
 
         AchievementViewModel achievementViewModel = new ViewModelProvider(this).get(AchievementViewModel.class);
-        achievementsAdapter = new AchievementsRecyclerAdapter(requireContext().getApplicationContext());
+        achievementsAdapter = new AchievementsRecyclerAdapter(requireContext());
 
         achievementViewModel.getAchievementRepo().getEntitiesFromDB()
                 .subscribeOn(Schedulers.io())

@@ -59,7 +59,8 @@
     <!-- EVENTS FRAGMENT -->
     <!-- YEARS FRAGMENT -->
     <!-- TESTS FRAGMENT -->
-    <!-- WEAPONS AND TECHNIQUE FRAGMENT -->
+    <string name="prompt_no_tests">Тесты можно проходить только с наличием связи со штабом (наличие интернет-соединения)!</string>
+    <!-- Armament FRAGMENT -->
 
     <!-- BOTTOM NAV BAR -->
     <string name="nav_item_years">Года</string>

@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
@@ -39,6 +42,9 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
     private RecyclerView recyclerView;
     private TestsThemesRecyclerAdapter testsThemesRecyclerAdapter;
     private TestQuestionRecyclerAdapter testQuestionRecyclerAdapter;
+    private Boolean hasConnection;
+    private TextView timerView;
+    private Button finishTestBtn;
     //private ArrayList<QuestionItem> questionItems;
 
     public TestsThemesFragment() {
@@ -51,66 +57,72 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         super.onCreate(savedInstanceState);
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
 
-        //questionItems = new ArrayList<>();
-        testsThemesViewModel = new ViewModelProvider(this).get(TestsThemesViewModel.class);
+        hasConnection = RetrofitService.hasConnection(requireContext());
 
-        TestsThemesRecyclerAdapter.OnItemClickListener testThemeClickListener =
-                (testThemeEntity, position) -> {
-                    Toast.makeText(requireContext().getApplicationContext(),
-                            "You chose testThemeEntity with title " + testThemeEntity.getName(),
-                            Toast.LENGTH_SHORT).show();
+        if(hasConnection) {
+            //questionItems = new ArrayList<>();
+            testsThemesViewModel = new ViewModelProvider(this).get(TestsThemesViewModel.class);
+            testQuestionRecyclerAdapter = new TestQuestionRecyclerAdapter(requireContext());
 
-                    testsThemesViewModel.getTestThemeQuestions(testThemeEntity.getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableSingleObserver<List<TestQuestionEntity>>() {
-                                @Override
-                                public void onSuccess(List<TestQuestionEntity> testQuestionEntities) {
-                                    ArrayList<QuestionItem> temp = new ArrayList<>();
-                                    for (TestQuestionEntity question: testQuestionEntities) {
-                                        QuestionItem questionItem = new QuestionItem();
+            TestsThemesRecyclerAdapter.OnItemClickListener testThemeClickListener =
+                    (testThemeEntity, position) -> {
+                        Toast.makeText(requireContext().getApplicationContext(),
+                                "You chose testThemeEntity with title " + testThemeEntity.getName(),
+                                Toast.LENGTH_SHORT).show();
 
-                                        testsThemesViewModel.getQuestionAnswers(question.getId())
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new DisposableSingleObserver<List<TestAnswerEntity>>() {
-                                                    @Override
-                                                    public void onSuccess(List<TestAnswerEntity> testAnswerEntities) {
-                                                        questionItem.setQuestionText(question.getText());
-                                                        questionItem.setQuestionImg(question.getImg());
+                        testsThemesViewModel.getTestThemeQuestions(testThemeEntity.getId())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableSingleObserver<List<TestQuestionEntity>>() {
+                                    @Override
+                                    public void onSuccess(List<TestQuestionEntity> testQuestionEntities) {
+                                        ArrayList<QuestionItem> temp = new ArrayList<>();
+                                        for (TestQuestionEntity question: testQuestionEntities) {
+                                            QuestionItem questionItem = new QuestionItem();
 
-                                                        for (TestAnswerEntity answer: testAnswerEntities) {
-                                                            questionItem.getAnswersText().add(answer.getText());
-                                                            questionItem.getAnswersPoints().add(answer.getPoints());
-                                                            questionItem.getAnswersIsTrue().add(answer.getIsTrue());
+                                            testsThemesViewModel.getQuestionAnswers(question.getId())
+                                                    .subscribeOn(Schedulers.io())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(new DisposableSingleObserver<List<TestAnswerEntity>>() {
+                                                        @Override
+                                                        public void onSuccess(List<TestAnswerEntity> testAnswerEntities) {
+                                                            questionItem.setQuestionText(question.getText());
+                                                            questionItem.setQuestionImg(question.getImg());
+
+                                                            for (TestAnswerEntity answer: testAnswerEntities) {
+                                                                questionItem.getAnswersText().add(answer.getText());
+                                                                questionItem.getAnswersPoints().add(answer.getPoints());
+                                                                questionItem.getAnswersIsTrue().add(answer.getIsTrue());
+                                                            }
+                                                            temp.add(questionItem);
                                                         }
-                                                        temp.add(questionItem);
-                                                    }
-                                                    @Override
-                                                    public void onError(Throwable e) { }
-                                                });
+                                                        @Override
+                                                        public void onError(Throwable e) { }
+                                                    });
+                                        }
+                                        testQuestionRecyclerAdapter.setItems(temp);
                                     }
-                                    testQuestionRecyclerAdapter.setItems(temp);
-                                }
-                                @Override
-                                public void onError(Throwable e) { }
-                            });
-                };
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                });
+                    };
 
-        testsThemesRecyclerAdapter = new TestsThemesRecyclerAdapter(requireContext().getApplicationContext(), testThemeClickListener);
+            testsThemesRecyclerAdapter = new TestsThemesRecyclerAdapter(requireContext().getApplicationContext(), testThemeClickListener);
 
-        testsThemesViewModel.getTestsThemes().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableMaybeObserver<List<TestThemeEntity>>() {
-                    @Override
-                    public void onSuccess(List<TestThemeEntity> testThemeEntities) {
-                        testsThemesRecyclerAdapter.setItems(testThemeEntities);
-                    }
-                    @Override
-                    public void onError(Throwable e) { }
-                    @Override
-                    public void onComplete() { }
-                });
+            testsThemesViewModel.getTestsThemes().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new DisposableMaybeObserver<List<TestThemeEntity>>() {
+                        @Override
+                        public void onSuccess(List<TestThemeEntity> testThemeEntities) {
+                            testsThemesRecyclerAdapter.setItems(testThemeEntities);
+                        }
+                        @Override
+                        public void onError(Throwable e) { }
+                        @Override
+                        public void onComplete() { }
+                    });
+        }
+        else { hasConnection = false; }
     }
 
     @Override
@@ -126,8 +138,22 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.fragment_tests_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(testsThemesRecyclerAdapter);
+        TextView noInternet = view.findViewById(R.id.fragment_tests_no_internet);
+        finishTestBtn = view.findViewById(R.id.fragment_tests_btn_finish);
+        timerView = view.findViewById(R.id.fragment_tests_timer);
+
+        if(hasConnection) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+            recyclerView.setAdapter(testsThemesRecyclerAdapter);
+            finishTestBtn.setVisibility(View.VISIBLE);
+            timerView.setVisibility(View.VISIBLE);
+        }
+        else {
+            recyclerView.setVisibility(View.GONE);
+            timerView.setVisibility(View.GONE);
+            finishTestBtn.setVisibility(View.GONE);
+            noInternet.setVisibility(View.VISIBLE);
+        }
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
