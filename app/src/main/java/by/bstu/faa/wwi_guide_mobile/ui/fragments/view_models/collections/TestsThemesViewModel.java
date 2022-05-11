@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.LogDto;
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestAnswerDao;
@@ -17,6 +18,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
+import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.DataMethods;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,10 +40,16 @@ public class TestsThemesViewModel extends ViewModel implements DataMethods {
     private final UserDao userDao;
     @Getter@Setter
     private int testThreshold;
+    @Getter@Setter
+    private String themeId;
     @Getter
     private final ArrayList<QuestionItem> questionItems = new ArrayList<>();
     @Getter@Setter
     private String achievementId;
+    @Getter
+    private LogRepo logRepo;
+    @Getter@Setter
+    private LogDto log;
 
     public TestsThemesViewModel() {
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
@@ -49,8 +57,11 @@ public class TestsThemesViewModel extends ViewModel implements DataMethods {
         testQuestionDao = AppInstance.getInstance().getDatabase().testQuestionDao();
         testAnswerDao = AppInstance.getInstance().getDatabase().testAnswerDao();
         userDao = AppInstance.getInstance().getDatabase().userDao();
+        logRepo = new LogRepo();
+        log = new LogDto();
     }
 
+    public void sendLog(String token, LogDto data) { logRepo.sendLog(token, data); }
     public Maybe<List<TestThemeEntity>> getTestsThemes() { return testThemeDao.getAll(); }
     public List<TestQuestionEntity> getTestThemeQuestions(String themeId) {
         return testQuestionDao.getTestsQuestionsByThemeId(themeId);

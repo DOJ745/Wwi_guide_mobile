@@ -30,6 +30,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
+import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestQuestionRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestsThemesRecyclerAdapter;
@@ -56,6 +57,8 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
     private TestsThemesRecyclerAdapter.OnItemClickListener testThemeClickListener;
     private UserEntity user;
 
+    private SecurePreferences preferences;
+
     public TestsThemesFragment() {
         // Required empty public constructor
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
@@ -66,6 +69,7 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         super.onCreate(savedInstanceState);
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
         hasConnection = RetrofitService.hasConnection(requireContext());
+        preferences = SecurePreferences.getInstance(requireContext());
 
         testsThemesViewModel = new ViewModelProvider(this).get(TestsThemesViewModel.class);
         testQuestionRecyclerAdapter = new TestQuestionRecyclerAdapter(requireContext());
@@ -136,12 +140,15 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         if(hasConnection) {
             testThemeClickListener = (theme, position) -> {
                 infoBtn.setVisibility(View.GONE);
-
+                testsThemesViewModel.setThemeId(theme.getId());
                 answerTimer = new CountDownTimer(90000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         timerView.setText("Осталость " + millisUntilFinished / 1000 + " сек.");
                     }
-                    public void onFinish() { timerView.setText("Время вышло"); }
+                    public void onFinish() {
+                        timerView.setText("Время вышло");
+                        recyclerView.setAdapter(testsThemesRecyclerAdapter);
+                    }
                 }.start();
 
                 float _testThreshold = 0.0f;
@@ -188,6 +195,14 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         finishTestBtn.setOnClickListener(v -> {
             answerTimer.cancel();
             user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum());
+
+            testsThemesViewModel.getLog().formLog(
+                    CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_TEST + testsThemesViewModel.getThemeId(),
+                    CONSTANTS.LOG_STRUCT.ACTION_RESULT_TEST_RATIO +
+                            testQuestionRecyclerAdapter.getCorrectAnswersAmount() + "/" + testsThemesViewModel.getTestThreshold());
+
+            testsThemesViewModel.sendLog(preferences.getString("token"), testsThemesViewModel.getLog());
+
             if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()){
                 user.getAchievements().add(testsThemesViewModel.getAchievementId());
                 testsThemesViewModel.updateUser(user);

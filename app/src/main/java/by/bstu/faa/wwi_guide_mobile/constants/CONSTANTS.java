@@ -20,6 +20,13 @@ public class CONSTANTS {
         public final static String TEST_THEME_TABLE = "tests_themes";
     }
 
+    public static class LOG_STRUCT {
+        public final static String ACTION_NAME_PASSED_TEST = "Passed test theme ID: ";
+        public final static String ACTION_RESULT_TEST_RATIO = "Correct/threshold: ";
+        public final static String ACTION_NAME_PASSED_SURVEY = "Passed survey ID: ";
+        public final static String ACTION_RESULT_SURVEY = "Chosen option: ";
+    }
+
     public static class WEB_APP_SUCCESS_RESPONSES {
         public final static String REG_SUCCESS = "Successful registration";
         public final static String LOGIN_SUCCESS = "Successful login";

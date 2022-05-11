@@ -41,7 +41,6 @@ public class UserRepo {
                     public void onFailure(
                             @NonNull Call<Void> call,
                             @NonNull Throwable t) {
-                        //apiRes.postValue(null);
                     }
                 });
     }
