@@ -44,7 +44,6 @@ import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
-
 public class UserFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
     private final String TAG = UserFragment.class.getSimpleName();
 
@@ -112,9 +111,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new MaybeObserver<List<AchievementEntity>>() {
                                     @Override
-                                    public void onSubscribe(Disposable d) {
-                                        Log.d(TAG, "subscribed; is disposed: " + d.isDisposed());
-                                    }
+                                    public void onSubscribe(Disposable d) { Log.d(TAG, "subscribed; is disposed: " + d.isDisposed()); }
                                     @Override
                                     public void onSuccess(List<AchievementEntity> entities) {
                                         achievementProgress.setMax(entities.size());
@@ -125,12 +122,10 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                             if (userEntity.getAchievements().contains(entity.getId()))
                                                 userAchievements.add(entity);
                                         }
-
                                         achievementProgressEarned.setText(userAchievements.size() + "/" + entities.size());
                                         achievementsRecyclerAdapter.setItems(userAchievements);
                                         achievementRecyclerView.setAdapter(achievementsRecyclerAdapter);
                                     }
-
                                     @Override
                                     public void onError(Throwable e) { }
                                     @Override
@@ -142,9 +137,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new SingleObserver<RankEntity>() {
                                     @Override
-                                    public void onSubscribe(Disposable d) {
-                                        Log.d(TAG, "subscribed; is disposed: " + d.isDisposed());
-                                    }
+                                    public void onSubscribe(Disposable d) { Log.d(TAG, "subscribed; is disposed: " + d.isDisposed()); }
                                     @Override
                                     public void onSuccess(RankEntity rankEntity) {
                                         Glide
@@ -165,7 +158,6 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                     public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
                                 });
                     }
-
                     @Override
                     public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
                     @Override

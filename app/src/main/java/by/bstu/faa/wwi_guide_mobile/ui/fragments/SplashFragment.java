@@ -40,6 +40,7 @@ public class SplashFragment extends Fragment {
 
     private TextView textPrompt;
 
+    private UserEntity user;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
 
     public SplashFragment() {
@@ -58,6 +59,24 @@ public class SplashFragment extends Fragment {
         splashViewModel = new ViewModelProvider(this).get(SplashViewModel.class);
 
         splashViewModel.getAllData();
+
+        splashViewModel.getUserFromDB()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableMaybeObserver<UserEntity>() {
+                    @Override
+                    public void onSuccess(UserEntity userEntity) {
+                        Log.d(TAG, "DB: user has been found");
+                        user = userEntity;
+                    }
+                    @Override
+                    public void onError(Throwable e) { }
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "DB: NO user has been found");
+                        user = null;
+                    }
+                });
     }
 
     @Override
@@ -74,9 +93,13 @@ public class SplashFragment extends Fragment {
 
                         ModelMapper mapper = new ModelMapper();
                         UserDto userData = mapper.map(res, UserDto.class);
+                        UserEntity userDataEntity = mapper.map(userData, UserEntity.class);
                         String token = res.getToken();
                         preferences.put("token", token);
                         Log.d(TAG, "Token has been saved into shared pref: " + token);
+
+                        if(!userDataEntity.equals(user))
+                            userData = mapper.map(user, UserDto.class);
 
                         mDisposable.add(splashViewModel.insertOrUpdateUser(userData)
                                 .subscribeOn(Schedulers.io())
@@ -184,6 +207,29 @@ public class SplashFragment extends Fragment {
     }
 
     private void checkUserAndConnection(boolean hasConnection, View view) {
+
+        /*if(user != null){
+            if(hasConnection) {
+                Log.d(TAG, "DB ONLINE: user has been found");
+                loginWithSavedUser();
+            }
+            else {
+                Log.d(TAG, "DB OFFLINE: user has been found");
+                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
+            }
+        }
+        else {
+            if(hasConnection) {
+                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
+            }
+            else {
+                if(preferences.getString("FIRST_LAUNCH").equals("1"))
+                    textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
+                else
+                    textPrompt.setText(R.string.prompt_no_internet_connection);
+            }
+        }*/
+
         splashViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

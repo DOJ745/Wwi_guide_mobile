@@ -2,11 +2,13 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,17 +19,41 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.QuestionItem;
+import lombok.Getter;
 
 public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuestionRecyclerAdapter.TestResultHolder>
         implements AdapterSetItems<QuestionItem> {
 
     private List<QuestionItem> items = new ArrayList<>();
     private final LayoutInflater inflater;
+    @Getter
+    private int pointsSum = 0;
+    @Getter
+    private int correctAnswersAmount = 0;
+    private int randomAnswerOne;
+    private int randomAnswerTwo;
+    private int randomAnswerThree;
 
-    public TestQuestionRecyclerAdapter(Context context) { this.inflater = LayoutInflater.from(context); }
+    public TestQuestionRecyclerAdapter(Context context) {
+        this.inflater = LayoutInflater.from(context);
+        int _randomAnswerOne = QuestionItem.getRandomAnswer();
+        int _randomAnswerTwo = QuestionItem.getRandomAnswer();
+        int _randomAnswerThree = QuestionItem.getRandomAnswer();
+        while (_randomAnswerOne == _randomAnswerTwo ||
+                _randomAnswerOne == _randomAnswerThree ||
+                _randomAnswerTwo == _randomAnswerThree) {
+            _randomAnswerOne = QuestionItem.getRandomAnswer();
+            _randomAnswerTwo = QuestionItem.getRandomAnswer();
+            _randomAnswerThree = QuestionItem.getRandomAnswer();
+        }
+        randomAnswerOne = _randomAnswerOne;
+        randomAnswerTwo = _randomAnswerTwo;
+        randomAnswerThree = _randomAnswerThree;
+    }
 
     @NonNull
     @Override
@@ -43,6 +69,7 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
 
         QuestionItem item = items.get(position);
 
+
         holder.textView.setText(item.getQuestionText());
         if(item.getQuestionImg() != null){
             Glide
@@ -56,25 +83,44 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
         }
         else holder.imgView.setVisibility(View.GONE);
 
-        holder.answerOne.setText(item.getAnswers().get(0).getText());
-        holder.answerTwo.setText(item.getAnswers().get(1).getText());
-        holder.answerThree.setText(item.getAnswers().get(2).getText());
+        holder.answerOne.setText(item.getAnswers().get(randomAnswerOne).getText());
+        holder.answerTwo.setText(item.getAnswers().get(randomAnswerTwo).getText());
+        holder.answerThree.setText(item.getAnswers().get(randomAnswerThree).getText());
+
+        holder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.item_question_answer1:
+                    pointsSum += item.getAnswers().get(randomAnswerOne).getPoints();
+                    checkAnswer(item.getAnswers().get(randomAnswerOne).getIsTrue());
+                    disableRadioButtons(holder);
+                    break;
+                case R.id.item_question_answer2:
+                    pointsSum += item.getAnswers().get(randomAnswerTwo).getPoints();
+                    checkAnswer(item.getAnswers().get(randomAnswerTwo).getIsTrue());
+                    disableRadioButtons(holder);
+                    break;
+                case R.id.item_question_answer3:
+                    pointsSum += item.getAnswers().get(randomAnswerThree).getPoints();
+                    checkAnswer(item.getAnswers().get(randomAnswerThree).getIsTrue());
+                    disableRadioButtons(holder);
+                    break;
+            }
+        });
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
-    }
+    public int getItemCount() { return items.size(); }
 
     @Override
     public void setItems(List<QuestionItem> items) {
         this.items = items;
-        this.notifyDataSetChanged();
+        //this.notifyDataSetChanged();
     }
 
     static class TestResultHolder extends RecyclerView.ViewHolder {
         private final TextView textView;
         private final ImageView imgView;
+        private final RadioGroup radioGroup;
         private final RadioButton answerOne;
         private final RadioButton answerTwo;
         private final RadioButton answerThree;
@@ -83,9 +129,20 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
             super(itemView);
             textView = itemView.findViewById(R.id.item_question_text);
             this.imgView = itemView.findViewById(R.id.item_question_img);
+            this.radioGroup = itemView.findViewById(R.id.item_question_radio_group);
             this.answerOne = itemView.findViewById(R.id.item_question_answer1);
             this.answerTwo = itemView.findViewById(R.id.item_question_answer2);
             this.answerThree = itemView.findViewById(R.id.item_question_answer3);
+        }
+    }
+
+    private void checkAnswer(String isTrueValue){
+        if(isTrueValue.equals("true"))
+            correctAnswersAmount += 1;
+    }
+    private void disableRadioButtons(TestResultHolder holder){
+        for(int i = 0; i < holder.radioGroup.getChildCount(); i++){
+            ((RadioButton)holder.radioGroup.getChildAt(i)).setClickable(false);
         }
     }
 }

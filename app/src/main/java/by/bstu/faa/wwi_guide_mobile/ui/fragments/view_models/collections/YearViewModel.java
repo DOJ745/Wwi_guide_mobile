@@ -13,11 +13,10 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.ViewModelDataMethods;
 import io.reactivex.Single;
 import lombok.Getter;
 
-public class YearViewModel extends ViewModel implements ViewModelDataMethods<YearDto> {
+public class YearViewModel extends ViewModel  {
     private final String TAG = YearViewModel.class.getSimpleName();
     private final EventDao eventDao;
     @Getter

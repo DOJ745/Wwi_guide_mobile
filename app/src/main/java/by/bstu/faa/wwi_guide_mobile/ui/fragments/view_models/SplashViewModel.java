@@ -5,14 +5,12 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.LoginData;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.LoginData;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.UserDto;
 import by.bstu.faa.wwi_guide_mobile.repo.auth.LoginRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.AchievementRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.ArmamentRepo;
@@ -27,7 +25,6 @@ import by.bstu.faa.wwi_guide_mobile.repo.data.TestsThemesRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.YearRepo;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.auth.LoginUserMethods;
 import io.reactivex.Completable;
-import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import lombok.Getter;
 
@@ -72,12 +69,12 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
 
     public void getAllData() {
         achievementRepo.callApi();
+        testsThemesRepo.callApi();
         armamentRepo.callApi();
-        yearRepo.callApi();
         countryRepo.callApi();
+        yearRepo.callApi();
         rankRepo.callApi();
         eventsRepo.callApi();
-        testsThemesRepo.callApi();
         testsAnswersRepo.callApi();
         testsQuestionsRepo.callApi();
         surveysAnswersRepo.callApi();

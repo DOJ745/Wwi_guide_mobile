@@ -14,13 +14,18 @@
 
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/old_type_nr_regular</item>
+        <item name="android:textSize">@dimen/default_font_size</item>
+        <item name="android:buttonStyle">@style/BtnNoCaps</item>
     </style>
 
     <style name="AppTheme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_drawable</item>
     </style>
-
     <style name="AppTheme.AuthFragments" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
+    <style name="BtnNoCaps" parent="android:Widget.Button">
+        <item name="android:textAllCaps">false</item>
     </style>
 
 </resources>

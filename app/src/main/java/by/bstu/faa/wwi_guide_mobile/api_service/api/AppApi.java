@@ -34,7 +34,7 @@ public interface AppApi {
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
 
     @PUT("users")
-    Call<AppMsgResponseDto> updateUserInfo(@Header("Authorization") String token);
+    Call<Void> updateUserInfo(@Header("Authorization") String token, @Body UserDto userDto);
 
     @POST("logs")
     Call<Void> sendLog(@Header("Authorization") String token, @Body LogDto userLog);

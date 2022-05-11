@@ -15,12 +15,14 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
+import lombok.Getter;
 
 public class TestsThemesRecyclerAdapter extends RecyclerView.Adapter<TestsThemesRecyclerAdapter.TestThemeResultHolder>
         implements AdapterSetItems<TestThemeEntity> {
 
     public interface OnItemClickListener { void onItemClick(TestThemeEntity item, int position); }
     private final TestsThemesRecyclerAdapter.OnItemClickListener onClickListener;
+    @Getter
     private List<TestThemeEntity> items = new ArrayList<>();
     private final LayoutInflater inflater;
 
@@ -44,7 +46,10 @@ public class TestsThemesRecyclerAdapter extends RecyclerView.Adapter<TestsThemes
         TestThemeEntity item = items.get(position);
         holder.nameTextView.setText(item.getName());
 
-        holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
+        if(item.getName().contains("ПРОЙДЕН")){
+            holder.itemView.setClickable(false);
+        }
+        else holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
 
     @Override

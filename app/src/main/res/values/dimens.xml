@@ -14,7 +14,6 @@
     <dimen name="double_main_margin">32dp</dimen>
     <dimen name="big_margin">40dp</dimen>
 
-    <dimen name="main_button_width">135dp</dimen>
-
+    <dimen name="main_button_width">180dp</dimen>
     <dimen name="default_font_size">21sp</dimen>
 </resources>

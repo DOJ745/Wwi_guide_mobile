@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -12,12 +13,17 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.TestsThemesViewModel;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = MainActivity.class.getSimpleName();
     public static BottomNavigationView BottomNavigationView;
+    private SecurePreferences preferences;
+
+    private MainViewModel mainViewModel;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -26,7 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SecurePreferences preferences = SecurePreferences.getInstance(this);
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        preferences = SecurePreferences.getInstance(this);
         String FIRST_LAUNCH_KEY = "FIRST_LAUNCH";
 
         String FIRST_LAUNCH;
@@ -97,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        if(preferences.getString("token") != null && RetrofitService.hasConnection(this))
+            mainViewModel.updateUserReq(preferences.getString("token"));
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_STOP);
     }
     @Override
