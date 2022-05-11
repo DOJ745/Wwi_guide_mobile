@@ -57,6 +57,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
     private TextView rankProgressPoints;
     private ProgressBar achievementProgress;
     private TextView achievementProgressEarned;
+    private TextView noAchievementsView;
 
     private SecurePreferences preferences;
 
@@ -92,6 +93,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
         rankName = view.findViewById(R.id.fragment_user_rank_name);
         rankProgressPoints = view.findViewById(R.id.fragment_user_rank_points);
         loginTextView = view.findViewById(R.id.fragment_user_login);
+        noAchievementsView = view.findViewById(R.id.fragment_user_no_achievements);
         rankProgress = view.findViewById(R.id.fragment_user_rank_progress);
         achievementProgress = view.findViewById(R.id.fragment_user_achievements_progress);
         achievementProgressEarned = view.findViewById(R.id.fragment_user_achievements_earned);
@@ -123,6 +125,15 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                                 userAchievements.add(entity);
                                         }
                                         achievementProgressEarned.setText(userAchievements.size() + "/" + entities.size());
+                                        if(userAchievements.size() == 0) {
+                                            achievementRecyclerView.setVisibility(View.GONE);
+                                            noAchievementsView.setVisibility(View.VISIBLE);
+                                        }
+                                        else{
+                                            achievementRecyclerView.setVisibility(View.VISIBLE);
+                                            noAchievementsView.setVisibility(View.GONE);
+                                        }
+
                                         achievementsRecyclerAdapter.setItems(userAchievements);
                                         achievementRecyclerView.setAdapter(achievementsRecyclerAdapter);
                                     }

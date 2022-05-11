@@ -112,6 +112,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(preferences.getString("token") != null && RetrofitService.hasConnection(this))
+            mainViewModel.updateUserReq(preferences.getString("token"));
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DESTROY);
     }
 }

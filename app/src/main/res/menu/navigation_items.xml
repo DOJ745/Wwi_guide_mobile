@@ -15,7 +15,7 @@
     <item
         android:id="@+id/armamentFragment"
         android:title="@string/nav_item_weapons_and_technique"
-        android:icon="@drawable/test_icon"/>
+        android:icon="@drawable/book_icon_128"/>
     <item
         android:id="@+id/userFragment"
         android:title="@string/nav_item_user_info"

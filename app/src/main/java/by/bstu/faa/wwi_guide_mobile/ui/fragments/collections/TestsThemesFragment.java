@@ -1,6 +1,8 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.collections;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +17,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
@@ -31,6 +36,7 @@ import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestsThemesRecyclerAda
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.QuestionItem;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.TestsThemesViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -43,7 +49,9 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
     private TestQuestionRecyclerAdapter testQuestionRecyclerAdapter;
     private Boolean hasConnection;
     private TextView timerView;
+    private FloatingActionButton infoBtn;
     private Button finishTestBtn;
+    private CountDownTimer answerTimer;
 
     private TestsThemesRecyclerAdapter.OnItemClickListener testThemeClickListener;
     private UserEntity user;
@@ -114,10 +122,28 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         recyclerView = view.findViewById(R.id.fragment_tests_recycler_view);
         TextView noInternet = view.findViewById(R.id.fragment_tests_no_internet);
         finishTestBtn = view.findViewById(R.id.fragment_tests_btn_finish);
+        infoBtn = view.findViewById(R.id.fragment_tests_btn_info);
         timerView = view.findViewById(R.id.fragment_tests_timer);
+
+        infoBtn.setOnClickListener(v -> new AlertDialog.Builder(getActivity())
+                .setTitle("Как проходятся тесты. Инструкция для рядовых")
+                .setMessage(R.string.prompt_tests_rules)
+                .setPositiveButton("Понял", (dialog, which) -> dialog.dismiss() )
+                .setNegativeButton("Закрыть", null)
+                .setIcon(R.drawable.book_icon_128)
+                .show());
 
         if(hasConnection) {
             testThemeClickListener = (theme, position) -> {
+                infoBtn.setVisibility(View.GONE);
+
+                answerTimer = new CountDownTimer(90000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                        timerView.setText("Осталость " + millisUntilFinished / 1000 + " сек.");
+                    }
+                    public void onFinish() { timerView.setText("Время вышло"); }
+                }.start();
+
                 float _testThreshold = 0.0f;
 
                 testsThemesViewModel.setAchievementId(theme.getAchievementId());
@@ -160,6 +186,7 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
         }
 
         finishTestBtn.setOnClickListener(v -> {
+            answerTimer.cancel();
             user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum());
             if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()){
                 user.getAchievements().add(testsThemesViewModel.getAchievementId());

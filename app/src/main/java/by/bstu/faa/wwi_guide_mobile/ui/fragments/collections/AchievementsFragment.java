@@ -61,7 +61,7 @@ public class AchievementsFragment extends Fragment implements FragmentBottomNav 
                     @Override
                     public void onError(Throwable e) { }
                     @Override
-                    public void onComplete() { Log.d(TAG, "onComplete"); }
+                    public void onComplete() { Log.d(TAG, "no achievements have been found"); }
                 });
     }
 
