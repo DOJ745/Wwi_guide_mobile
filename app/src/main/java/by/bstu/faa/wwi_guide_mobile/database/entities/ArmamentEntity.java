@@ -3,6 +3,7 @@ package by.bstu.faa.wwi_guide_mobile.database.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseDataEntity;
@@ -16,8 +17,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = CONSTANTS.APP_DATABASE.ARMAMENT_TABLE)
+@Entity(tableName = CONSTANTS.APP_DATABASE.ARMAMENT_TABLE, foreignKeys = {
+        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
+})
 public class ArmamentEntity extends BaseDataEntity {
     @ColumnInfo@NonNull
     private String category;
+    @Getter@Setter
+    private String achievementId;
 }

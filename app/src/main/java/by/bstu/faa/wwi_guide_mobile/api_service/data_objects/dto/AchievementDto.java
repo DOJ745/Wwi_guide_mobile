@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.base_dto.IdDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 @EqualsAndHashCode(callSuper = true)
 @Data

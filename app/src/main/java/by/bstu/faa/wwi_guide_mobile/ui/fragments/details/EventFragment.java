@@ -1,5 +1,6 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.details;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,13 +9,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
@@ -29,12 +36,11 @@ public class EventFragment extends Fragment {
     private EventViewModel eventViewModel;
     private static final String ARG_ID = "id";
     private TextView titleView;
-    private ImageView imgView;
-    private TextView imgTitleView;
-    private TextView textView;
     private ConstraintLayout constraintLayout;
+    private RadioGroup surveyGroup;
 
     private EventEntity entity;
+
     public EventFragment() {
         // Required empty public constructor
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
@@ -46,20 +52,9 @@ public class EventFragment extends Fragment {
 
         entity = new EventEntity();
         eventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
+        MainActivity.BottomNavigationView.setVisibility(View.GONE);
 
-        if (getArguments() != null) {
-            Log.d(TAG, getArguments().getString(ARG_ID));
-            eventViewModel.getEntityDataById(getArguments().getString(ARG_ID)).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<EventEntity>() {
-                        @Override
-                        public void onSuccess(EventEntity eventEntity) { entity = eventEntity; }
-                        @Override
-                        public void onError(Throwable e) { }
-                    });
-        }
-
-
+        if (getArguments() != null) { Log.d(TAG, getArguments().getString(ARG_ID)); }
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
@@ -76,9 +71,79 @@ public class EventFragment extends Fragment {
 
         constraintLayout = view.findViewById(R.id.fragment_data_constraint_layout);
         titleView = view.findViewById(R.id.fragment_data_title);
-        imgView = view.findViewById(R.id.fragment_data_img1);
-        imgTitleView = view.findViewById(R.id.fragment_data_img1_title);
-        textView = view.findViewById(R.id.fragment_data_text1);
+        surveyGroup = view.findViewById(R.id.fragment_data_survey);
+
+        eventViewModel.getEntityDataById(getArguments().getString(ARG_ID)).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<EventEntity>() {
+                    @SuppressLint("ResourceType")
+                    @Override
+                    public void onSuccess(EventEntity eventEntity) {
+                        entity = eventEntity;
+                        titleView.setText(entity.getTitle());
+
+                        int lastParagraphViewId = 0;
+                        for(int i = 0; i < entity.getImages().size(); i++) {
+                            ImageView imageView = new ImageView(requireContext());
+                            imageView.setId(200000 + i);
+                            TextView imageTitleView = new TextView(requireContext());
+                            imageTitleView.setId(2010000 + i);
+                            TextView paragraphView = new TextView(requireContext());
+                            paragraphView.setId(2020000 + i);
+
+                            Glide
+                                    .with(view)
+                                    .asBitmap()
+                                    .load(entity.getImages().get(i))
+                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                                    .placeholder(R.drawable.placeholder)
+                                    .error(R.drawable.error)
+                                    .into(imageView);
+                            imageTitleView.setText(entity.getImages_titles().get(i));
+                            paragraphView.setText(Html.fromHtml(entity.getText_paragraphs().get(i)));
+
+                            ConstraintLayout.LayoutParams imageViewLayoutParams = new ConstraintLayout.LayoutParams
+                                    (ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                            imageViewLayoutParams.startToStart = constraintLayout.getId();
+                            imageViewLayoutParams.endToEnd = constraintLayout.getId();
+                            imageViewLayoutParams.leftMargin = 16;
+                            imageViewLayoutParams.rightMargin = 16;
+                            if(i == 0) { imageViewLayoutParams.topToBottom = titleView.getId(); }
+                            else { imageViewLayoutParams.topToBottom = paragraphView.getId() - 1; }
+                            imageView.setLayoutParams(imageViewLayoutParams);
+
+                            ConstraintLayout.LayoutParams imageTitleViewLayoutParams = new ConstraintLayout.LayoutParams
+                                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                            imageTitleViewLayoutParams.startToStart = constraintLayout.getId();
+                            imageTitleViewLayoutParams.endToEnd = constraintLayout.getId();
+                            imageTitleViewLayoutParams.topMargin = 8;
+                            imageTitleViewLayoutParams.topToBottom = imageView.getId();
+                            imageTitleView.setLayoutParams(imageTitleViewLayoutParams);
+
+                            ConstraintLayout.LayoutParams paragraphLayoutParams = new ConstraintLayout.LayoutParams
+                                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                            paragraphLayoutParams.startToStart = constraintLayout.getId();
+                            paragraphLayoutParams.endToEnd = constraintLayout.getId();
+                            paragraphLayoutParams.topToBottom = imageTitleView.getId();
+                            paragraphLayoutParams.leftMargin = 8;
+                            paragraphLayoutParams.rightMargin = 8;
+                            paragraphView.setLayoutParams(paragraphLayoutParams);
+
+                            constraintLayout.addView(imageView);
+                            constraintLayout.addView(imageTitleView);
+                            constraintLayout.addView(paragraphView);
+                            lastParagraphViewId = paragraphView.getId();
+                        }
+                        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams
+                                (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+                        layoutParams.startToStart = constraintLayout.getId();
+                        layoutParams.bottomToBottom = constraintLayout.getId();
+                        layoutParams.topToBottom = lastParagraphViewId;
+                        surveyGroup.setLayoutParams(layoutParams);
+                    }
+                    @Override
+                    public void onError(Throwable e) { }
+                });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }

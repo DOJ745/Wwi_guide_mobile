@@ -20,7 +20,11 @@ public abstract class BaseDataEntity extends BaseEntityId {
     protected String title;
     @ColumnInfo
     @NonNull
-    protected String text;
+    protected ArrayList<String> text_paragraphs;
     @ColumnInfo
+    @NonNull
     protected ArrayList<String> images;
+    @ColumnInfo
+    @NonNull
+    protected ArrayList<String> images_titles;
 }

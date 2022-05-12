@@ -14,9 +14,12 @@ import lombok.ToString;
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.EVENTS_TABLE,
         foreignKeys = {
-        @ForeignKey(entity = YearEntity.class, parentColumns = "id", childColumns = "yearId")
+        @ForeignKey(entity = YearEntity.class, parentColumns = "id", childColumns = "yearId"),
+                @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
 })
 public class EventEntity extends BaseDataEntity {
     @Getter@Setter
     private String yearId;
+    @Getter@Setter
+    private String achievementId;
 }

@@ -23,7 +23,6 @@ import lombok.ToString;
                 {
                         @ForeignKey(entity = EventEntity.class, parentColumns = "id", childColumns = "eventId"),
                         @ForeignKey(entity = ArmamentEntity.class, parentColumns = "id", childColumns = "armamentId"),
-                        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
                 }
 )
 public class SurveyQuestionEntity extends BaseQuestionEntity {
@@ -31,6 +30,4 @@ public class SurveyQuestionEntity extends BaseQuestionEntity {
     private ArrayList<String> eventId;
     @ColumnInfo@NonNull
     private ArrayList<String> armamentId;
-    @ColumnInfo@NonNull
-    private String achievementId;
 }

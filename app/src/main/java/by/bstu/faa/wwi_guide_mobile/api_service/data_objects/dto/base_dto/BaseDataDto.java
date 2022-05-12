@@ -1,5 +1,8 @@
 package by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.base_dto;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -13,8 +16,12 @@ import lombok.EqualsAndHashCode;
 public abstract class BaseDataDto extends IdDto {
     @SerializedName("title")@Expose
     private String title;
-    @SerializedName("text")@Expose
-    private String text;
+    @SerializedName("text_paragraphs")@Expose
+    protected ArrayList<String> text_paragraphs;
     @SerializedName("images")@Expose
-    private ArrayList<String> images;
+    protected ArrayList<String> images;
+    @SerializedName("images_titles")@Expose
+    protected ArrayList<String> images_titles;
+    @SerializedName("achievementId")@Expose
+    private String achievementId;
 }

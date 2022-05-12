@@ -16,4 +16,8 @@ import io.reactivex.Single;
 public interface SurveyQuestionDao extends BaseDao<SurveyQuestionEntity> {
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.SURVEYS_QUESTIONS_TABLE)
     Maybe<List<SurveyQuestionEntity>> getAll();
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.SURVEYS_QUESTIONS_TABLE + " WHERE eventId = :eventId")
+    Single<SurveyQuestionEntity> getSurveyQuestionByEventId(String eventId);
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.SURVEYS_QUESTIONS_TABLE + " WHERE armamentId = :armamentId")
+    Single<SurveyQuestionEntity> getSurveyQuestionByArmamentId(String armamentId);
 }
