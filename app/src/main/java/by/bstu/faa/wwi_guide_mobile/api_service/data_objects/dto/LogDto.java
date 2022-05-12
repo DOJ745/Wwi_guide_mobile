@@ -23,10 +23,13 @@ public class LogDto {
         this.actionName = actionName;
         this.actionResult = actionResult;
 
-        this.timestamp = calendar.get(Calendar.DAY_OF_MONTH ) + "."
-                + calendar.get(Calendar.MONTH) + 1 + "."
-                + calendar.get(Calendar.YEAR) + " --- "
-                + calendar.get(Calendar.HOUR) + ":"
-                + calendar.get(Calendar.MINUTE);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int year = calendar.get(Calendar.YEAR);
+        int hours = calendar.get(Calendar.HOUR);
+        int minutes = calendar.get(Calendar.MINUTE);
+
+        this.timestamp = day + "." + month + "." + year
+                + " --- " + hours + ":" + minutes;
     }
 }

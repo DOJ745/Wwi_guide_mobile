@@ -34,26 +34,8 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
     private int pointsSum = 0;
     @Getter
     private int correctAnswersAmount = 0;
-    private int randomAnswerOne;
-    private int randomAnswerTwo;
-    private int randomAnswerThree;
 
-    public TestQuestionRecyclerAdapter(Context context) {
-        this.inflater = LayoutInflater.from(context);
-        int _randomAnswerOne = QuestionItem.getRandomAnswer();
-        int _randomAnswerTwo = QuestionItem.getRandomAnswer();
-        int _randomAnswerThree = QuestionItem.getRandomAnswer();
-        while (_randomAnswerOne == _randomAnswerTwo ||
-                _randomAnswerOne == _randomAnswerThree ||
-                _randomAnswerTwo == _randomAnswerThree) {
-            _randomAnswerOne = QuestionItem.getRandomAnswer();
-            _randomAnswerTwo = QuestionItem.getRandomAnswer();
-            _randomAnswerThree = QuestionItem.getRandomAnswer();
-        }
-        randomAnswerOne = _randomAnswerOne;
-        randomAnswerTwo = _randomAnswerTwo;
-        randomAnswerThree = _randomAnswerThree;
-    }
+    public TestQuestionRecyclerAdapter(Context context) { this.inflater = LayoutInflater.from(context); }
 
     @NonNull
     @Override
@@ -69,7 +51,6 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
 
         QuestionItem item = items.get(position);
 
-
         holder.textView.setText(item.getQuestionText());
         if(item.getQuestionImg() != null){
             Glide
@@ -83,25 +64,25 @@ public class TestQuestionRecyclerAdapter extends RecyclerView.Adapter<TestQuesti
         }
         else holder.imgView.setVisibility(View.GONE);
 
-        holder.answerOne.setText(item.getAnswers().get(randomAnswerOne).getText());
-        holder.answerTwo.setText(item.getAnswers().get(randomAnswerTwo).getText());
-        holder.answerThree.setText(item.getAnswers().get(randomAnswerThree).getText());
+        holder.answerOne.setText(item.getAnswers().get(item.getRandOne()).getText());
+        holder.answerTwo.setText(item.getAnswers().get(item.getRandTwo()).getText());
+        holder.answerThree.setText(item.getAnswers().get(item.getRandThree()).getText());
 
         holder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
                 case R.id.item_question_answer1:
-                    pointsSum += item.getAnswers().get(randomAnswerOne).getPoints();
-                    checkAnswer(item.getAnswers().get(randomAnswerOne).getIsTrue());
+                    pointsSum += item.getAnswers().get(item.getRandOne()).getPoints();
+                    checkAnswer(item.getAnswers().get(item.getRandOne()).getIsTrue());
                     disableRadioButtons(holder);
                     break;
                 case R.id.item_question_answer2:
-                    pointsSum += item.getAnswers().get(randomAnswerTwo).getPoints();
-                    checkAnswer(item.getAnswers().get(randomAnswerTwo).getIsTrue());
+                    pointsSum += item.getAnswers().get(item.getRandTwo()).getPoints();
+                    checkAnswer(item.getAnswers().get(item.getRandTwo()).getIsTrue());
                     disableRadioButtons(holder);
                     break;
                 case R.id.item_question_answer3:
-                    pointsSum += item.getAnswers().get(randomAnswerThree).getPoints();
-                    checkAnswer(item.getAnswers().get(randomAnswerThree).getIsTrue());
+                    pointsSum += item.getAnswers().get(item.getRandThree()).getPoints();
+                    checkAnswer(item.getAnswers().get(item.getRandThree()).getIsTrue());
                     disableRadioButtons(holder);
                     break;
             }

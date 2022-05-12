@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,7 +23,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
@@ -32,16 +32,16 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestQuestionRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.TestsThemesRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.QuestionItem;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.TestsThemesViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
+public class TestsThemesFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
     private final String TAG = TestsThemesFragment.class.getSimpleName();
 
     private TestsThemesViewModel testsThemesViewModel;
@@ -133,7 +133,6 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
                 .setTitle("Как проходятся тесты. Инструкция для рядовых")
                 .setMessage(R.string.prompt_tests_rules)
                 .setPositiveButton("Понял", (dialog, which) -> dialog.dismiss() )
-                .setNegativeButton("Закрыть", null)
                 .setIcon(R.drawable.book_icon_128)
                 .show());
 
@@ -141,6 +140,7 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
             testThemeClickListener = (theme, position) -> {
                 infoBtn.setVisibility(View.GONE);
                 testsThemesViewModel.setThemeId(theme.getId());
+
                 answerTimer = new CountDownTimer(90000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         timerView.setText("Осталость " + millisUntilFinished / 1000 + " сек.");
@@ -151,34 +151,8 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
                     }
                 }.start();
 
-                float _testThreshold = 0.0f;
-
                 testsThemesViewModel.setAchievementId(theme.getAchievementId());
-                List<TestQuestionEntity> currentQuestions = new ArrayList<>(testsThemesViewModel.getTestThemeQuestions(theme.getId()));
-                List<List<TestAnswerEntity>> currentAnswers = new ArrayList<>();
-
-                for(TestQuestionEntity question: currentQuestions){
-                    QuestionItem temp = new QuestionItem();
-                    temp.setQuestionText(question.getText());
-                    temp.setQuestionImg(question.getImg());
-                    temp.setAnswers((ArrayList<TestAnswerEntity>) testsThemesViewModel.getQuestionAnswers(question.getId()));
-                    currentAnswers.add(testsThemesViewModel.getQuestionAnswers(question.getId()));
-                    testsThemesViewModel.getQuestionItems().add(temp);
-                }
-
-                for(List<TestAnswerEntity> answerList: currentAnswers) {
-                    for(int i = 0; i < answerList.size(); i++) {
-                        if (answerList.get(i).getIsTrue().equals("true")){
-                            _testThreshold += 1;
-                        }
-                    }
-                }
-                testsThemesViewModel.setTestThreshold((int)Math.round(_testThreshold / 2));
-
-                testQuestionRecyclerAdapter.setItems(testsThemesViewModel.getQuestionItems());
-                recyclerView.setAdapter(testQuestionRecyclerAdapter);
-                finishTestBtn.setVisibility(View.VISIBLE);
-                timerView.setVisibility(View.VISIBLE);
+                formTest(theme.getId());
             };
 
             testsThemesRecyclerAdapter = new TestsThemesRecyclerAdapter(requireContext().getApplicationContext(), testThemeClickListener);
@@ -189,28 +163,52 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
             recyclerView.setVisibility(View.GONE);
             timerView.setVisibility(View.GONE);
             finishTestBtn.setVisibility(View.GONE);
+            infoBtn.setVisibility(View.GONE);
             noInternet.setVisibility(View.VISIBLE);
         }
 
         finishTestBtn.setOnClickListener(v -> {
             answerTimer.cancel();
+            finishTestBtn.setVisibility(View.GONE);
+            timerView.setVisibility(View.GONE);
+            infoBtn.setVisibility(View.VISIBLE);
+
             user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum());
 
             testsThemesViewModel.getLog().formLog(
                     CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_TEST + testsThemesViewModel.getThemeId(),
                     CONSTANTS.LOG_STRUCT.ACTION_RESULT_TEST_RATIO +
-                            testQuestionRecyclerAdapter.getCorrectAnswersAmount() + "/" + testsThemesViewModel.getTestThreshold());
+                            testsThemesViewModel.getQuestionItems().size() + "/" +
+                            testQuestionRecyclerAdapter.getCorrectAnswersAmount()
+                            + "/" + testsThemesViewModel.getTestThreshold());
 
             testsThemesViewModel.sendLog(preferences.getString("token"), testsThemesViewModel.getLog());
 
-            if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()){
+            if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()) {
                 user.getAchievements().add(testsThemesViewModel.getAchievementId());
                 testsThemesViewModel.updateUser(user);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Успех!")
+                        .setMessage(R.string.prompt_tests_success)
+                        .setPositiveButton("Замечательно", (dialog, which) -> {
+                            recyclerView.setAdapter(testsThemesRecyclerAdapter);
+                            dialog.dismiss();
+                            navigateToFragment(view, "user");
+                        } )
+                        .setIcon(R.drawable.test_success)
+                        .show();
             }
             else {
-                finishTestBtn.setVisibility(View.GONE);
-                timerView.setVisibility(View.GONE);
-                recyclerView.setAdapter(testsThemesRecyclerAdapter);
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Провал!")
+                        .setMessage(R.string.prompt_tests_failure)
+                        .setPositiveButton("Вас понял", (dialog, which) -> {
+                            recyclerView.setAdapter(testsThemesRecyclerAdapter);
+                            dialog.dismiss();
+                            navigateToFragment(view, "year");
+                        } )
+                        .setIcon(R.drawable.test_failure)
+                        .show();
             }
         });
 
@@ -263,5 +261,47 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    private void formTest(String themeId) {
+        float _testThreshold = 0.0f;
+        List<TestQuestionEntity> currentQuestions = new ArrayList<>(testsThemesViewModel.getTestThemeQuestions(themeId));
+        List<List<TestAnswerEntity>> currentAnswers = new ArrayList<>();
+
+        for(TestQuestionEntity question: currentQuestions) {
+            QuestionItem temp = new QuestionItem();
+            temp.setQuestionText(question.getText());
+            temp.setQuestionImg(question.getImg());
+            temp.setAnswers((ArrayList<TestAnswerEntity>) testsThemesViewModel.getQuestionAnswers(question.getId()));
+            currentAnswers.add(testsThemesViewModel.getQuestionAnswers(question.getId()));
+            testsThemesViewModel.getQuestionItems().add(temp);
+        }
+
+        for(List<TestAnswerEntity> answerList: currentAnswers) {
+            for(int i = 0; i < answerList.size(); i++) {
+                if (answerList.get(i).getIsTrue().equals("true")){
+                    _testThreshold += 1;
+                }
+            }
+        }
+        testsThemesViewModel.setTestThreshold((int)Math.round(_testThreshold / 2));
+
+        testQuestionRecyclerAdapter.setItems(testsThemesViewModel.getQuestionItems());
+        recyclerView.setAdapter(testQuestionRecyclerAdapter);
+        finishTestBtn.setVisibility(View.VISIBLE);
+        timerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void navigateToFragment(View view, String fragmentName) {
+        switch (fragmentName){
+            case "year":
+                Navigation.findNavController(view).navigate(R.id.yearsFragment, null);
+                break;
+            case "user":
+                Navigation.findNavController(view).navigate(R.id.userFragment, null);
+                break;
+        }
+
     }
 }

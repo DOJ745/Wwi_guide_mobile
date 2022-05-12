@@ -22,7 +22,7 @@ public class CONSTANTS {
 
     public static class LOG_STRUCT {
         public final static String ACTION_NAME_PASSED_TEST = "Passed test theme ID: ";
-        public final static String ACTION_RESULT_TEST_RATIO = "Correct/threshold: ";
+        public final static String ACTION_RESULT_TEST_RATIO = "Total Q amount/Correct answers/threshold: ";
         public final static String ACTION_NAME_PASSED_SURVEY = "Passed survey ID: ";
         public final static String ACTION_RESULT_SURVEY = "Chosen option: ";
     }

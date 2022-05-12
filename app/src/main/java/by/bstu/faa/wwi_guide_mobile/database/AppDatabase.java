@@ -16,7 +16,6 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.CountryEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.LogEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
@@ -43,8 +42,7 @@ import androidx.room.TypeConverters;
         SurveyQuestionEntity.class,
         TestAnswerEntity.class,
         TestQuestionEntity.class,
-        TestThemeEntity.class,
-        LogEntity.class
+        TestThemeEntity.class
 }, version = 1)
 @TypeConverters({ArrayListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {

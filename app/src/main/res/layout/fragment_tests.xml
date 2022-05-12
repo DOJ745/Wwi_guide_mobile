@@ -65,9 +65,12 @@
             android:layout_marginBottom="16dp"
             android:clickable="true"
             android:contentDescription="@string/prompt_info_btn"
-            android:src="@android:drawable/ic_menu_info_details"
+            android:src="@drawable/question_mark"
+            app:tint="@null"
+            app:backgroundTint="#FF9800"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            android:focusable="true" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

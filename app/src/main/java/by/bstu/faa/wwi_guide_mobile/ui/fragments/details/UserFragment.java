@@ -127,10 +127,14 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                         achievementProgressEarned.setText(userAchievements.size() + "/" + entities.size());
                                         if(userAchievements.size() == 0) {
                                             achievementRecyclerView.setVisibility(View.GONE);
+                                            achievementProgressEarned.setVisibility(View.GONE);
+                                            achievementProgress.setVisibility(View.GONE);
                                             noAchievementsView.setVisibility(View.VISIBLE);
                                         }
                                         else{
                                             achievementRecyclerView.setVisibility(View.VISIBLE);
+                                            achievementProgressEarned.setVisibility(View.VISIBLE);
+                                            achievementProgress.setVisibility(View.VISIBLE);
                                             noAchievementsView.setVisibility(View.GONE);
                                         }
 
