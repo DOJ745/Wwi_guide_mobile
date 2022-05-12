@@ -9,7 +9,11 @@
         android:id="@+id/yearsFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.YearsFragment"
         android:label="fragment_years"
-        tools:layout="@layout/fragment_years" />
+        tools:layout="@layout/fragment_years" >
+        <action
+            android:id="@+id/action_yearsFragment_to_eventFragment"
+            app:destination="@id/eventFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -47,7 +51,7 @@
         tools:layout="@layout/fragment_tests" />
     <fragment
         android:id="@+id/armamentFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.ArmamentFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.ArmamentFragment"
         android:label="fragment_armament"
         tools:layout="@layout/fragment_armament" />
     <fragment
@@ -63,7 +67,7 @@
         android:id="@+id/eventFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.EventFragment"
         android:label="fragment_event"
-        tools:layout="@layout/fragment_event" />
+        tools:layout="@layout/fragment_data" />
     <fragment
         android:id="@+id/splashFragment"
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.SplashFragment"

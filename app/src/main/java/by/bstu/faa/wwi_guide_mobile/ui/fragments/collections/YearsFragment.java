@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,6 +23,7 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
@@ -30,13 +32,15 @@ import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class YearsFragment extends Fragment implements FragmentBottomNav {
+public class YearsFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
     private final String TAG = YearsFragment.class.getSimpleName();
 
     private YearsRecyclerAdapter yearAdapter;
     private EventsRecyclerAdapter eventsAdapter;
     private YearViewModel yearViewModel;
     private RecyclerView recyclerView;
+
+    private String eventId;
 
     public YearsFragment() {
         // Required empty public constructor
@@ -49,33 +53,18 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
 
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
 
-        EventsRecyclerAdapter.OnItemClickListener eventClickListener =
-                (event, position) -> Toast.makeText(requireContext().getApplicationContext(),
-                        "You chose event with title " + event.getTitle(),
-                        Toast.LENGTH_SHORT).show();
-
-        eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
-
         YearsRecyclerAdapter.OnItemClickListener yearClickListener =
-                (year, position) -> {
-                    Toast.makeText(requireContext().getApplicationContext(),
-                            "You chose year with title " + year.getTitle(),
-                            Toast.LENGTH_SHORT).show();
-
-                    yearViewModel.getYearEvents(year.getId())
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
-                                @Override
-                                public void onSuccess(List<EventEntity> entities) {
-                                    eventsAdapter.setItems(entities);
-                                    recyclerView.setAdapter(eventsAdapter);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
-                            });
-                };
+                (year, position) -> yearViewModel.getYearEvents(year.getId()).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
+                            @Override
+                            public void onSuccess(List<EventEntity> entities) {
+                                eventsAdapter.setItems(entities);
+                                recyclerView.setAdapter(eventsAdapter);
+                            }
+                            @Override
+                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                        });
 
         yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
 
@@ -102,6 +91,15 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_years, container, false);
+
+        EventsRecyclerAdapter.OnItemClickListener eventClickListener =
+                (event, position) -> {
+                    eventId = event.getId();
+                    navigateToFragment(view, "event");
+                };
+
+        eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
+
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
@@ -165,5 +163,16 @@ public class YearsFragment extends Fragment implements FragmentBottomNav {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    @Override
+    public void navigateToFragment(View view, String fragmentName) {
+        Bundle bundle = new Bundle();
+
+        try { bundle.putString("id", eventId); }
+        catch (IndexOutOfBoundsException e) { bundle.putString("id", ""); }
+
+        if(fragmentName.equals("event"))
+            Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_eventFragment, bundle);
     }
 }

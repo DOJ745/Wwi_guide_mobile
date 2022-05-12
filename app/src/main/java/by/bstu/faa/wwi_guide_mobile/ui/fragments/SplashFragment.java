@@ -207,29 +207,6 @@ public class SplashFragment extends Fragment {
     }
 
     private void checkUserAndConnection(boolean hasConnection, View view) {
-
-        /*if(user != null){
-            if(hasConnection) {
-                Log.d(TAG, "DB ONLINE: user has been found");
-                loginWithSavedUser();
-            }
-            else {
-                Log.d(TAG, "DB OFFLINE: user has been found");
-                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
-            }
-        }
-        else {
-            if(hasConnection) {
-                Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
-            }
-            else {
-                if(preferences.getString("FIRST_LAUNCH").equals("1"))
-                    textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
-                else
-                    textPrompt.setText(R.string.prompt_no_internet_connection);
-            }
-        }*/
-
         splashViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

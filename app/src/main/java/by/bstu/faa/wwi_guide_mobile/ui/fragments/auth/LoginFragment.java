@@ -2,6 +2,7 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments.auth;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
     private EditText loginField;
     private EditText passwordField;
     private CheckBox rememberMeBox;
+    private TextView testView;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -108,6 +110,8 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         loginField = view.findViewById(R.id.fragment_login_login_input);
         passwordField = view.findViewById(R.id.fragment_login_password_input);
         rememberMeBox = view.findViewById(R.id.fragment_login_remember_me);
+        testView = view.findViewById(R.id.fragment_login_test_view);
+        testView.setText(Html.fromHtml("<p><b>Жирный текст</b><i>курсивный текст</i><u>подчеркнутый текст</u></p>*img-Подпись под картинкой*"));
 
         setTextFieldListeners(loginField, passwordField, rememberMeBox);
 

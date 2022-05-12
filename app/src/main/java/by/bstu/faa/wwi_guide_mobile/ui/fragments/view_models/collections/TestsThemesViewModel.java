@@ -19,7 +19,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.DataMethods;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethods;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TestsThemesViewModel extends ViewModel implements DataMethods {
+public class TestsThemesViewModel extends ViewModel implements GetUserMethods {
     private final String TAG = TestsThemesViewModel.class.getSimpleName();
 
     @Getter

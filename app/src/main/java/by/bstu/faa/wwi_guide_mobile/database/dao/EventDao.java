@@ -20,4 +20,6 @@ public interface EventDao extends BaseDao<EventEntity> {
     Single<List<EventEntity>> getYearEvents(String yearId);
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.EVENTS_TABLE)
     Maybe<List<EventEntity>> getAll();
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.EVENTS_TABLE + " WHERE id = :eventId")
+    Single<EventEntity> getEventById (String eventId);
 }

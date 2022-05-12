@@ -29,7 +29,7 @@ import io.reactivex.subscribers.DisposableSubscriber;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UserViewModel extends ViewModel {
+public class UserViewModel extends ViewModel implements GetUserMethods {
     private final String TAG = UserViewModel.class.getSimpleName();
 
     @Getter
@@ -52,6 +52,6 @@ public class UserViewModel extends ViewModel {
     }
 
     public Single<List<RankEntity>> getRanksByCountryId(String id) { return rankDao.getRanksByCountryId(id); }
-    public Maybe<UserEntity> getUserDataFromDB() { return userDao.getUser(); }
+    public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
     public Completable logoutUser(UserEntity userEntity) { return userDao.delete(userEntity); }
 }

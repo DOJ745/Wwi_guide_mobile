@@ -37,7 +37,6 @@ import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.AchievementsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.UserViewModel;
 import io.reactivex.MaybeObserver;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -101,7 +100,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
         achievementRecyclerView = view.findViewById(R.id.fragment_user_achievement);
         achievementRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        userViewModel.getUserDataFromDB()
+        userViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableMaybeObserver<UserEntity>() {
