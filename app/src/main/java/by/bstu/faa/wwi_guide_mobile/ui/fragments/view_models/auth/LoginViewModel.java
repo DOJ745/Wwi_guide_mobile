@@ -41,7 +41,6 @@ public class LoginViewModel extends ViewModel implements LoginUserMethods {
         loggedUser.setLogin(data.getLogin());
         loggedUser.setPassword(data.getPassword());
         loggedUser.setCountryId(data.getCountryId());
-        loggedUser.setRankId(data.getRankId());
         loggedUser.setScore(data.getScore());
         loggedUser.setAchievements(data.getAchievements());
         loggedUser.setRoles(data.getRoles());

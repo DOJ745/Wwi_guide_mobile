@@ -24,8 +24,6 @@ public class UserEntity {
     @ColumnInfo@NonNull
     private String password;
     @ColumnInfo@NonNull
-    private String rankId;
-    @ColumnInfo@NonNull
     private String countryId;
     @ColumnInfo
     private int score;

@@ -18,4 +18,7 @@ public interface RankDao extends BaseDao<RankEntity> {
 
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.RANKS_TABLE + " WHERE id = :rankId")
     Single<RankEntity> getRankById(String rankId);
+
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.RANKS_TABLE + " WHERE countryId = :countryId")
+    Single<List<RankEntity>> getRanksByCountryId(String countryId);
 }

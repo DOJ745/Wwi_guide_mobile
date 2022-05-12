@@ -293,7 +293,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         userData.setPassword(loginResponse.getPassword());
         userData.setCountryId(loginResponse.getCountryId());
         userData.setAchievements(loginResponse.getAchievements());
-        userData.setRankId(loginResponse.getRankId());
         userData.setScore(loginResponse.getScore());
         userData.setRoles(loginResponse.getRoles());
     }

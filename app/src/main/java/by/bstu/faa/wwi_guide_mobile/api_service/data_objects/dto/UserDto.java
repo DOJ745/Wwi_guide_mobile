@@ -22,8 +22,6 @@ public class UserDto extends AppMsgResponseDto {
     private ArrayList<String> achievements;
     @SerializedName("score")@Expose
     private int score;
-    @SerializedName("rankId")@Expose@NonNull
-    private String rankId;
     @SerializedName("countryId")@Expose@NonNull
     private String countryId;
 

@@ -42,6 +42,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class UserFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
@@ -147,30 +148,33 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                     public void onComplete() { }
                                 });
 
-                        userViewModel.getUserRankByIdFromDB(userEntity.getRankId())
-                                .subscribeOn(Schedulers.io())
+                        userViewModel.getRanksByCountryId(userEntity.getCountryId()).subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(new SingleObserver<RankEntity>() {
+                                .subscribe(new DisposableSingleObserver<List<RankEntity>>() {
                                     @Override
-                                    public void onSubscribe(Disposable d) { Log.d(TAG, "subscribed; is disposed: " + d.isDisposed()); }
-                                    @Override
-                                    public void onSuccess(RankEntity rankEntity) {
+                                    public void onSuccess(List<RankEntity> rankEntities) {
+                                        RankEntity temp = new RankEntity();
+                                        for(RankEntity rank: rankEntities){
+                                            if(userEntity.getScore() <= rank.getPoints()){
+                                                temp = rank;
+                                                break;
+                                            }
+                                        }
                                         Glide
                                                 .with(view)
                                                 .asBitmap()
-                                                .load(rankEntity.getImg())
+                                                .load(temp.getImg())
                                                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
                                                 .placeholder(R.drawable.placeholder)
                                                 .error(R.drawable.error)
                                                 .into(rankImg);
-
-                                        rankName.setText(rankEntity.getName());
-                                        rankProgressPoints.setText(userEntity.getScore() + "/" + rankEntity.getPoints() + "xp");
-                                        rankProgress.setMax(rankEntity.getPoints());
+                                        rankName.setText(temp.getName());
+                                        rankProgressPoints.setText(userEntity.getScore() + "/" + temp.getPoints() + "xp");
+                                        rankProgress.setMax(temp.getPoints());
                                         rankProgress.setProgress(userEntity.getScore());
                                     }
                                     @Override
-                                    public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                    public void onError(Throwable e) { }
                                 });
                     }
                     @Override

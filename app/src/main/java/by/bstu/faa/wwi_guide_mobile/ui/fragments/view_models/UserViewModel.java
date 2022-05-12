@@ -51,7 +51,7 @@ public class UserViewModel extends ViewModel {
         achievementDao = AppInstance.getInstance().getDatabase().achievementDao();
     }
 
-    public Single<RankEntity> getUserRankByIdFromDB(String id) { return rankDao.getRankById(id); }
+    public Single<List<RankEntity>> getRanksByCountryId(String id) { return rankDao.getRanksByCountryId(id); }
     public Maybe<UserEntity> getUserDataFromDB() { return userDao.getUser(); }
     public Completable logoutUser(UserEntity userEntity) { return userDao.delete(userEntity); }
 }
