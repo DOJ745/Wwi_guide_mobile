@@ -11,6 +11,4 @@ import lombok.EqualsAndHashCode;
 public abstract class BaseAnswerDto extends IdDto {
     @SerializedName("text")@Expose
     private String text;
-    @SerializedName("points")@Expose
-    private int points;
 }

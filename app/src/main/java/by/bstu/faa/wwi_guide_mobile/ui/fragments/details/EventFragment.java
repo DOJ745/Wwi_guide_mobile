@@ -76,70 +76,11 @@ public class EventFragment extends Fragment {
         eventViewModel.getEntityDataById(getArguments().getString(ARG_ID)).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<EventEntity>() {
-                    @SuppressLint("ResourceType")
                     @Override
                     public void onSuccess(EventEntity eventEntity) {
                         entity = eventEntity;
                         titleView.setText(entity.getTitle());
-
-                        int lastParagraphViewId = 0;
-                        for(int i = 0; i < entity.getImages().size(); i++) {
-                            ImageView imageView = new ImageView(requireContext());
-                            imageView.setId(200000 + i);
-                            TextView imageTitleView = new TextView(requireContext());
-                            imageTitleView.setId(2010000 + i);
-                            TextView paragraphView = new TextView(requireContext());
-                            paragraphView.setId(2020000 + i);
-
-                            Glide
-                                    .with(view)
-                                    .asBitmap()
-                                    .load(entity.getImages().get(i))
-                                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                                    .placeholder(R.drawable.placeholder)
-                                    .error(R.drawable.error)
-                                    .into(imageView);
-                            imageTitleView.setText(entity.getImages_titles().get(i));
-                            paragraphView.setText(Html.fromHtml(entity.getText_paragraphs().get(i)));
-
-                            ConstraintLayout.LayoutParams imageViewLayoutParams = new ConstraintLayout.LayoutParams
-                                    (ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                            imageViewLayoutParams.startToStart = constraintLayout.getId();
-                            imageViewLayoutParams.endToEnd = constraintLayout.getId();
-                            imageViewLayoutParams.leftMargin = 16;
-                            imageViewLayoutParams.rightMargin = 16;
-                            if(i == 0) { imageViewLayoutParams.topToBottom = titleView.getId(); }
-                            else { imageViewLayoutParams.topToBottom = paragraphView.getId() - 1; }
-                            imageView.setLayoutParams(imageViewLayoutParams);
-
-                            ConstraintLayout.LayoutParams imageTitleViewLayoutParams = new ConstraintLayout.LayoutParams
-                                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                            imageTitleViewLayoutParams.startToStart = constraintLayout.getId();
-                            imageTitleViewLayoutParams.endToEnd = constraintLayout.getId();
-                            imageTitleViewLayoutParams.topMargin = 8;
-                            imageTitleViewLayoutParams.topToBottom = imageView.getId();
-                            imageTitleView.setLayoutParams(imageTitleViewLayoutParams);
-
-                            ConstraintLayout.LayoutParams paragraphLayoutParams = new ConstraintLayout.LayoutParams
-                                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                            paragraphLayoutParams.startToStart = constraintLayout.getId();
-                            paragraphLayoutParams.endToEnd = constraintLayout.getId();
-                            paragraphLayoutParams.topToBottom = imageTitleView.getId();
-                            paragraphLayoutParams.leftMargin = 8;
-                            paragraphLayoutParams.rightMargin = 8;
-                            paragraphView.setLayoutParams(paragraphLayoutParams);
-
-                            constraintLayout.addView(imageView);
-                            constraintLayout.addView(imageTitleView);
-                            constraintLayout.addView(paragraphView);
-                            lastParagraphViewId = paragraphView.getId();
-                        }
-                        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams
-                                (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-                        layoutParams.startToStart = constraintLayout.getId();
-                        layoutParams.bottomToBottom = constraintLayout.getId();
-                        layoutParams.topToBottom = lastParagraphViewId;
-                        surveyGroup.setLayoutParams(layoutParams);
+                        createUiElements(view);
                     }
                     @Override
                     public void onError(Throwable e) { }
@@ -194,5 +135,67 @@ public class EventFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    @SuppressLint("ResourceType")
+    private void createUiElements(View view) {
+        int lastParagraphViewId = 0;
+        for(int i = 0; i < entity.getImages().size(); i++) {
+            ImageView imageView = new ImageView(requireContext());
+            imageView.setId(200000 + i);
+            TextView imageTitleView = new TextView(requireContext());
+            imageTitleView.setId(2010000 + i);
+            TextView paragraphView = new TextView(requireContext());
+            paragraphView.setId(2020000 + i);
+
+            Glide
+                    .with(view)
+                    .asBitmap()
+                    .load(entity.getImages().get(i))
+                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.error)
+                    .into(imageView);
+            imageTitleView.setText(entity.getImages_titles().get(i));
+            paragraphView.setText(Html.fromHtml(entity.getText_paragraphs().get(i)));
+
+            ConstraintLayout.LayoutParams imageViewLayoutParams = new ConstraintLayout.LayoutParams
+                    (ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            imageViewLayoutParams.startToStart = constraintLayout.getId();
+            imageViewLayoutParams.endToEnd = constraintLayout.getId();
+            imageViewLayoutParams.leftMargin = 16;
+            imageViewLayoutParams.rightMargin = 16;
+            if(i == 0) { imageViewLayoutParams.topToBottom = titleView.getId(); }
+            else { imageViewLayoutParams.topToBottom = paragraphView.getId() - 1; }
+            imageView.setLayoutParams(imageViewLayoutParams);
+
+            ConstraintLayout.LayoutParams imageTitleViewLayoutParams = new ConstraintLayout.LayoutParams
+                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            imageTitleViewLayoutParams.startToStart = constraintLayout.getId();
+            imageTitleViewLayoutParams.endToEnd = constraintLayout.getId();
+            imageTitleViewLayoutParams.topMargin = 8;
+            imageTitleViewLayoutParams.topToBottom = imageView.getId();
+            imageTitleView.setLayoutParams(imageTitleViewLayoutParams);
+
+            ConstraintLayout.LayoutParams paragraphLayoutParams = new ConstraintLayout.LayoutParams
+                    (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            paragraphLayoutParams.startToStart = constraintLayout.getId();
+            paragraphLayoutParams.endToEnd = constraintLayout.getId();
+            paragraphLayoutParams.topToBottom = imageTitleView.getId();
+            paragraphLayoutParams.leftMargin = 8;
+            paragraphLayoutParams.rightMargin = 8;
+            paragraphView.setLayoutParams(paragraphLayoutParams);
+
+            constraintLayout.addView(imageView);
+            constraintLayout.addView(imageTitleView);
+            constraintLayout.addView(paragraphView);
+            lastParagraphViewId = paragraphView.getId();
+        }
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams
+                (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.startToStart = constraintLayout.getId();
+        layoutParams.bottomToBottom = constraintLayout.getId();
+        layoutParams.topToBottom = lastParagraphViewId;
+        surveyGroup.setLayoutParams(layoutParams);
     }
 }

@@ -2,12 +2,15 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.List;
+
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyQuestionDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import io.reactivex.Maybe;
@@ -32,6 +35,7 @@ public class EventViewModel extends ViewModel implements DataMethods<EventEntity
     }
     public Single<EventEntity> getEntityDataById(String id) { return eventDao.getEventById(id); }
     public Single<SurveyQuestionEntity> getSurveyQuestionById(String id) { return surveyQuestionDao.getSurveyQuestionByEventId(id); }
+    public Single<List<SurveyAnswerEntity>> getSurveyAnswersById(String id) { return surveyAnswerDao.getSurveyAnswersByQuestionId(id); }
 
     @Override
     public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
