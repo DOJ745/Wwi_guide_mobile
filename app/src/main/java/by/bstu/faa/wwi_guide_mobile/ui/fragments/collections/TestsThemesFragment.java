@@ -176,7 +176,7 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav, 
             user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum());
 
             testsThemesViewModel.getLog().formLog(
-                    CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_TEST + testsThemesViewModel.getThemeId(),
+                    CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_TEST_ID + testsThemesViewModel.getThemeId(),
                     CONSTANTS.LOG_STRUCT.ACTION_RESULT_TEST_RATIO +
                             testsThemesViewModel.getQuestionItems().size() + "/" +
                             testQuestionRecyclerAdapter.getCorrectAnswersAmount()

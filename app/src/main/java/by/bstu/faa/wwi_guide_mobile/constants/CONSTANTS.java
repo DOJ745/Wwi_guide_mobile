@@ -22,9 +22,11 @@ public class CONSTANTS {
     }
 
     public static class LOG_STRUCT {
-        public final static String ACTION_NAME_PASSED_TEST = "Passed test theme ID: ";
+        public final static String ACTION_NAME_PASSED_TEST_ID = "Passed test theme ID: ";
         public final static String ACTION_RESULT_TEST_RATIO = "Total Q amount/Correct answers/threshold: ";
-        public final static String ACTION_NAME_PASSED_SURVEY = "Passed survey ID: ";
+        public final static String ACTION_NAME_PASSED_SURVEY_ID = "Passed survey ID: ";
+        public final static String LOG_EVENT_ID = "Event ID: ";
+        public final static String LOG_ARMAMENT_ID = "Armament ID: ";
         public final static String ACTION_RESULT_SURVEY = "Chosen option: ";
     }
 

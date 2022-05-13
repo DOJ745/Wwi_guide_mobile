@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_tests" />
     <fragment
         android:id="@+id/armamentFragment"
-        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.ArmamentFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.ArmamentFragment"
         android:label="fragment_armament"
         tools:layout="@layout/fragment_armament" />
     <fragment

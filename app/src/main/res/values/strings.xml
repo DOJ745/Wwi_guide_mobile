@@ -57,6 +57,9 @@
     <!-- USER FRAGMENT -->
     <string name="prompt_no_achievements">Пока что вы нигде не отличились…</string>
     <!-- EVENTS FRAGMENT -->
+    <string name="prompt_no_surveys">Опросы можно проходить только с наличием связи со штабом (с наличием интернет-соединения)!</string>
+    <string name="prompt_passed_survey">Вы ранее прошли данный опрос. Ответ на него уже записан в нашей бухгалтерии.</string>
+    <string name="prompt_answered_survey">Ваше мнение учтётся в дальнейшем, ибо здесь оно имеет вес. Особенно для отдела разведки.</string>
     <!-- YEARS FRAGMENT -->
     <!-- TESTS FRAGMENT -->
     <string name="prompt_no_tests">Тесты можно проходить только с наличием связи со штабом (с наличием интернет-соединения)!</string>
