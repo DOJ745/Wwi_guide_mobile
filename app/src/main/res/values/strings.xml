@@ -74,6 +74,8 @@
     </string>
     <string name="prompt_info_btn">info_btn</string>
     <!-- Armament FRAGMENT -->
+    <string name="prompt_weapon_category">Оружие</string>
+    <string name="prompt_technique_category">Техника</string>
 
     <!-- BOTTOM NAV BAR -->
     <string name="nav_item_years">Года</string>

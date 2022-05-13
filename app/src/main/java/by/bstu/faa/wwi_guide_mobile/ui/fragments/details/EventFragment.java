@@ -303,9 +303,7 @@ public class EventFragment extends Fragment {
             new AlertDialog.Builder(getActivity())
                     .setTitle("Спасибо!")
                     .setMessage(R.string.prompt_answered_survey)
-                    .setPositiveButton("Хорошо", (dialog, which) -> {
-                        dialog.dismiss();
-                    })
+                    .setPositiveButton("Хорошо", (dialog, which) -> dialog.dismiss())
                     .setIcon(R.drawable.passed_survey)
                     .show();
 

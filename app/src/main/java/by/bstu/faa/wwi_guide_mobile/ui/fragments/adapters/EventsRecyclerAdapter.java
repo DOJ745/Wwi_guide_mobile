@@ -38,7 +38,7 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
     @Override
     public EventsRecyclerAdapter.EventResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = inflater.inflate(R.layout.collection_item_event, parent, false);
+        View itemView = inflater.inflate(R.layout.collection_item_data, parent, false);
         return new EventResultHolder(itemView);
     }
 
@@ -79,8 +79,8 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
 
         public EventResultHolder(@NonNull View itemView) {
             super(itemView);
-            titleTextView = itemView.findViewById(R.id.item_event_title);
-            imgView = itemView.findViewById(R.id.item_event_img);
+            titleTextView = itemView.findViewById(R.id.item_data_title);
+            imgView = itemView.findViewById(R.id.item_data_img);
         }
     }
 }
