@@ -12,13 +12,13 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.UserRepo;
 
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethods;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethod;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainViewModel extends ViewModel implements GetUserMethods {
+public class MainViewModel extends ViewModel implements GetUserMethod {
     private final String TAG = MainViewModel.class.getSimpleName();
 
     private UserDao userDao;

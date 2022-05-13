@@ -17,8 +17,7 @@ import by.bstu.faa.wwi_guide_mobile.repo.data.ArmamentRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.CountryRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.EventsRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.RankRepo;
-import by.bstu.faa.wwi_guide_mobile.repo.data.SurveysAnswersRepo;
-import by.bstu.faa.wwi_guide_mobile.repo.data.SurveysQuestionsRepo;
+import by.bstu.faa.wwi_guide_mobile.repo.data.SurveyRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.TestsAnswersRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.TestsQuestionsRepo;
 import by.bstu.faa.wwi_guide_mobile.repo.data.TestsThemesRepo;
@@ -51,9 +50,7 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     @Getter
     private TestsAnswersRepo testsAnswersRepo;
     @Getter
-    private SurveysQuestionsRepo surveysQuestionsRepo;
-    @Getter
-    private SurveysAnswersRepo surveysAnswersRepo;
+    private SurveyRepo surveyRepo;
 
     private LoginRepo loginRepo;
     @Getter
@@ -68,17 +65,16 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     }
 
     public void getAllData() {
+        surveyRepo.callApi();
         achievementRepo.callApi();
         testsThemesRepo.callApi();
-        armamentRepo.callApi();
         countryRepo.callApi();
         yearRepo.callApi();
         rankRepo.callApi();
-        eventsRepo.callApi();
         testsAnswersRepo.callApi();
         testsQuestionsRepo.callApi();
-        surveysAnswersRepo.callApi();
-        surveysQuestionsRepo.callApi();
+        armamentRepo.callApi();
+        eventsRepo.callApi();
     }
 
     public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
@@ -86,17 +82,16 @@ public class SplashViewModel extends ViewModel implements LoginUserMethods {
     public void loginUser(LoginData loginData) { loginRepo.loginUser(loginData); }
 
     private void initRepos() {
+        this.surveyRepo = new SurveyRepo();
         this.testsThemesRepo = new TestsThemesRepo();
         this.testsQuestionsRepo = new TestsQuestionsRepo();
         this.testsAnswersRepo = new TestsAnswersRepo();
-        this.surveysQuestionsRepo = new SurveysQuestionsRepo();
-        this.surveysAnswersRepo = new SurveysAnswersRepo();
-        this.armamentRepo = new ArmamentRepo();
+        this.countryRepo = new CountryRepo();
+        this.yearRepo = new YearRepo();
         this.achievementRepo = new AchievementRepo();
         this.loginRepo = new LoginRepo();
         this.rankRepo = new RankRepo();
-        this.countryRepo = new CountryRepo();
-        this.yearRepo = new YearRepo();
+        this.armamentRepo = new ArmamentRepo();
         this.eventsRepo = new EventsRepo();
     }
 

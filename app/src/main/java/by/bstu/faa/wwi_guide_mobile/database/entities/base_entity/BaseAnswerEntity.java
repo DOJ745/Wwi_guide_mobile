@@ -16,4 +16,6 @@ public abstract class BaseAnswerEntity extends BaseEntityId {
     @ColumnInfo
     @NonNull
     protected String text;
+    @ColumnInfo
+    protected int points;
 }

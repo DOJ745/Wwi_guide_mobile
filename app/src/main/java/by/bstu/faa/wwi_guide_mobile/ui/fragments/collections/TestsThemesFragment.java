@@ -186,7 +186,7 @@ public class TestsThemesFragment extends Fragment implements FragmentBottomNav, 
 
             if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()) {
                 user.getAchievements().add(testsThemesViewModel.getAchievementId());
-                testsThemesViewModel.updateUser(user);
+                testsThemesViewModel.updateUser(user, testsThemesViewModel.getUserDao(), TAG);
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Успех!")
                         .setMessage(R.string.prompt_tests_success)

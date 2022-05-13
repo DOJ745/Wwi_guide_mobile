@@ -24,4 +24,6 @@ public abstract class BaseDataDto extends IdDto {
     protected ArrayList<String> images_titles;
     @SerializedName("achievementId")@Expose
     private String achievementId;
+    @SerializedName("surveyId")@Expose
+    private String surveyId;
 }

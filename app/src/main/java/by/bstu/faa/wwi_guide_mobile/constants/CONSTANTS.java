@@ -11,6 +11,7 @@ public class CONSTANTS {
         public final static String EVENTS_TABLE = "events";
         public final static String RANKS_TABLE = "ranks";
         public final static String COUNTRIES_TABLE = "countries";
+        public final static String SURVEYS_TABLE = "surveys";
         public final static String SURVEYS_QUESTIONS_TABLE = "surveys_questions";
         public final static String SURVEYS_ANSWERS_TABLE = "surveys_answers";
         public final static String TESTS_QUESTIONS_TABLE = "tests_questions";

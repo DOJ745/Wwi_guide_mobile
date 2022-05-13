@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.lifecycle.ViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
@@ -12,24 +11,16 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
-import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.data.UserRepo;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
-import io.reactivex.MaybeObserver;
 import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableMaybeObserver;
-import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DisposableSubscriber;
 import lombok.Getter;
 import lombok.Setter;
 
-public class UserViewModel extends ViewModel implements GetUserMethods {
+public class UserViewModel extends ViewModel implements GetUserMethod {
     private final String TAG = UserViewModel.class.getSimpleName();
 
     @Getter

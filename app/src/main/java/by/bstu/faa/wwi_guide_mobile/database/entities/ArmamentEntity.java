@@ -18,11 +18,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity(tableName = CONSTANTS.APP_DATABASE.ARMAMENT_TABLE, foreignKeys = {
-        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
+        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId"),
+        @ForeignKey(entity = SurveyEntity.class, parentColumns = "id", childColumns = "surveyId")
 })
 public class ArmamentEntity extends BaseDataEntity {
     @ColumnInfo@NonNull
     private String category;
-    @Getter@Setter
-    private String achievementId;
 }

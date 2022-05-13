@@ -19,7 +19,8 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethods;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethod;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.UpdateUser;
 import io.reactivex.Maybe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -27,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TestsThemesViewModel extends ViewModel implements GetUserMethods {
+public class TestsThemesViewModel extends ViewModel implements GetUserMethod, UpdateUser {
     private final String TAG = TestsThemesViewModel.class.getSimpleName();
 
     @Getter
@@ -70,15 +71,4 @@ public class TestsThemesViewModel extends ViewModel implements GetUserMethods {
         return testAnswerDao.getQuestionAnswersByQuestionId(questionId);
     }
     public Maybe<UserEntity> getUserFromDB(){ return userDao.getUser(); }
-
-    public void updateUser(UserEntity user){
-        userDao.insert(user).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new DisposableCompletableObserver() {
-                @Override
-                public void onComplete() { Log.d(TAG, "User has been updated"); }
-                @Override
-                public void onError(Throwable e) { Log.d(TAG, "Error occurred\n" + e.getMessage()); }
-            });
-    }
 }

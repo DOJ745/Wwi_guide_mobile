@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -36,10 +37,13 @@ public class EventFragment extends Fragment {
     private EventViewModel eventViewModel;
     private static final String ARG_ID = "id";
     private TextView titleView;
+    private TextView surveyQuestionView;
     private ConstraintLayout constraintLayout;
-    private RadioGroup surveyGroup;
+    private RadioGroup radioGroup;
+    private ImageView surveyImg;
 
     private EventEntity entity;
+    private int pointsSum = 0;
 
     public EventFragment() {
         // Required empty public constructor
@@ -71,15 +75,19 @@ public class EventFragment extends Fragment {
 
         constraintLayout = view.findViewById(R.id.fragment_data_constraint_layout);
         titleView = view.findViewById(R.id.fragment_data_title);
-        surveyGroup = view.findViewById(R.id.fragment_data_survey);
+        radioGroup = view.findViewById(R.id.fragment_data_survey);
+        surveyQuestionView = view.findViewById(R.id.fragment_data_survey_question_text);
+        surveyImg = view.findViewById(R.id.fragment_data_survey_img);
 
-        eventViewModel.getEntityDataById(getArguments().getString(ARG_ID)).subscribeOn(Schedulers.io())
+        eventViewModel.getEntityDataById(getArguments().getString(ARG_ID))
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<EventEntity>() {
                     @Override
                     public void onSuccess(EventEntity eventEntity) {
                         entity = eventEntity;
                         titleView.setText(entity.getTitle());
+
                         createUiElements(view);
                     }
                     @Override
@@ -157,6 +165,7 @@ public class EventFragment extends Fragment {
                     .error(R.drawable.error)
                     .into(imageView);
             imageTitleView.setText(entity.getImages_titles().get(i));
+
             paragraphView.setText(Html.fromHtml(entity.getText_paragraphs().get(i)));
 
             ConstraintLayout.LayoutParams imageViewLayoutParams = new ConstraintLayout.LayoutParams
@@ -191,11 +200,31 @@ public class EventFragment extends Fragment {
             constraintLayout.addView(paragraphView);
             lastParagraphViewId = paragraphView.getId();
         }
-        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams
+        ConstraintLayout.LayoutParams surveyQuestionLayoutParams = new ConstraintLayout.LayoutParams
                 (ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams.startToStart = constraintLayout.getId();
-        layoutParams.bottomToBottom = constraintLayout.getId();
-        layoutParams.topToBottom = lastParagraphViewId;
-        surveyGroup.setLayoutParams(layoutParams);
+        surveyQuestionLayoutParams.startToStart = constraintLayout.getId();
+        surveyQuestionLayoutParams.endToEnd = constraintLayout.getId();
+        surveyQuestionLayoutParams.topToBottom = lastParagraphViewId;
+        surveyQuestionView.setLayoutParams(surveyQuestionLayoutParams);
+
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.fragment_data_answer1:
+                    //pointsSum += item.getAnswers().get(item.getRandOne()).getPoints();
+                    //checkAnswer(item.getAnswers().get(item.getRandOne()).getIsTrue());
+                    disableRadioButtons(radioGroup);
+                    break;
+                case R.id.fragment_data_answer2:
+                    //pointsSum += item.getAnswers().get(item.getRandTwo()).getPoints();
+                    //checkAnswer(item.getAnswers().get(item.getRandTwo()).getIsTrue());
+                    disableRadioButtons(radioGroup);
+                    break;
+            }
+        });
+    }
+    private void disableRadioButtons(RadioGroup radioGroup){
+        for(int i = 0; i < radioGroup.getChildCount(); i++){
+            ((RadioButton) radioGroup.getChildAt(i)).setClickable(false);
+        }
     }
 }

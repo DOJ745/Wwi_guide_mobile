@@ -5,8 +5,7 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.ArmamentDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.CountryDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.RankDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyAnswerDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyQuestionDao;
+import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestQuestionDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestThemeDao;
@@ -17,8 +16,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.CountryEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyAnswerEntity;
-import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyQuestionEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArrayListConverter;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
@@ -38,8 +36,7 @@ import androidx.room.TypeConverters;
         ArmamentEntity.class,
         RankEntity.class,
         CountryEntity.class,
-        SurveyAnswerEntity.class,
-        SurveyQuestionEntity.class,
+        SurveyEntity.class,
         TestAnswerEntity.class,
         TestQuestionEntity.class,
         TestThemeEntity.class
@@ -54,8 +51,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ArmamentDao armamentDao();
     public abstract TestAnswerDao testAnswerDao();
     public abstract TestQuestionDao testQuestionDao();
-    public abstract SurveyAnswerDao surveyAnswerDao();
-    public abstract SurveyQuestionDao surveyQuestionDao();
+    public abstract SurveyDao surveyDao();
     public abstract CountryDao countryDao();
     public abstract TestThemeDao testThemeDao();
 }

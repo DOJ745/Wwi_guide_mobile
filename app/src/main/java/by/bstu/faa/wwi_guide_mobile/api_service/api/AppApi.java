@@ -10,8 +10,7 @@ import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.CountryDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.EventDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.LogDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.RankDto;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.SurveyAnswerDto;
-import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.SurveyQuestionDto;
+import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.SurveyDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.TestAnswerDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.TestQuestionDto;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.TestThemeDto;
@@ -60,11 +59,8 @@ public interface AppApi {
     @GET("tests-answers")
     Call<List<TestAnswerDto>> getTestsAnswers();
 
-    @GET("surveys-questions")
-    Call<List<SurveyQuestionDto>> getSurveysQuestions();
-
-    @GET("surveys-answers")
-    Call<List<SurveyAnswerDto>> getSurveysAnswers();
+    @GET("surveys")
+    Call<List<SurveyDto>> getSurveys();
 
     @GET("events")
     Call<List<EventDto>> getEvents();

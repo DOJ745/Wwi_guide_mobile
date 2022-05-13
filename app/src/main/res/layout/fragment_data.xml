@@ -49,24 +49,45 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/fragment_data_img1_title" />
 -->
+        <TextView
+            android:id="@+id/fragment_data_survey_question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/half_main_margin"
+            android:layout_marginBottom="@dimen/half_main_margin"
+            android:contentDescription="@string/img_description"
+            android:id="@+id/fragment_data_survey_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_data_survey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_data_title"
+            tools:src="@tools:sample/avatars" />
 
         <RadioGroup
             android:id="@+id/fragment_data_survey"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_data_survey_question_text"
+            tools:layout_constraintTop_toBottomOf="@id/fragment_data_survey_question_text">
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/fragment_data_answer1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/fragment_data_answer2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="RadioButton" />

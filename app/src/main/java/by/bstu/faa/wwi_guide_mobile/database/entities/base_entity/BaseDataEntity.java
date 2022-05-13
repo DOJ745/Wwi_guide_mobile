@@ -27,4 +27,10 @@ public abstract class BaseDataEntity extends BaseEntityId {
     @ColumnInfo
     @NonNull
     protected ArrayList<String> images_titles;
+    @ColumnInfo
+    @NonNull
+    protected String surveyId;
+    @ColumnInfo
+    @NonNull
+    private String achievementId;
 }
