@@ -5,10 +5,10 @@ import androidx.lifecycle.ViewModel;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.LogDto;
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
-import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
+import by.bstu.faa.wwi_guide_mobile.database.dao.ArmamentDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
-import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
 import io.reactivex.Maybe;
@@ -16,8 +16,8 @@ import io.reactivex.Single;
 import lombok.Getter;
 import lombok.Setter;
 
-public class EventViewModel extends ViewModel implements ViewModelDataMethods<EventEntity>, GetUserMethod {
-    private final EventDao eventDao;
+public class ArmamentItemViewModel extends ViewModel implements ViewModelDataMethods<ArmamentEntity>, GetUserMethod{
+    private final ArmamentDao armamentDao;
     @Getter
     private final UserDao userDao;
     @Getter
@@ -35,16 +35,17 @@ public class EventViewModel extends ViewModel implements ViewModelDataMethods<Ev
     @Getter@Setter
     private String chosenVariant;
 
-    public EventViewModel() {
+    public ArmamentItemViewModel() {
         userDao = AppInstance.getInstance().getDatabase().userDao();
-        eventDao = AppInstance.getInstance().getDatabase().eventDao();
+        armamentDao = AppInstance.getInstance().getDatabase().armamentDao();
         surveyDao = AppInstance.getInstance().getDatabase().surveyDao();
         achievementDao = AppInstance.getInstance().getDatabase().achievementDao();
         logRepo = new LogRepo();
         log = new LogDto();
     }
 
-    public Single<EventEntity> getEntityDataById(String id) { return eventDao.getEventById(id); }
+    @Override
+    public Single<ArmamentEntity> getEntityDataById(String entityId) { return armamentDao.getArmamentById(entityId); }
     @Override
     public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
 }

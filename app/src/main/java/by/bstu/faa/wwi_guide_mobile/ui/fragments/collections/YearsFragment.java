@@ -5,7 +5,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +23,7 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventsRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.YearsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -36,7 +35,7 @@ public class YearsFragment extends Fragment implements FragmentBottomNav, Fragme
     private final String TAG = YearsFragment.class.getSimpleName();
 
     private YearsRecyclerAdapter yearAdapter;
-    private EventsRecyclerAdapter eventsAdapter;
+    private EventRecyclerAdapter eventsAdapter;
     private YearViewModel yearViewModel;
     private RecyclerView recyclerView;
 
@@ -92,13 +91,13 @@ public class YearsFragment extends Fragment implements FragmentBottomNav, Fragme
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_years, container, false);
 
-        EventsRecyclerAdapter.OnItemClickListener eventClickListener =
+        EventRecyclerAdapter.OnItemClickListener eventClickListener =
                 (event, position) -> {
                     eventId = event.getId();
                     navigateToFragment(view, "event");
                 };
 
-        eventsAdapter = new EventsRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
+        eventsAdapter = new EventRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;

@@ -15,6 +15,7 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/old_type_nr_regular</item>
         <item name="android:textSize">@dimen/default_font_size</item>
+        <item name="android:textColor">@color/black</item>
         <item name="android:buttonStyle">@style/BtnNoCaps</item>
     </style>
 

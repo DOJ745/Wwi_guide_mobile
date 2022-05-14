@@ -25,20 +25,20 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.EventViewModel;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.ArmamentItemViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EventFragment extends Fragment implements FragmentDataMethods {
-    private final String TAG = EventFragment.class.getSimpleName();
+public class ArmamentItemFragment extends Fragment implements FragmentDataMethods {
+    private final String TAG = ArmamentItemFragment.class.getSimpleName();
 
-    private EventViewModel eventViewModel;
+    private ArmamentItemViewModel armamentItemViewModel;
     private static final String ARG_ID = "id";
     private TextView titleView;
     private TextView surveyQuestionView;
@@ -46,11 +46,11 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
     private RadioGroup radioGroup;
     private ImageView surveyImg;
 
-    private EventEntity entity;
+    private ArmamentEntity entity;
     private SecurePreferences preferences;
     private UserEntity user;
 
-    public EventFragment() {
+    public ArmamentItemFragment() {
         // Required empty public constructor
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
@@ -60,13 +60,13 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
         super.onCreate(savedInstanceState);
 
         preferences = SecurePreferences.getInstance(requireContext());
-        entity = new EventEntity();
-        eventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
+        entity = new ArmamentEntity();
+        armamentItemViewModel = new ViewModelProvider(this).get(ArmamentItemViewModel.class);
         MainActivity.BottomNavigationView.setVisibility(View.GONE);
 
         if (getArguments() != null) { Log.d(TAG, getArguments().getString(ARG_ID)); }
 
-        eventViewModel.getUserFromDB()
+        armamentItemViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableMaybeObserver<UserEntity>() {
@@ -77,8 +77,6 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
                     @Override
                     public void onComplete() { }
                 });
-
-        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
     @Override
@@ -151,21 +149,47 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
     }
 
+    private void surveyLogic(View view, String surveyId, String eventId) {
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton radioButton = view.findViewById(checkedId);
+
+            user.getAchievements().add(armamentItemViewModel.getAchievementId());
+            user.setScore(user.getScore() + armamentItemViewModel.getPoints());
+            armamentItemViewModel.updateUser(user, armamentItemViewModel.getUserDao(), TAG);
+
+            armamentItemViewModel.getLog().formLog(
+                    CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_SURVEY_ID + surveyId + "\n"
+                            + CONSTANTS.LOG_STRUCT.LOG_EVENT_ID + eventId,
+                    CONSTANTS.LOG_STRUCT.ACTION_RESULT_SURVEY + radioButton.getText());
+
+            armamentItemViewModel.sendLog(preferences.getString("token"), armamentItemViewModel.getLog(), armamentItemViewModel.getLogRepo());
+
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("Спасибо!")
+                    .setMessage(R.string.prompt_answered_survey)
+                    .setPositiveButton("Хорошо", (dialog, which) -> dialog.dismiss())
+                    .setIcon(R.drawable.passed_survey)
+                    .show();
+
+            disableRadioButtons(radioGroup);
+        });
+    }
+
     @Override
     public void formArticle(View view) {
-        eventViewModel.getEntityDataById(getArguments().getString(ARG_ID))
+        armamentItemViewModel.getEntityDataById(getArguments().getString(ARG_ID))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<EventEntity>() {
+                .subscribe(new DisposableSingleObserver<ArmamentEntity>() {
                     @Override
-                    public void onSuccess(EventEntity eventEntity) {
-                        entity = eventEntity;
-                        eventViewModel.setAchievementId(eventEntity.getAchievementId());
+                    public void onSuccess(ArmamentEntity armamentEntity) {
+                        entity = armamentEntity;
+                        armamentItemViewModel.setAchievementId(armamentEntity.getAchievementId());
                         titleView.setText(entity.getTitle());
 
                         if(RetrofitService.hasConnection(requireContext()))
                         {
-                            eventViewModel.getSurveyById(entity.getSurveyId(), eventViewModel.getSurveyDao())
+                            armamentItemViewModel.getSurveyById(entity.getSurveyId(), armamentItemViewModel.getSurveyDao())
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new DisposableSingleObserver<SurveyEntity>() {
@@ -173,7 +197,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
                                         @Override
                                         public void onSuccess(SurveyEntity surveyEntity) {
                                             surveyQuestionView.setText(surveyEntity.getQuestion_text());
-                                            eventViewModel.setPoints(surveyEntity.getPoints());
+                                            armamentItemViewModel.setPoints(surveyEntity.getPoints());
 
                                             if(surveyEntity.getImg() == null)
                                             {
@@ -220,31 +244,5 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
                     @Override
                     public void onError(Throwable e) { }
                 });
-    }
-
-    private void surveyLogic(View view, String surveyId, String eventId) {
-        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            RadioButton radioButton = view.findViewById(checkedId);
-
-            user.getAchievements().add(eventViewModel.getAchievementId());
-            user.setScore(user.getScore() + eventViewModel.getPoints());
-            eventViewModel.updateUser(user, eventViewModel.getUserDao(), TAG);
-
-            eventViewModel.getLog().formLog(
-                    CONSTANTS.LOG_STRUCT.ACTION_NAME_PASSED_SURVEY_ID + surveyId + "\n"
-                            + CONSTANTS.LOG_STRUCT.LOG_EVENT_ID + eventId,
-                    CONSTANTS.LOG_STRUCT.ACTION_RESULT_SURVEY + radioButton.getText());
-
-            eventViewModel.sendLog(preferences.getString("token"), eventViewModel.getLog(), eventViewModel.getLogRepo());
-
-            new AlertDialog.Builder(getActivity())
-                    .setTitle("Спасибо!")
-                    .setMessage(R.string.prompt_answered_survey)
-                    .setPositiveButton("Хорошо", (dialog, which) -> dialog.dismiss())
-                    .setIcon(R.drawable.passed_survey)
-                    .show();
-
-            disableRadioButtons(radioGroup);
-        });
     }
 }

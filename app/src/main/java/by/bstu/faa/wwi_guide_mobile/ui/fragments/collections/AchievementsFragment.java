@@ -56,7 +56,6 @@ public class AchievementsFragment extends Fragment implements FragmentBottomNav 
                     @Override
                     public void onSuccess(List<AchievementEntity> entities) {
                         achievementsAdapter.setItems(entities);
-                        Log.d(TAG, "Set items to adapter");
                     }
                     @Override
                     public void onError(Throwable e) { }

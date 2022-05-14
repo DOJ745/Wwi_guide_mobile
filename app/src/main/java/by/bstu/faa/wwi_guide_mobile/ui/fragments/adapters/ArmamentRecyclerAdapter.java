@@ -18,36 +18,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 
-public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAdapter.EventResultHolder>
-        implements AdapterSetItems<EventEntity> {
+public class ArmamentRecyclerAdapter extends RecyclerView.Adapter<ArmamentRecyclerAdapter.ArmamentResultHolder>
+        implements AdapterSetItems<ArmamentEntity> {
 
-    public interface OnItemClickListener { void onItemClick(EventEntity item, int position); }
-    private final OnItemClickListener onClickListener;
+    public interface OnItemClickListener { void onItemClick(ArmamentEntity item, int position); }
+    private final ArmamentRecyclerAdapter.OnItemClickListener onClickListener;
 
-    private List<EventEntity> items = new ArrayList<>();
+    private List<ArmamentEntity> items = new ArrayList<>();
     private final LayoutInflater inflater;
 
-    public EventsRecyclerAdapter(Context context, OnItemClickListener onClickListener) {
+    public ArmamentRecyclerAdapter(Context context, ArmamentRecyclerAdapter.OnItemClickListener onClickListener) {
         this.onClickListener = onClickListener;
         this.inflater = LayoutInflater.from(context);
     }
 
     @NonNull
     @Override
-    public EventsRecyclerAdapter.EventResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ArmamentRecyclerAdapter.ArmamentResultHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View itemView = inflater.inflate(R.layout.collection_item_data, parent, false);
-        return new EventResultHolder(itemView);
+        return new ArmamentRecyclerAdapter.ArmamentResultHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventsRecyclerAdapter.EventResultHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ArmamentRecyclerAdapter.ArmamentResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.titleTextView.setTypeface(typeface);
 
-        EventEntity item = items.get(position);
+        ArmamentEntity item = items.get(position);
         holder.titleTextView.setText(item.getTitle());
 
         Glide
@@ -67,20 +67,21 @@ public class EventsRecyclerAdapter extends RecyclerView.Adapter<EventsRecyclerAd
         return items.size();
     }
 
-    public void setItems(List<EventEntity> items) {
+    public void setItems(List<ArmamentEntity> items) {
         this.items = items;
         this.notifyDataSetChanged();
     }
 
-    static class EventResultHolder extends RecyclerView.ViewHolder {
+    static class ArmamentResultHolder extends RecyclerView.ViewHolder {
 
         private final TextView titleTextView;
         private final ImageView imgView;
 
-        public EventResultHolder(@NonNull View itemView) {
+        public ArmamentResultHolder(@NonNull View itemView) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.item_data_title);
             imgView = itemView.findViewById(R.id.item_data_img);
         }
     }
+
 }

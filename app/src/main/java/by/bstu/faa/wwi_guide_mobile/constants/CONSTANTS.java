@@ -12,8 +12,6 @@ public class CONSTANTS {
         public final static String RANKS_TABLE = "ranks";
         public final static String COUNTRIES_TABLE = "countries";
         public final static String SURVEYS_TABLE = "surveys";
-        public final static String SURVEYS_QUESTIONS_TABLE = "surveys_questions";
-        public final static String SURVEYS_ANSWERS_TABLE = "surveys_answers";
         public final static String TESTS_QUESTIONS_TABLE = "tests_questions";
         public final static String TESTS_ANSWERS_TABLE = "tests_answers";
         public final static String YEARS_TABLE = "years";
@@ -51,8 +49,6 @@ public class CONSTANTS {
         public final static String BASE_LOCALHOST = "http://10.0.2.2:5000" + API_URL;
 
         public final static String IMG = BASE + "images/";
-        public final static String RANK_IMG = IMG + "ranks";
-        public final static String COUNTRIES_IMG = IMG + "countries";
 
         public final static String NO_IMG = "https://www.bakicubuk.com/wp-content/uploads/builder-image.jpg";
 

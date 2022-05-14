@@ -17,6 +17,7 @@
         android:layout_height="match_parent">
 
         <ImageView
+            android:scaleType="fitXY"
             android:id="@+id/item_data_img"
             android:layout_width="match_parent"
             android:layout_height="192dp"
