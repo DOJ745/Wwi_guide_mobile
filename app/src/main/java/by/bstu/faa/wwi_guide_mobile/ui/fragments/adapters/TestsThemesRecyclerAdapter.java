@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,13 +43,12 @@ public class TestsThemesRecyclerAdapter extends RecyclerView.Adapter<TestsThemes
     public void onBindViewHolder(@NonNull TestsThemesRecyclerAdapter.TestThemeResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.nameTextView.setTypeface(typeface);
+        holder.nameTextView.setTextColor(Color.BLACK);
 
         TestThemeEntity item = items.get(position);
         holder.nameTextView.setText(item.getName());
 
-        if(item.getName().contains("ПРОЙДЕН")){
-            holder.itemView.setClickable(false);
-        }
+        if(item.getName().contains("ПРОЙДЕН")) { holder.itemView.setClickable(false); }
         else holder.itemView.setOnClickListener(v -> onClickListener.onItemClick(item, position));
     }
 

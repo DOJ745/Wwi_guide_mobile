@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,7 @@ public class ArmamentRecyclerAdapter extends RecyclerView.Adapter<ArmamentRecycl
     public void onBindViewHolder(@NonNull ArmamentRecyclerAdapter.ArmamentResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.titleTextView.setTypeface(typeface);
+        holder.titleTextView.setTextColor(Color.BLACK);
 
         ArmamentEntity item = items.get(position);
         holder.titleTextView.setText(item.getTitle());

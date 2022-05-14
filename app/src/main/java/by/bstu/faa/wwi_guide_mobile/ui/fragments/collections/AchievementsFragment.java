@@ -23,6 +23,7 @@ import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.AchievementDto;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.AchievementsRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.AchievementViewModel;
@@ -35,6 +36,7 @@ public class AchievementsFragment extends Fragment implements FragmentBottomNav 
     private final String TAG = AchievementsFragment.class.getSimpleName();
 
     private AchievementsRecyclerAdapter achievementsAdapter;
+    private List<String> userAchievements = new ArrayList<>();
 
     public AchievementsFragment() {
         // Required empty public constructor
@@ -49,19 +51,37 @@ public class AchievementsFragment extends Fragment implements FragmentBottomNav 
         AchievementViewModel achievementViewModel = new ViewModelProvider(this).get(AchievementViewModel.class);
         achievementsAdapter = new AchievementsRecyclerAdapter(requireContext());
 
-        achievementViewModel.getAchievementRepo().getEntitiesFromDB()
+        achievementViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableMaybeObserver<List<AchievementEntity>>() {
+                .subscribe(new DisposableMaybeObserver<UserEntity>() {
                     @Override
-                    public void onSuccess(List<AchievementEntity> entities) {
-                        achievementsAdapter.setItems(entities);
+                    public void onSuccess(UserEntity entity) {
+                        userAchievements.addAll(entity.getAchievements());
+
+                        achievementViewModel.getAchievementRepo().getEntitiesFromDB()
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableMaybeObserver<List<AchievementEntity>>() {
+                                    @Override
+                                    public void onSuccess(List<AchievementEntity> entities) {
+                                        achievementsAdapter.setItems(entities);
+                                        achievementsAdapter.setUserAchievements(userAchievements);
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                    @Override
+                                    public void onComplete() { Log.d(TAG, "no achievements have been found"); }
+                                });
                     }
+
                     @Override
                     public void onError(Throwable e) { }
                     @Override
-                    public void onComplete() { Log.d(TAG, "no achievements have been found"); }
+                    public void onComplete() { }
                 });
+
+
     }
 
     @Override

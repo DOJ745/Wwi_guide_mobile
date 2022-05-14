@@ -139,6 +139,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                         }
 
                                         achievementsRecyclerAdapter.setItems(userAchievements);
+                                        achievementsRecyclerAdapter.setUserAchievements(userEntity.getAchievements());
                                         achievementRecyclerView.setAdapter(achievementsRecyclerAdapter);
                                     }
                                     @Override

@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,7 +48,9 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.dateTextView.setTypeface(typeface);
+        holder.dateTextView.setTextColor(Color.BLACK);
         holder.titleTextView.setTypeface(typeface);
+        holder.titleTextView.setTextColor(Color.BLACK);
 
         YearEntity item = items.get(position);
 
