@@ -3,21 +3,21 @@
     <item
         android:id="@+id/achievementsFragment"
         android:title="@string/nav_item_achievements"
-        android:icon="@drawable/square"/>
+        android:icon="@drawable/achievements_menu_icon"/>
     <item
         android:id="@+id/testsFragment"
         android:title="@string/nav_item_tests"
-        android:icon="@drawable/square"/>
+        android:icon="@drawable/test_menu_icon"/>
     <item
         android:id="@+id/yearsFragment"
         android:title="@string/nav_item_years"
-        android:icon="@drawable/square"/>
+        android:icon="@drawable/years_menu_black_icon"/>
     <item
         android:id="@+id/armamentFragment"
         android:title="@string/nav_item_weapons_and_technique"
-        android:icon="@drawable/book_icon_128"/>
+        android:icon="@drawable/armament_menu_icon3"/>
     <item
         android:id="@+id/userFragment"
         android:title="@string/nav_item_user_info"
-        android:icon="@drawable/square" />
+        android:icon="@drawable/user_menu_icon2" />
 </menu>

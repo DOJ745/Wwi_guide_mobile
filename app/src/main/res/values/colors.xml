@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="old_paper">#f6eabe</color>
+    <color name="cherry_red">#B13403</color>
 </resources>
