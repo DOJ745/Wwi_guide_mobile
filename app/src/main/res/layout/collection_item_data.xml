@@ -28,14 +28,17 @@
 
         <TextView
             android:id="@+id/item_data_title"
-            android:textAlignment="center"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_margin"
-            app:layout_constraintEnd_toEndOf="@id/item_data_img"
-            app:layout_constraintStart_toStartOf="@id/item_data_img"
-            app:layout_constraintTop_toTopOf="@id/item_data_img" />
+            android:layout_gravity="center"
+            android:shadowColor="#000000"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

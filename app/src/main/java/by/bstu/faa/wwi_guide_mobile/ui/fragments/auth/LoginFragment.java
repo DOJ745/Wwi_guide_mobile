@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -39,10 +40,8 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
     private static final String ARG_CHECKBOX = "checkbox";
 
     private LoginViewModel loginViewModel;
-
     private LoginData loginData;
     private UserDto userData;
-
     private String token;
     private String loginParam;
     private String passwordParam;
@@ -55,7 +54,6 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
     private EditText loginField;
     private EditText passwordField;
     private CheckBox rememberMeBox;
-    private TextView testView;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -104,14 +102,16 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1.0f);
+        alphaAnimation.setDuration(533);
+        alphaAnimation.setFillAfter(true);
+
         loginMsgResponse = view.findViewById(R.id.fragment_login_msg_response);
         Button loginButton = view.findViewById(R.id.fragment_login_enter_button);
         Button regFragmentButton = view.findViewById(R.id.fragment_login_toReg_button);
         loginField = view.findViewById(R.id.fragment_login_login_input);
         passwordField = view.findViewById(R.id.fragment_login_password_input);
         rememberMeBox = view.findViewById(R.id.fragment_login_remember_me);
-        testView = view.findViewById(R.id.fragment_login_test_view);
-        testView.setText(Html.fromHtml("<p><b>Жирный текст</b><i>курсивный текст</i><u>подчеркнутый текст</u></p>*img-Подпись под картинкой*"));
 
         setTextFieldListeners(loginField, passwordField, rememberMeBox);
 
@@ -125,6 +125,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                     preferences.put(ARG_LOGIN, loginField.getText().toString());
                     preferences.put(ARG_PASSWORD, passwordField.getText().toString());
 
+                    loginMsgResponse.startAnimation(alphaAnimation);
                     loginMsgResponse.setText(R.string.prompt_remember_me_info);
                 }
                 catch (Exception e) { e.printStackTrace(); }
@@ -134,6 +135,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                 preferences.removeValue(ARG_LOGIN);
                 preferences.removeValue(ARG_PASSWORD);
                 Log.d(TAG, "checkBox unchecked");
+                loginMsgResponse.setText("");
             }
         });
 
@@ -141,12 +143,11 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         passwordField.setText(passwordParam);
 
         loginViewModel.getLoginRepoResponse().observe(getViewLifecycleOwner(), loginResponse -> {
-
             if (loginResponse != null) {
+                setUserData(userData, loginResponse);
                 if (!loginResponse.getMsgStatus().equals("") && loginResponse.getMsgError() == null) {
                     switch (loginResponse.getMsgStatus()) {
                         case (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.LOGIN_SUCCESS):
-                            setUserData(userData, loginResponse);
                             token = loginResponse.getToken();
                             preferences.put(ARG_TOKEN, token);
                             Log.d(TAG, "Token has been saved: " + token);
@@ -164,20 +165,27 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                             break;
 
                         case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_INCORRECT_PASSWORD):
+                            Log.d(TAG, "mapped user data: " + userData.getMsgStatus());
+                            loginMsgResponse.startAnimation(alphaAnimation);
                             loginMsgResponse.setText(R.string.err_login_wrong_user_password);
                             break;
 
                         case (CONSTANTS.WEB_APP_ERR_RESPONSES.LOGIN_NO_SUCH_USER):
+                            loginMsgResponse.startAnimation(alphaAnimation);
                             loginMsgResponse.setText(R.string.err_login_wrong_user_login);
                             break;
 
                         default:
+                            loginMsgResponse.startAnimation(alphaAnimation);
                             loginMsgResponse.setText(R.string.err_login_failed);
                             break;
                     }
                 }
                 else
-                    loginMsgResponse.setText(loginResponse.getMsgError());
+                    if(loginResponse.getMsgError() != null) {
+                        loginMsgResponse.startAnimation(alphaAnimation);
+                        loginMsgResponse.setText(loginResponse.getMsgError());
+                    }
             }
         });
 
@@ -187,11 +195,12 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
                 loginData.setPassword(passwordField.getText().toString());
                 loginViewModel.loginUser(loginData);
             }
-            else{ loginMsgResponse.setText(R.string.err_mismatch_data); }
+            else {
+                loginMsgResponse.startAnimation(alphaAnimation);
+                loginMsgResponse.setText(R.string.err_mismatch_data);
+            }
         });
-
         regFragmentButton.setOnClickListener(view1 -> navigateToFragment(view1, "login"));
-
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
@@ -299,5 +308,7 @@ public class LoginFragment extends Fragment implements FragmentNavigation {
         userData.setAchievements(loginResponse.getAchievements());
         userData.setScore(loginResponse.getScore());
         userData.setRoles(loginResponse.getRoles());
+        userData.setMsgStatus(loginResponse.getMsgStatus());
+        userData.setMsgError(loginResponse.getMsgError());
     }
 }

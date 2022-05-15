@@ -3,7 +3,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
 
     <!-- android:drawable should be the same as in the main theme -->
-    <item android:drawable="@android:color/white"/>
+    <item android:drawable="@color/old_paper"/>
     <item>
         <bitmap
             android:src="@drawable/app_icon_128"

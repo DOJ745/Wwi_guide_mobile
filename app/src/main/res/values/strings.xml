@@ -4,7 +4,7 @@
     <string name="img_description">IMG</string>
 
     <!-- LOGIN/REGISTER FRAGMENT -->
-    <string name="prompt_login">Логин</string>
+    <string name="prompt_login">Позывной</string>
     <string name="prompt_password">Пароль</string>
     <string name="prompt_repeat_password">Повторите пароль</string>
     <string name="prompt_remember_me">Запомнить меня</string>
@@ -32,10 +32,10 @@
     <string name="err_reg_invalid_password">Пароль должен быть от 6-ти до 12-ти символов!</string>
     <string name="err_validation_password">Минимум 6 символов!</string>
     <string name="err_login_failed">"Ошибка входа"</string>
-    <string name="err_reg_user_exist">Пользователь с таким именем уже существует!</string>
+    <string name="err_reg_user_exist">Пользователь с таким позывным уже существует!</string>
     <string name="err_reg_failed">Ошибка регистрации</string>
     <string name="err_reg_mismatch_password">Пароли не совпадают!</string>
-    <string name="err_login_wrong_user_login">Неверное имя пользователя!</string>
+    <string name="err_login_wrong_user_login">Такого позывного нет!</string>
     <string name="err_login_wrong_user_password">Неверный пароль!</string>
     <string name="err_mismatch_data">Проверьте введённые данные!</string>
 

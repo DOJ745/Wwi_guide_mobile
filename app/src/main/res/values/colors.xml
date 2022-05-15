@@ -10,4 +10,7 @@
     <color name="red">#FF0000</color>
     <color name="old_paper">#f6eabe</color>
     <color name="cherry_red">#B13403</color>
+    <color name="orange">#E1A100</color>
+    <color name="yellow">#F0CA00</color>
+    <color name="green">#32CD32</color>
 </resources>
