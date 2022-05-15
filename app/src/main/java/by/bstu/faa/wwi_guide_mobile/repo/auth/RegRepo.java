@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegRepo extends AuthRepo {
-    private final String REG_REPO = "REG REPO";
+    private final String TAG = RegRepo.class.getSimpleName();
 
     public void regUser(RegData regData) {
 
@@ -32,7 +32,7 @@ public class RegRepo extends AuthRepo {
                             @NonNull Call<AppMsgResponseDto> call,
                             @NonNull Response<AppMsgResponseDto> response) {
                         if(response.body() != null && response.isSuccessful()) {
-                            Log.d(REG_REPO, "Receiving REG DATA");
+                            Log.d(TAG, "Receiving REG DATA");
                             appResponse.postValue(response.body());
                         }
                         if (response.errorBody()!= null && response.code() == CONSTANTS.HTTP_CODES.BAD_REQUEST){
@@ -40,8 +40,7 @@ public class RegRepo extends AuthRepo {
                             Gson gson = new Gson();
                             Type type = new TypeToken<AppMsgResponseDto>(){}.getType();
                             AppMsgResponseDto errorResponse = gson.fromJson(response.errorBody().charStream(), type);
-
-                            Log.d(REG_REPO, "errorResponse:\n" + errorResponse.toString());
+                            Log.d(TAG, "errorResponse:\n" + errorResponse.toString());
                             appResponse.postValue(errorResponse);
                         }
                     }

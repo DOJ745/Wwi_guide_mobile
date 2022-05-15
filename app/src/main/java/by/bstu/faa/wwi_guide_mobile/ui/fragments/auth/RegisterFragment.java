@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -72,16 +73,13 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-
         List<CountryDto> temp = new ArrayList<>();
-
-        for (int i = 0; i < 1; i++){
+        for (int i = 0; i < 1; i++) {
             CountryDto testCountry = new CountryDto();
             testCountry.setName("PLEASE, WAIT..." );
             testCountry.setImg("EMPTY");
             temp.add(testCountry);
         }
-
         countrySpinnerAdapter = new CountrySpinnerAdapter(
                 this.getContext(),
                 R.layout.row_country,
@@ -98,6 +96,10 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
+
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1.0f);
+        alphaAnimation.setDuration(533);
+        alphaAnimation.setFillAfter(true);
 
         loginField = view.findViewById(R.id.fragment_reg_login_input);
         passwordField = view.findViewById(R.id.fragment_reg_password_input);
@@ -116,63 +118,64 @@ public class RegisterFragment extends Fragment implements FragmentNavigation {
                 if (!regResponse.getMsgStatus().equals("") && regResponse.getMsgError() == null) {
                     switch (regResponse.getMsgStatus()) {
                         case (CONSTANTS.WEB_APP_SUCCESS_RESPONSES.REG_SUCCESS):
+                            regMsgResponse.startAnimation(alphaAnimation);
                             regMsgResponse.setText(R.string.success_registration);
                             dataToTransfer.add(loginField.getText().toString());
                             dataToTransfer.add(passwordField.getText().toString());
                             break;
 
-                        case (CONSTANTS.WEB_APP_ERR_RESPONSES.REG_SUCH_USER_EXISTS):
+                        case (CONSTANTS.WEB_APP_ERR_RESPONSES.REG_SUCH_USER_EXIST):
+                            regMsgResponse.startAnimation(alphaAnimation);
                             regMsgResponse.setText(R.string.err_reg_user_exist);
                             break;
 
                         default:
+                            regMsgResponse.startAnimation(alphaAnimation);
                             regMsgResponse.setText(R.string.err_reg_failed);
                             break;
                     }
                 }
                 else
-                    regMsgResponse.setText(regResponse.getMsgError());
+                    if(regResponse.getMsgError() != null) {
+                        regMsgResponse.startAnimation(alphaAnimation);
+                        regMsgResponse.setText(regResponse.getMsgError());
+                    }
             }
         });
 
         rankSpinner.setAdapter(countrySpinnerAdapter);
         rankSpinner.setPromptId(R.string.id_for_spinner);
         rankSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int pos, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 selectedCountryId = countrySpinnerAdapter.getItem(pos).getId();
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
                 selectedCountryId = countrySpinnerAdapter.getItem(0).getId();
             }
         });
 
-        setTextFieldListeners(loginField,
-                passwordField,
-                repeatPasswordField,
-                passwordRequirements);
+        setTextFieldListeners(loginField, passwordField, repeatPasswordField, passwordRequirements);
 
         regButton.setOnClickListener(v -> {
-
-            if( loginField.getError() == null &&
-                    passwordField.getError() == null &&
+            if(loginField.getError() == null && passwordField.getError() == null &&
                     repeatPasswordField.getError() == null &&
                     passwordField.getText().toString().equals(repeatPasswordField.getText().toString()) ) {
-
                 userRegData.setLogin(loginField.getText().toString());
                 userRegData.setPassword(repeatPasswordField.getText().toString());
                 userRegData.setCountryId(selectedCountryId);
 
                 registerViewModel.regUser(userRegData);
             }
-            else if(!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())){
+            else if(!passwordField.getText().toString().equals(repeatPasswordField.getText().toString())) {
+                regMsgResponse.startAnimation(alphaAnimation);
                 regMsgResponse.setText(R.string.err_reg_mismatch_password);
             }
-            else { regMsgResponse.setText(R.string.err_mismatch_data); }
+            else {
+                regMsgResponse.startAnimation(alphaAnimation);
+                regMsgResponse.setText(R.string.err_mismatch_data);
+            }
         });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);

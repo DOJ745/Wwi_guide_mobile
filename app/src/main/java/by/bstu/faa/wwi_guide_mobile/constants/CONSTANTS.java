@@ -34,7 +34,7 @@ public class CONSTANTS {
     }
 
     public static class WEB_APP_ERR_RESPONSES {
-        public final static String REG_SUCH_USER_EXISTS = "Such user already exists!";
+        public final static String REG_SUCH_USER_EXIST = "Such user already exist!";
         public final static String LOGIN_NO_SUCH_USER = "No such user!";
         public final static String LOGIN_INCORRECT_PASSWORD = "Incorrect password!";
     }
