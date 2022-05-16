@@ -18,14 +18,13 @@ import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 
-public class ArmamentFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
-    private final String TAG = ArmamentFragment.class.getSimpleName();
+public class ArmamentSubcategoriesFragment extends Fragment implements FragmentNavigation, FragmentBottomNav {
+    private final String TAG = ArmamentSubcategoriesFragment.class.getSimpleName();
 
     private String categoryName;
 
-    public ArmamentFragment() {
+    public ArmamentSubcategoriesFragment() {
         // Required empty public constructor
-        Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
@@ -39,7 +38,7 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_armament, container, false);
+        View view = inflater.inflate(R.layout.fragment_armament_subcategories, container, false);
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
         return view;
     }
@@ -48,15 +47,24 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        CardView weaponsCard = view.findViewById(R.id.fragment_armament_weapon_category);
-        CardView techniqueCard = view.findViewById(R.id.fragment_armament_technique_category);
+        CardView techniqueSubcategoryAviationCard = view.findViewById(R.id.fragment_armament_subcategories_aviation);
+        CardView techniqueSubcategoryNavyCard = view.findViewById(R.id.fragment_armament_subcategories_navy);
+        CardView techniqueSubcategoryGroundCard = view.findViewById(R.id.fragment_armament_subcategories_ground);
 
-        weaponsCard.setOnClickListener(v -> {
-            categoryName = "";
+
+        techniqueSubcategoryGroundCard.setOnClickListener(v -> {
+            categoryName = CONSTANTS.TECHNIQUE_SUBCATEGORIES.GROUND;
             navigateToFragment(view, "armament_list");
         });
-        techniqueCard.setOnClickListener(v -> navigateToFragment(view, "armament_subcategory"));
+        techniqueSubcategoryAviationCard.setOnClickListener(v -> {
+                    categoryName = CONSTANTS.TECHNIQUE_SUBCATEGORIES.AVIATION;
+                    navigateToFragment(view, "armament_list");
+        });
 
+        techniqueSubcategoryNavyCard.setOnClickListener(v -> {
+                    categoryName = CONSTANTS.TECHNIQUE_SUBCATEGORIES.NAVY;
+                    navigateToFragment(view, "armament_list");
+        });
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
@@ -116,9 +124,6 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
         catch (IndexOutOfBoundsException e) { bundle.putString("category", ""); }
 
         if(fragmentName.equals("armament_list"))
-            Navigation.findNavController(view).navigate(R.id.action_armamentFragment_to_armamentListFragment, bundle);
-
-        if(fragmentName.equals("armament_subcategory"))
-            Navigation.findNavController(view).navigate(R.id.action_armamentFragment_to_armamentSubcategoriesFragment, null);
+            Navigation.findNavController(view).navigate(R.id.action_armamentSubcategoriesFragment_to_armamentListFragment, bundle);
     }
 }

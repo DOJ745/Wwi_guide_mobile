@@ -29,13 +29,14 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.ArmamentItemViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ArmamentItemFragment extends Fragment implements FragmentDataMethods {
+public class ArmamentItemFragment extends Fragment implements FragmentDataMethods, FragmentBottomNav {
     private final String TAG = ArmamentItemFragment.class.getSimpleName();
 
     private ArmamentItemViewModel armamentItemViewModel;
@@ -62,7 +63,7 @@ public class ArmamentItemFragment extends Fragment implements FragmentDataMethod
         preferences = SecurePreferences.getInstance(requireContext());
         entity = new ArmamentEntity();
         armamentItemViewModel = new ViewModelProvider(this).get(ArmamentItemViewModel.class);
-        MainActivity.BottomNavigationView.setVisibility(View.GONE);
+        showBottomNav(MainActivity.BottomNavigationView, false);
 
         if (getArguments() != null) { Log.d(TAG, getArguments().getString(ARG_ID)); }
 

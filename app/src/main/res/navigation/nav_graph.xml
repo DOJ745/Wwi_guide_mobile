@@ -55,8 +55,11 @@
         android:label="fragment_armament"
         tools:layout="@layout/fragment_armament" >
         <action
-            android:id="@+id/action_armamentFragment_to_armamentItemFragment"
-            app:destination="@id/armamentItemFragment" />
+            android:id="@+id/action_armamentFragment_to_armamentSubcategoriesFragment"
+            app:destination="@id/armamentSubcategoriesFragment" />
+        <action
+            android:id="@+id/action_armamentFragment_to_armamentListFragment"
+            app:destination="@id/armamentListFragment" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"
@@ -89,5 +92,23 @@
         android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.details.ArmamentItemFragment"
         android:label="fragment_armament_item"
         tools:layout="@layout/fragment_data" />
+    <fragment
+        android:id="@+id/armamentSubcategoriesFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.ArmamentSubcategoriesFragment"
+        android:label="fragment_armament_subcategories"
+        tools:layout="@layout/fragment_armament_subcategories" >
+        <action
+            android:id="@+id/action_armamentSubcategoriesFragment_to_armamentListFragment"
+            app:destination="@id/armamentListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/armamentListFragment"
+        android:name="by.bstu.faa.wwi_guide_mobile.ui.fragments.collections.ArmamentListFragment"
+        android:label="fragment_armament_list"
+        tools:layout="@layout/fragment_armament_list" >
+        <action
+            android:id="@+id/action_armamentListFragment_to_armamentItemFragment"
+            app:destination="@id/armamentItemFragment" />
+    </fragment>
 
 </navigation>
