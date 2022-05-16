@@ -19,6 +19,12 @@ public class CONSTANTS {
         public final static String TEST_THEME_TABLE = "tests_themes";
     }
 
+    public static class TECHNIQUE_SUBCATEGORIES {
+        public final static String AVIATION = "aviation";
+        public final static String GROUND = "ground";
+        public final static String NAVY = "navy";
+    }
+
     public static class LOG_STRUCT {
         public final static String ACTION_NAME_PASSED_TEST_ID = "Passed test theme ID: ";
         public final static String ACTION_RESULT_TEST_RATIO = "Total Q amount/Correct answers/threshold: ";

@@ -56,6 +56,7 @@
 
     <!-- USER FRAGMENT -->
     <string name="prompt_no_achievements">Пока что вы нигде не отличились…</string>
+    <string name="prompt_log_out">Выйти в отпуск</string>
     <!-- EVENTS FRAGMENT -->
     <string name="prompt_no_surveys">Опросы можно проходить только с наличием связи со штабом (с наличием интернет-соединения)!</string>
     <string name="prompt_passed_survey">Вы ранее прошли данный опрос. Ответ на него уже записан в нашей бухгалтерии.</string>
@@ -76,6 +77,9 @@
     <!-- Armament FRAGMENT -->
     <string name="prompt_weapon_category">Оружие</string>
     <string name="prompt_technique_category">Техника</string>
+    <string name="prompt_technique_subcategory_aviation">Авиация</string>
+    <string name="prompt_technique_subcategory_navy">Флот</string>
+    <string name="prompt_technique_subcategory_ground">Наземная техника</string>
 
     <!-- BOTTOM NAV BAR -->
     <string name="nav_item_years">Года</string>

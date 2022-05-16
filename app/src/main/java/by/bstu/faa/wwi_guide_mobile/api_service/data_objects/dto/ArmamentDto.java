@@ -1,5 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,4 +14,6 @@ import lombok.EqualsAndHashCode;
 public class ArmamentDto extends BaseDataDto {
     @SerializedName("category")@Expose
     private String category;
+    @SerializedName("subcategory")@Expose@Nullable
+    private String subcategory;
 }

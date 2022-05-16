@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:opacity="opaque">
 
     <!-- android:drawable should be the same as in the main theme -->
     <item android:drawable="@color/old_paper"/>
+
     <item>
         <bitmap
             android:src="@drawable/app_icon_128"
             android:gravity="center">
         </bitmap>
     </item>
+    <item
+        android:name="android:statusBarColor"
+        tools:targetApi="l">@color/cherry_red</item>
 
 </layer-list>

@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -24,4 +25,6 @@ import lombok.ToString;
 public class ArmamentEntity extends BaseDataEntity {
     @ColumnInfo@NonNull
     private String category;
+    @ColumnInfo@Nullable
+    private String subcategory;
 }

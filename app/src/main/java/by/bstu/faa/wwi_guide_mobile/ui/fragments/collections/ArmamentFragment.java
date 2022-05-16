@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,6 +37,10 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
     private RecyclerView recyclerView;
     private CardView weaponsCard;
     private CardView techniqueCard;
+    private CardView techniqueSubcategoryNavyCard;
+    private CardView techniqueSubcategoryAviationCard;
+    private CardView techniqueSubcategoryGroundCard;
+    private ImageView backBtn;
 
     private String armamentId;
 
@@ -83,8 +88,66 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
 
         weaponsCard = view.findViewById(R.id.fragment_armament_weapon_category);
         techniqueCard = view.findViewById(R.id.fragment_armament_technique_category);
+        backBtn = view.findViewById(R.id.fragment_armament_back);
+        techniqueSubcategoryAviationCard = view.findViewById(R.id.fragment_armament_technique_subcategory_aviation);
+        techniqueSubcategoryNavyCard = view.findViewById(R.id.fragment_armament_technique_subcategory_navy);
+        techniqueSubcategoryGroundCard = view.findViewById(R.id.fragment_armament_technique_subcategory_ground);
         recyclerView = view.findViewById(R.id.fragment_armament_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        techniqueSubcategoryGroundCard.setOnClickListener(v ->
+                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.GROUND)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                            @Override
+                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                armamentRecyclerAdapter.setItems(armamentEntities);
+                                recyclerView.setAdapter(armamentRecyclerAdapter);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                makeSubcategoriesVisible(false);
+
+                                backBtn.setVisibility(View.VISIBLE);
+
+                                backBtn.setOnClickListener(v1 -> {
+                                    makeSubcategoriesVisible(true);
+                                });
+                            }
+                            @Override
+                            public void onError(Throwable e) { }
+                        }));
+
+        techniqueSubcategoryAviationCard.setOnClickListener(v ->
+                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.AVIATION)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                            @Override
+                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                armamentRecyclerAdapter.setItems(armamentEntities);
+                                recyclerView.setAdapter(armamentRecyclerAdapter);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                makeSubcategoriesVisible(false);
+                            }
+                            @Override
+                            public void onError(Throwable e) { }
+                        }));
+
+        techniqueSubcategoryNavyCard.setOnClickListener(v ->
+                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.NAVY)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                            @Override
+                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                armamentRecyclerAdapter.setItems(armamentEntities);
+                                recyclerView.setAdapter(armamentRecyclerAdapter);
+                                recyclerView.setVisibility(View.VISIBLE);
+                                makeSubcategoriesVisible(false);
+                            }
+                            @Override
+                            public void onError(Throwable e) { }
+                        }));
 
         weaponsCard.setOnClickListener(v ->
                 armamentViewModel.getWeapons()
@@ -95,28 +158,24 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
                     public void onSuccess(List<ArmamentEntity> armamentEntities) {
                         armamentRecyclerAdapter.setItems(armamentEntities);
                         recyclerView.setAdapter(armamentRecyclerAdapter);
-                        weaponsCard.setVisibility(View.GONE);
-                        techniqueCard.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        makeCategoriesVisible(false);
                     }
                     @Override
                     public void onError(Throwable e) { }
                 }));
 
-        techniqueCard.setOnClickListener(v ->
-                armamentViewModel.getTechnique()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
-                            @Override
-                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
-                                armamentRecyclerAdapter.setItems(armamentEntities);
-                                recyclerView.setAdapter(armamentRecyclerAdapter);
-                                weaponsCard.setVisibility(View.GONE);
-                                techniqueCard.setVisibility(View.GONE);
-                            }
-                            @Override
-                            public void onError(Throwable e) { }
-                        }));
+        techniqueCard.setOnClickListener(v -> {
+            makeSubcategoriesVisible(true);
+            makeCategoriesVisible(false);
+            backBtn.setVisibility(View.VISIBLE);
+
+            backBtn.setOnClickListener(v1 -> {
+                makeSubcategoriesVisible(false);
+                makeSubcategoriesVisible(true);
+                backBtn.setVisibility(View.GONE);
+            });
+        });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
@@ -167,6 +226,29 @@ public class ArmamentFragment extends Fragment implements FragmentBottomNav, Fra
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    private void makeCategoriesVisible(boolean flag){
+        if(flag){
+            techniqueCard.setVisibility(View.VISIBLE);
+            weaponsCard.setVisibility(View.VISIBLE);
+        }
+        else{
+            techniqueCard.setVisibility(View.GONE);
+            weaponsCard.setVisibility(View.GONE);
+        }
+    }
+    private void makeSubcategoriesVisible(boolean flag){
+        if(flag) {
+            techniqueSubcategoryGroundCard.setVisibility(View.VISIBLE);
+            techniqueSubcategoryAviationCard.setVisibility(View.VISIBLE);
+            techniqueSubcategoryNavyCard.setVisibility(View.VISIBLE);
+        }
+        else {
+            techniqueSubcategoryGroundCard.setVisibility(View.GONE);
+            techniqueSubcategoryAviationCard.setVisibility(View.GONE);
+            techniqueSubcategoryNavyCard.setVisibility(View.GONE);
+        }
     }
 
     @Override

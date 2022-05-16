@@ -19,4 +19,6 @@ public interface ArmamentDao extends BaseDao<ArmamentEntity> {
     Single<ArmamentEntity> getArmamentById(String id);
     @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.ARMAMENT_TABLE + " WHERE category = :categoryName")
     Single<List<ArmamentEntity>> getArmamentsByCategory(String categoryName);
+    @Query("SELECT * FROM " + CONSTANTS.APP_DATABASE.ARMAMENT_TABLE + " WHERE subcategory = :subcategoryName")
+    Single<List<ArmamentEntity>> getArmamentsBySubcategory(String subcategoryName);
 }

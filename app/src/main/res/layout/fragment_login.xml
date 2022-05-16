@@ -68,6 +68,8 @@
             android:id="@+id/fragment_login_remember_me"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/orange"
             android:text="@string/prompt_remember_me"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

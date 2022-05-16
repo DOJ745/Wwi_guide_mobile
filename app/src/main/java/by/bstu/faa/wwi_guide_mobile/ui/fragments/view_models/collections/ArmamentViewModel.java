@@ -19,5 +19,5 @@ public class ArmamentViewModel extends ViewModel {
 
     public Single<ArmamentEntity> getArmamentById(String id) { return armamentDao.getArmamentById(id); }
     public Single<List<ArmamentEntity>> getWeapons() { return armamentDao.getArmamentsByCategory("weapon"); }
-    public Single<List<ArmamentEntity>> getTechnique() { return armamentDao.getArmamentsByCategory("technique"); }
+    public Single<List<ArmamentEntity>> getTechniqueBySub(String subcategoryConstant) { return armamentDao.getArmamentsBySubcategory(subcategoryConstant); }
 }
