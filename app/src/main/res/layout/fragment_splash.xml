@@ -30,6 +30,8 @@
             android:id="@+id/fragment_splash_text_prompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/default_font_size"
