@@ -25,6 +25,7 @@ import java.util.List;
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
@@ -36,6 +37,7 @@ import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.Questio
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.TestsThemesViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class TestItemFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
@@ -46,6 +48,7 @@ public class TestItemFragment extends Fragment implements FragmentBottomNav, Fra
 
     private String themeId;
     private String achievementId;
+    private int achievementPoints;
 
     private TestsThemesViewModel testsThemesViewModel;
     private RecyclerView recyclerView;
@@ -87,6 +90,18 @@ public class TestItemFragment extends Fragment implements FragmentBottomNav, Fra
                     public void onComplete() { }
                 });
 
+        testsThemesViewModel.getAchievementById(achievementId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableSingleObserver<AchievementEntity>() {
+                    @Override
+                    public void onSuccess(AchievementEntity achievementEntity) {
+                        achievementPoints = achievementEntity.getPoints();
+                    }
+                    @Override
+                    public void onError(Throwable e) { }
+                });
+
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
@@ -118,7 +133,7 @@ public class TestItemFragment extends Fragment implements FragmentBottomNav, Fra
         finishTestBtn.setOnClickListener(v -> {
             answerTimer.cancel();
             if(testQuestionRecyclerAdapter.getCorrectAnswersAmount() >= testsThemesViewModel.getTestThreshold()) {
-                user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum());
+                user.setScore(user.getScore() + testQuestionRecyclerAdapter.getPointsSum() + achievementPoints);
                 user.getAchievements().add(achievementId);
 
                 new AlertDialog.Builder(getActivity())

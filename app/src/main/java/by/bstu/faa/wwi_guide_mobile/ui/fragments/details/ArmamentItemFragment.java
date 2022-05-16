@@ -26,6 +26,7 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
@@ -52,6 +53,7 @@ public class ArmamentItemFragment extends Fragment implements FragmentDataMethod
     private SecurePreferences preferences;
     private UserEntity user;
     private String armamentId;
+    private int achievementPoints;
 
     public ArmamentItemFragment() {
         // Required empty public constructor
@@ -160,7 +162,7 @@ public class ArmamentItemFragment extends Fragment implements FragmentDataMethod
             RadioButton radioButton = view.findViewById(checkedId);
 
             user.getAchievements().add(armamentItemViewModel.getAchievementId());
-            user.setScore(user.getScore() + armamentItemViewModel.getPoints());
+            user.setScore(user.getScore() + armamentItemViewModel.getPoints() + achievementPoints);
             armamentItemViewModel.updateUser(user, armamentItemViewModel.getUserDao(), TAG);
 
             armamentItemViewModel.getLog().formLog(
@@ -192,6 +194,18 @@ public class ArmamentItemFragment extends Fragment implements FragmentDataMethod
                         entity = armamentEntity;
                         armamentItemViewModel.setAchievementId(armamentEntity.getAchievementId());
                         titleView.setText(entity.getTitle());
+
+                        armamentItemViewModel.getAchievementById(entity.getAchievementId())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableSingleObserver<AchievementEntity>() {
+                                    @Override
+                                    public void onSuccess(AchievementEntity achievementEntity) {
+                                        achievementPoints = achievementEntity.getPoints();
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                });
 
                         if(RetrofitService.hasConnection(requireContext()))
                         {

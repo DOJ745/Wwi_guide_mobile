@@ -26,6 +26,7 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
@@ -52,6 +53,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
     private EventEntity entity;
     private SecurePreferences preferences;
     private UserEntity user;
+    private int achievementPoints;
 
     public EventFragment() {
         // Required empty public constructor
@@ -168,6 +170,18 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
                         eventViewModel.setAchievementId(eventEntity.getAchievementId());
                         titleView.setText(entity.getTitle());
 
+                        eventViewModel.getAchievementById(entity.getAchievementId())
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableSingleObserver<AchievementEntity>() {
+                                    @Override
+                                    public void onSuccess(AchievementEntity achievementEntity) {
+                                        achievementPoints = achievementEntity.getPoints();
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { }
+                                });
+
                         if(RetrofitService.hasConnection(requireContext()))
                         {
                             eventViewModel.getSurveyById(entity.getSurveyId(), eventViewModel.getSurveyDao())
@@ -233,7 +247,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
             RadioButton radioButton = view.findViewById(checkedId);
 
             user.getAchievements().add(eventViewModel.getAchievementId());
-            user.setScore(user.getScore() + eventViewModel.getPoints());
+            user.setScore(user.getScore() + eventViewModel.getPoints() + achievementPoints);
             eventViewModel.updateUser(user, eventViewModel.getUserDao(), TAG);
 
             eventViewModel.getLog().formLog(

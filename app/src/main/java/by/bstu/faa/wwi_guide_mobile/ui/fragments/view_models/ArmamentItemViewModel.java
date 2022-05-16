@@ -8,6 +8,7 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.ArmamentDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
@@ -44,6 +45,7 @@ public class ArmamentItemViewModel extends ViewModel implements ViewModelDataMet
         log = new LogDto();
     }
 
+    public Single<AchievementEntity> getAchievementById(String id) { return achievementDao.getAchievementById(id); }
     @Override
     public Single<ArmamentEntity> getEntityDataById(String entityId) { return armamentDao.getArmamentById(entityId); }
     @Override

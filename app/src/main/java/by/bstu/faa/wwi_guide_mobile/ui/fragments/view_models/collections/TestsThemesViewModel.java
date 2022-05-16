@@ -10,10 +10,12 @@ import java.util.List;
 import by.bstu.faa.wwi_guide_mobile.api_service.data_objects.dto.LogDto;
 import by.bstu.faa.wwi_guide_mobile.app.AppInstance;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
+import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestAnswerDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestQuestionDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.TestThemeDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestAnswerEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestQuestionEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
@@ -22,6 +24,7 @@ import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.GetUserMethod;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.UpdateUser;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -31,6 +34,8 @@ import lombok.Setter;
 public class TestsThemesViewModel extends ViewModel implements GetUserMethod, UpdateUser {
     private final String TAG = TestsThemesViewModel.class.getSimpleName();
 
+    @Getter
+    private final AchievementDao achievementDao;
     @Getter
     private final TestThemeDao testThemeDao;
     @Getter
@@ -57,11 +62,13 @@ public class TestsThemesViewModel extends ViewModel implements GetUserMethod, Up
         testThemeDao = AppInstance.getInstance().getDatabase().testThemeDao();
         testQuestionDao = AppInstance.getInstance().getDatabase().testQuestionDao();
         testAnswerDao = AppInstance.getInstance().getDatabase().testAnswerDao();
+        achievementDao = AppInstance.getInstance().getDatabase().achievementDao();
         userDao = AppInstance.getInstance().getDatabase().userDao();
         logRepo = new LogRepo();
         log = new LogDto();
     }
 
+    public Single<AchievementEntity> getAchievementById(String id) { return  achievementDao.getAchievementById(id); }
     public void sendLog(String token, LogDto data) { logRepo.sendLog(token, data); }
     public Maybe<List<TestThemeEntity>> getTestsThemes() { return testThemeDao.getAll(); }
     public List<TestQuestionEntity> getTestThemeQuestions(String themeId) {

@@ -8,6 +8,7 @@ import by.bstu.faa.wwi_guide_mobile.database.dao.AchievementDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.EventDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.SurveyDao;
 import by.bstu.faa.wwi_guide_mobile.database.dao.UserDao;
+import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.repo.log.LogRepo;
@@ -44,6 +45,7 @@ public class EventViewModel extends ViewModel implements ViewModelDataMethods<Ev
         log = new LogDto();
     }
 
+    public Single<AchievementEntity> getAchievementById(String id) { return achievementDao.getAchievementById(id); }
     public Single<EventEntity> getEntityDataById(String id) { return eventDao.getEventById(id); }
     @Override
     public Maybe<UserEntity> getUserFromDB() { return userDao.getUser(); }
