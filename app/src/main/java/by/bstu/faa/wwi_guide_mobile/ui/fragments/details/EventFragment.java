@@ -29,13 +29,14 @@ import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.SurveyEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.security.SecurePreferences;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.EventViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class EventFragment extends Fragment implements FragmentDataMethods {
+public class EventFragment extends Fragment implements FragmentDataMethods, FragmentBottomNav {
     private final String TAG = EventFragment.class.getSimpleName();
 
     private EventViewModel eventViewModel;
@@ -62,10 +63,9 @@ public class EventFragment extends Fragment implements FragmentDataMethods {
         preferences = SecurePreferences.getInstance(requireContext());
         entity = new EventEntity();
         eventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
-        MainActivity.BottomNavigationView.setVisibility(View.GONE);
+        showBottomNav(MainActivity.BottomNavigationView, false);
 
         if (getArguments() != null) { Log.d(TAG, getArguments().getString(ARG_ID)); }
-
         eventViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

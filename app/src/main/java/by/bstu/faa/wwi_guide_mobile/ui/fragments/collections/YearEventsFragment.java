@@ -1,10 +1,6 @@
 package by.bstu.faa.wwi_guide_mobile.ui.fragments.collections;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,66 +10,72 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
-import by.bstu.faa.wwi_guide_mobile.database.entities.YearEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
-import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.YearsRecyclerAdapter;
+import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableMaybeObserver;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class YearsFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
-    private final String TAG = YearsFragment.class.getSimpleName();
+public class YearEventsFragment extends Fragment implements FragmentBottomNav, FragmentNavigation {
+    private final String TAG = YearEventsFragment.class.getSimpleName();
 
-    private YearsRecyclerAdapter yearAdapter;
+    private static final String ARG_YEAR_ID = "yearId";
+
     private YearViewModel yearViewModel;
+    private RecyclerView recyclerView;
+    private EventRecyclerAdapter eventsAdapter;
 
     private String yearId;
+    private String eventId;
 
-    public YearsFragment() {
+    public YearEventsFragment() {
         // Required empty public constructor
         Log.d(TAG, CONSTANTS.LOG_TAGS.CONSTRUCTOR);
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) { yearId = getArguments().getString(ARG_YEAR_ID); }
         yearViewModel = new ViewModelProvider(this).get(YearViewModel.class);
         showBottomNav(MainActivity.BottomNavigationView, true);
-        Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE);
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_years, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_year_events, container, false);
+        EventRecyclerAdapter.OnItemClickListener eventClickListener =
+                (event, position) -> {
+                    eventId = event.getId();
+                    navigateToFragment(view, "event");
+                };
+        eventsAdapter = new EventRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
 
-        YearsRecyclerAdapter.OnItemClickListener yearClickListener = (year, position) -> {
-            yearId = year.getId();
-            navigateToFragment(view, "yearEvents");
-        };
-        yearAdapter = new YearsRecyclerAdapter(requireContext().getApplicationContext(), yearClickListener);
-
-        yearViewModel.getYearRepo().getEntitiesFromDB()
+        yearViewModel.getYearEvents(yearId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableMaybeObserver<List<YearEntity>>() {
+                .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
                     @Override
-                    public void onSuccess(List<YearEntity> entities) {
-                        yearAdapter.setItems(entities);
-                        Log.d(TAG, "Set items to adapter");
+                    public void onSuccess(List<EventEntity> entities) {
+                        eventsAdapter.setItems(entities);
+                        recyclerView.setAdapter(eventsAdapter);
                     }
                     @Override
-                    public void onError(Throwable e) { }
-                    @Override
-                    public void onComplete() { Log.d(TAG, "onComplete"); }
+                    public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
                 });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
@@ -84,9 +86,9 @@ public class YearsFragment extends Fragment implements FragmentBottomNav, Fragme
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = view.findViewById(R.id.fragment_years_recycle_view);
+        recyclerView = view.findViewById(R.id.fragment_year_events_recycle_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(yearAdapter);
+        recyclerView.setAdapter(eventsAdapter);
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
@@ -144,10 +146,10 @@ public class YearsFragment extends Fragment implements FragmentBottomNav, Fragme
     public void navigateToFragment(View view, String fragmentName) {
         Bundle bundle = new Bundle();
 
-        try { bundle.putString("yearId", yearId); }
-        catch (IndexOutOfBoundsException e) { bundle.putString("yearId", ""); }
+        try { bundle.putString("id", eventId); }
+        catch (IndexOutOfBoundsException e) { bundle.putString("id", ""); }
 
-        if(fragmentName.equals("yearEvents"))
-            Navigation.findNavController(view).navigate(R.id.action_yearsFragment_to_yearEventsFragment, bundle);
+        if(fragmentName.equals("event"))
+            Navigation.findNavController(view).navigate(R.id.action_yearEventsFragment_to_eventFragment, bundle);
     }
 }

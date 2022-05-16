@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/half_main_margin"
+    android:layout_marginVertical="@dimen/activity_vertical_margin"
     tools:context=".ui.fragments.details.EventFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

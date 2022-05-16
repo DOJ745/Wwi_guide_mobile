@@ -15,9 +15,9 @@
     <item
         android:id="@+id/armamentFragment"
         android:title="@string/nav_item_weapons_and_technique"
-        android:icon="@drawable/armament_menu_icon3"/>
+        android:icon="@drawable/armament_menu_icon"/>
     <item
         android:id="@+id/userFragment"
         android:title="@string/nav_item_user_info"
-        android:icon="@drawable/user_menu_icon2" />
+        android:icon="@drawable/user_menu_icon" />
 </menu>

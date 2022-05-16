@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.collections.ArmamentListFragment">
+    tools:context=".ui.fragments.collections.ArmamentListFragment"
+    android:layout_marginHorizontal="@dimen/fragment_horizontal_margin">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_armament_list_recycler"

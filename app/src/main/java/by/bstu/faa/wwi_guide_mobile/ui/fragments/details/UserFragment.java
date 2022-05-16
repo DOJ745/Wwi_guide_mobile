@@ -74,6 +74,8 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
         preferences = SecurePreferences.getInstance(requireContext().getApplicationContext());
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         achievementsRecyclerAdapter = new AchievementsRecyclerAdapter(requireContext().getApplicationContext());
+
+        showBottomNav(MainActivity.BottomNavigationView, true);
     }
 
     @Override
@@ -81,6 +83,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);
+        showBottomNav(MainActivity.BottomNavigationView, true);
         return inflater.inflate(R.layout.fragment_user, container, false);
     }
 
@@ -222,6 +225,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
     public void onResume() {
         super.onResume();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_RESUME);
+        showBottomNav(MainActivity.BottomNavigationView, true);
     }
 
     @Override
