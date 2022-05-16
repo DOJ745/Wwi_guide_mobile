@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,7 +44,6 @@ public class TestsThemesRecyclerAdapter extends RecyclerView.Adapter<TestsThemes
     public void onBindViewHolder(@NonNull TestsThemesRecyclerAdapter.TestThemeResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.nameTextView.setTypeface(typeface);
-        holder.nameTextView.setTextColor(Color.BLACK);
 
         TestThemeEntity item = items.get(position);
         holder.nameTextView.setText(item.getName());
@@ -63,10 +63,12 @@ public class TestsThemesRecyclerAdapter extends RecyclerView.Adapter<TestsThemes
 
     static class TestThemeResultHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
+        private final ImageView imageView;
 
         public TestThemeResultHolder(@NonNull View itemView) {
             super(itemView);
             nameTextView = itemView.findViewById(R.id.item_test_theme_name);
+            imageView = itemView.findViewById(R.id.item_test_theme_img);
         }
     }
 }

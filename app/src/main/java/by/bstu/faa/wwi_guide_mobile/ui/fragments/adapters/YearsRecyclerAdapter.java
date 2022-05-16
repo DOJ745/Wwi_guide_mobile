@@ -48,9 +48,7 @@ public class YearsRecyclerAdapter extends RecyclerView.Adapter<YearsRecyclerAdap
     public void onBindViewHolder(@NonNull YearResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.dateTextView.setTypeface(typeface);
-        holder.dateTextView.setTextColor(Color.BLACK);
         holder.titleTextView.setTypeface(typeface);
-        holder.titleTextView.setTextColor(Color.BLACK);
 
         YearEntity item = items.get(position);
 

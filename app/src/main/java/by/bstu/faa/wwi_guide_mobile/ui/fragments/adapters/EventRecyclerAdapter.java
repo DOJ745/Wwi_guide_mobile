@@ -47,7 +47,6 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     public void onBindViewHolder(@NonNull EventRecyclerAdapter.EventResultHolder holder, int position) {
         Typeface typeface = Typeface.createFromAsset(holder.itemView.getContext().getAssets(), "font/old_type_nr_regular.ttf");
         holder.titleTextView.setTypeface(typeface);
-        holder.titleTextView.setTextColor(Color.BLACK);
 
         EventEntity item = items.get(position);
         holder.titleTextView.setText(item.getTitle());

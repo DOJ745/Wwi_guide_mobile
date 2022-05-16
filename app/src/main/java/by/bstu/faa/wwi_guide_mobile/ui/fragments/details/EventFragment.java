@@ -2,6 +2,7 @@ package by.bstu.faa.wwi_guide_mobile.ui.fragments.details;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -47,6 +48,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
     private RadioGroup radioGroup;
     private ImageView surveyImg;
 
+    private String eventId;
     private EventEntity entity;
     private SecurePreferences preferences;
     private UserEntity user;
@@ -65,7 +67,10 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
         eventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
         showBottomNav(MainActivity.BottomNavigationView, false);
 
-        if (getArguments() != null) { Log.d(TAG, getArguments().getString(ARG_ID)); }
+        if (getArguments() != null) {
+            eventId = getArguments().getString(ARG_ID);
+            Log.d(TAG, getArguments().getString(ARG_ID));
+        }
         eventViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -153,7 +158,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
 
     @Override
     public void formArticle(View view) {
-        eventViewModel.getEntityDataById(getArguments().getString(ARG_ID))
+        eventViewModel.getEntityDataById(eventId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<EventEntity>() {
@@ -194,6 +199,7 @@ public class EventFragment extends Fragment implements FragmentDataMethods, Frag
                                                         (ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
                                                 radioButton.setLayoutParams(layoutParams);
                                                 radioButton.setText(surveyEntity.getAnswer_variants().get(i));
+                                                radioButton.setTextColor(Color.BLACK);
                                                 radioGroup.addView(radioButton);
                                             }
                                             if(user.getAchievements().contains(entity.getAchievementId())) {
