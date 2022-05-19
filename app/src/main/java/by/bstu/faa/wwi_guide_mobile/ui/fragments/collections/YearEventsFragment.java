@@ -21,11 +21,14 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.TestThemeEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.EventRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.YearViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -65,17 +68,38 @@ public class YearEventsFragment extends Fragment implements FragmentBottomNav, F
                 };
         eventsAdapter = new EventRecyclerAdapter(requireContext().getApplicationContext(), eventClickListener);
 
-        yearViewModel.getYearEvents(yearId)
+        yearViewModel.getUserFromDB()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
+                .subscribe(new DisposableMaybeObserver<UserEntity>() {
                     @Override
-                    public void onSuccess(List<EventEntity> entities) {
-                        eventsAdapter.setItems(entities);
-                        recyclerView.setAdapter(eventsAdapter);
+                    public void onSuccess(UserEntity entity) {
+                        yearViewModel.getYearEvents(yearId)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new DisposableSingleObserver<List<EventEntity>>() {
+                                    @Override
+                                    public void onSuccess(List<EventEntity> entities) {
+                                        eventsAdapter.setItems(entities);
+
+                                        for(EventEntity event: eventsAdapter.getItems()){
+                                            for(String achievementId: entity.getAchievements()){
+                                                if(event.getAchievementId().equals(achievementId))
+                                                    event.setTitle(event.getTitle() + " (ПРОЧИТАНО)");
+                                            }
+                                        }
+
+                                        eventsAdapter.setItems(eventsAdapter.getItems());
+                                        recyclerView.setAdapter(eventsAdapter);
+                                    }
+                                    @Override
+                                    public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                });
                     }
                     @Override
                     public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                    @Override
+                    public void onComplete() { }
                 });
 
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_CREATE_VIEW);

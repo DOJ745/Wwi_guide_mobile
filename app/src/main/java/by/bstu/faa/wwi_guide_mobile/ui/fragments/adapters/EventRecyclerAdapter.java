@@ -20,13 +20,14 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import lombok.Getter;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.EventResultHolder>
         implements AdapterSetItems<EventEntity> {
 
     public interface OnItemClickListener { void onItemClick(EventEntity item, int position); }
     private final OnItemClickListener onClickListener;
-
+    @Getter
     private List<EventEntity> items = new ArrayList<>();
     private final LayoutInflater inflater;
 

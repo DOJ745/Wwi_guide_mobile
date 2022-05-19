@@ -21,11 +21,14 @@ import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.EventEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.UserEntity;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentBottomNav;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.FragmentNavigation;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.adapters.ArmamentRecyclerAdapter;
 import by.bstu.faa.wwi_guide_mobile.ui.fragments.view_models.collections.ArmamentViewModel;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableMaybeObserver;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -85,67 +88,110 @@ public class ArmamentListFragment extends Fragment implements FragmentNavigation
 
         switch (categoryName) {
             case CONSTANTS.TECHNIQUE_SUBCATEGORIES.GROUND:
-                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.GROUND)
+                armamentViewModel.getUserFromDB()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                        .subscribe(new DisposableMaybeObserver<UserEntity>() {
                             @Override
-                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
-                                armamentRecyclerAdapter.setItems(armamentEntities);
-                                recyclerView.setAdapter(armamentRecyclerAdapter);
-                                recyclerView.setVisibility(View.VISIBLE);
+                            public void onSuccess(UserEntity entity) {
+                                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.GROUND)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                                            @Override
+                                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                                createElementsList(armamentEntities, entity);
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                        });
                             }
                             @Override
-                            public void onError(Throwable e) { }
+                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                            @Override
+                            public void onComplete() { }
                         });
                 break;
+
             case CONSTANTS.TECHNIQUE_SUBCATEGORIES.AVIATION:
-                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.AVIATION)
+                armamentViewModel.getUserFromDB()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                        .subscribe(new DisposableMaybeObserver<UserEntity>() {
                             @Override
-                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
-                                armamentRecyclerAdapter.setItems(armamentEntities);
-                                recyclerView.setAdapter(armamentRecyclerAdapter);
-                                recyclerView.setVisibility(View.VISIBLE);
+                            public void onSuccess(UserEntity entity) {
+                                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.AVIATION)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                                            @Override
+                                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                                createElementsList(armamentEntities, entity);
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                        });
                             }
                             @Override
-                            public void onError(Throwable e) { }
+                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                            @Override
+                            public void onComplete() { }
                         });
                 break;
+
             case CONSTANTS.TECHNIQUE_SUBCATEGORIES.NAVY:
-                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.NAVY)
+                armamentViewModel.getUserFromDB()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                        .subscribe(new DisposableMaybeObserver<UserEntity>() {
                             @Override
-                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
-                                armamentRecyclerAdapter.setItems(armamentEntities);
-                                recyclerView.setAdapter(armamentRecyclerAdapter);
-                                recyclerView.setVisibility(View.VISIBLE);
+                            public void onSuccess(UserEntity entity) {
+                                armamentViewModel.getTechniqueBySub(CONSTANTS.TECHNIQUE_SUBCATEGORIES.NAVY)
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                                            @Override
+                                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                                createElementsList(armamentEntities, entity);
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                                        });
+
                             }
                             @Override
-                            public void onError(Throwable e) { }
+                            public void onError(Throwable e) { Log.e(TAG, e.getMessage()); }
+                            @Override
+                            public void onComplete() { }
                         });
                 break;
+
             default:
-                armamentViewModel.getWeapons()
+                armamentViewModel.getUserFromDB()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                        .subscribe(new DisposableMaybeObserver<UserEntity>() {
                             @Override
-                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
-                                armamentRecyclerAdapter.setItems(armamentEntities);
-                                recyclerView.setAdapter(armamentRecyclerAdapter);
-                                recyclerView.setVisibility(View.VISIBLE);
+                            public void onSuccess(UserEntity entity) {
+                                armamentViewModel.getWeapons()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new DisposableSingleObserver<List<ArmamentEntity>>() {
+                                            @Override
+                                            public void onSuccess(List<ArmamentEntity> armamentEntities) {
+                                                createElementsList(armamentEntities, entity);
+                                            }
+                                            @Override
+                                            public void onError(Throwable e) { }
+                                        });
                             }
                             @Override
                             public void onError(Throwable e) { }
+                            @Override
+                            public void onComplete() { }
                         });
                 break;
         }
-
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_VIEW_CREATED);
     }
 
@@ -196,6 +242,19 @@ public class ArmamentListFragment extends Fragment implements FragmentNavigation
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, CONSTANTS.LIFECYCLE_STATES.ON_DETACH);
+    }
+
+    private void createElementsList(List<ArmamentEntity> armamentEntities, UserEntity entity) {
+        armamentRecyclerAdapter.setItems(armamentEntities);
+        for(ArmamentEntity armament: armamentRecyclerAdapter.getItems()){
+            for(String achievementId: entity.getAchievements()){
+                if(armament.getAchievementId().equals(achievementId))
+                    armament.setTitle(armament.getTitle() + " (ПРОЧИТАНО)");
+            }
+        }
+        armamentRecyclerAdapter.setItems(armamentRecyclerAdapter.getItems());
+        recyclerView.setAdapter(armamentRecyclerAdapter);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override

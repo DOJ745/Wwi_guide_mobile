@@ -20,13 +20,14 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.R;
 import by.bstu.faa.wwi_guide_mobile.database.entities.ArmamentEntity;
+import lombok.Getter;
 
 public class ArmamentRecyclerAdapter extends RecyclerView.Adapter<ArmamentRecyclerAdapter.ArmamentResultHolder>
         implements AdapterSetItems<ArmamentEntity> {
 
     public interface OnItemClickListener { void onItemClick(ArmamentEntity item, int position); }
     private final ArmamentRecyclerAdapter.OnItemClickListener onClickListener;
-
+    @Getter
     private List<ArmamentEntity> items = new ArrayList<>();
     private final LayoutInflater inflater;
 
