@@ -39,6 +39,8 @@ public class SplashFragment extends Fragment {
     private boolean hasConnection;
 
     private TextView textPrompt;
+    private Button retryButton;
+    private Button exitButton;
 
     private UserEntity user;
     private final CompositeDisposable mDisposable = new CompositeDisposable();
@@ -137,8 +139,8 @@ public class SplashFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         textPrompt = view.findViewById(R.id.fragment_splash_text_prompt);
-        Button retryButton = view.findViewById(R.id.fragment_splash_retry_button);
-        Button exitButton = view.findViewById(R.id.fragment_splash_exit_button);
+        retryButton = view.findViewById(R.id.fragment_splash_retry_button);
+        exitButton = view.findViewById(R.id.fragment_splash_exit_button);
 
         retryButton.setOnClickListener(v -> {
             hasConnection = RetrofitService.hasConnection(requireContext().getApplicationContext());
@@ -215,10 +217,14 @@ public class SplashFragment extends Fragment {
                     public void onSuccess(UserEntity userEntity) {
                         if(hasConnection) {
                             Log.d(TAG, "DB ONLINE: user has been found");
+                            retryButton.setVisibility(View.GONE);
+                            exitButton.setVisibility(View.GONE);
                             loginWithSavedUser();
                         }
                         else {
                             Log.d(TAG, "DB OFFLINE: user has been found");
+                            retryButton.setVisibility(View.GONE);
+                            exitButton.setVisibility(View.GONE);
                             Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_yearsFragment, null);
                         }
                     }
@@ -228,9 +234,13 @@ public class SplashFragment extends Fragment {
                     public void onComplete() {
                         Log.d(TAG, "No user has been found");
                         if(hasConnection) {
+                            retryButton.setVisibility(View.GONE);
+                            exitButton.setVisibility(View.GONE);
                             Navigation.findNavController(view).navigate(R.id.action_splashFragment_to_loginFragment, null);
                         }
                         else {
+                            retryButton.setVisibility(View.VISIBLE);
+                            exitButton.setVisibility(View.VISIBLE);
                             if(preferences.getString("FIRST_LAUNCH").equals("1"))
                                 textPrompt.setText(R.string.prompt_first_launch_no_internet_connection);
                             else
