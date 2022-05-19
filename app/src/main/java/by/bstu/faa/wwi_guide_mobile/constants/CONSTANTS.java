@@ -54,8 +54,6 @@ public class CONSTANTS {
         public final static String BASE = "https://quiet-eyrie-18331.herokuapp.com" + API_URL;
         public final static String BASE_LOCALHOST = "http://10.0.2.2:5000" + API_URL;
 
-        public final static String IMG = BASE + "images/";
-
         public final static String NO_IMG = "https://www.bakicubuk.com/wp-content/uploads/builder-image.jpg";
 
         public final static String BEARER = "Bearer ";

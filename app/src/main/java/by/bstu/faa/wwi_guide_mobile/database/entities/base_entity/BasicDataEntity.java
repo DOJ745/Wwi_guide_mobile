@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities.base_entity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public abstract class BaseDataEntity extends BaseEntityId {
+public abstract class BasicDataEntity extends BaseEntityId {
     @ColumnInfo
     @NonNull
     protected String title;
@@ -28,9 +29,9 @@ public abstract class BaseDataEntity extends BaseEntityId {
     @NonNull
     protected ArrayList<String> images_titles;
     @ColumnInfo
-    @NonNull
+    @Nullable
     protected String surveyId;
     @ColumnInfo
-    @NonNull
+    @Nullable
     private String achievementId;
 }

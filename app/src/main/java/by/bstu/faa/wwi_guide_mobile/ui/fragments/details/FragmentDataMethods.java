@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import by.bstu.faa.wwi_guide_mobile.R;
-import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BaseDataEntity;
+import by.bstu.faa.wwi_guide_mobile.database.entities.base_entity.BasicDataEntity;
 
 public interface FragmentDataMethods {
     void formArticle(View view);
@@ -27,7 +27,7 @@ public interface FragmentDataMethods {
 
     @SuppressLint("ResourceType")
     default void createUiElements(View view,
-                                  BaseDataEntity entity,
+                                  BasicDataEntity entity,
                                   ConstraintLayout constraintLayout,
                                   TextView surveyQuestionView,
                                   Context context,

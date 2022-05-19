@@ -25,7 +25,7 @@ public class RetrofitService {
                 .addInterceptor(interceptor);
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(CONSTANTS.URLS.BASE_LOCALHOST)
+                .baseUrl(CONSTANTS.URLS.BASE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client.build())
                 .build();

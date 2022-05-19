@@ -27,6 +27,7 @@ import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
 import by.bstu.faa.wwi_guide_mobile.R;
+import by.bstu.faa.wwi_guide_mobile.api_service.RetrofitService;
 import by.bstu.faa.wwi_guide_mobile.constants.CONSTANTS;
 import by.bstu.faa.wwi_guide_mobile.database.entities.AchievementEntity;
 import by.bstu.faa.wwi_guide_mobile.database.entities.RankEntity;
@@ -91,6 +92,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         Button logOutBtn = view.findViewById(R.id.fragment_user_logout_btn);
         rankImg = view.findViewById(R.id.fragment_user_rank_img);
         rankName = view.findViewById(R.id.fragment_user_rank_name);
@@ -144,6 +146,9 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                         achievementsRecyclerAdapter.setItems(userAchievements);
                                         achievementsRecyclerAdapter.setUserAchievements(userEntity.getAchievements());
                                         achievementRecyclerView.setAdapter(achievementsRecyclerAdapter);
+
+                                        if(preferences.getString("token") != null && RetrofitService.hasConnection(getActivity()))
+                                            userViewModel.updateUserReq(preferences.getString("token"));
                                     }
                                     @Override
                                     public void onError(Throwable e) { }

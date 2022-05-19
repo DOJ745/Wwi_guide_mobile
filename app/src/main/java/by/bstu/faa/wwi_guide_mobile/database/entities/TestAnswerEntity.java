@@ -1,6 +1,7 @@
 package by.bstu.faa.wwi_guide_mobile.database.entities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -19,12 +20,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode(callSuper = false)
-@Entity(tableName = CONSTANTS.APP_DATABASE.TESTS_ANSWERS_TABLE,
+@Entity(tableName = CONSTANTS.APP_DATABASE.TESTS_ANSWERS_TABLE/*,
         foreignKeys = {
         @ForeignKey(entity = TestQuestionEntity.class, parentColumns = "id", childColumns = "testQuestionId")
-})
+}*/)
 public class TestAnswerEntity extends BaseAnswerEntity {
-    @ColumnInfo@NonNull
+    @ColumnInfo@Nullable
     private String testQuestionId;
     @ColumnInfo
     private String isTrue;
