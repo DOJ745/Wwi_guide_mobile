@@ -120,7 +120,7 @@ public class TestItemFragment extends Fragment implements FragmentBottomNav, Fra
 
         formTest(themeId);
 
-        answerTimer = new CountDownTimer(90000, 1000) {
+        answerTimer = new CountDownTimer(120000, 1000) {
             public void onTick(long millisUntilFinished) {
                 timerView.setText("Осталость " + millisUntilFinished / 1000 + " сек.");
             }
