@@ -47,7 +47,7 @@ public interface AppApi {
     @GET("countries")
     Call<List<CountryDto>> getCountries();
 
-    @GET("armament")
+    @GET("armaments")
     Call<List<ArmamentDto>> getArmament();
 
     @GET("tests-themes")
