@@ -23,6 +23,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import by.bstu.faa.wwi_guide_mobile.MainActivity;
@@ -162,6 +165,7 @@ public class UserFragment extends Fragment implements FragmentBottomNav, Fragmen
                                     @Override
                                     public void onSuccess(List<RankEntity> rankEntities) {
                                         RankEntity temp = new RankEntity();
+                                        Collections.sort(rankEntities, (a, b) -> Integer.compare(a.getPoints(), b.getPoints()));
                                         for(RankEntity rank: rankEntities){
                                             if(userEntity.getScore() <= rank.getPoints()){
                                                 temp = rank;
