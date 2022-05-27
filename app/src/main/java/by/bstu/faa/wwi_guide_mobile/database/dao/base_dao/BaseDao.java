@@ -16,12 +16,10 @@ public interface BaseDao<T> {
     Completable insert(T data);
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertMany(List<T> dataList);
-
     @Update
     void update(T data);
     @Update
     void updateMany(List<T> dataList);
-
     @Delete
     Completable delete(T data);
     @Delete

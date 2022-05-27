@@ -99,9 +99,10 @@
             android:id="@+id/fragment_login_msg_response"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/fragment_login_toReg_button"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_login_toReg_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

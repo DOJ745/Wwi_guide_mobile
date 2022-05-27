@@ -17,11 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(tableName = CONSTANTS.APP_DATABASE.TEST_THEME_TABLE
-/*, foreignKeys = {
-        @ForeignKey(entity = AchievementEntity.class, parentColumns = "id", childColumns = "achievementId")
-}*/
-)
+@Entity(tableName = CONSTANTS.APP_DATABASE.TEST_THEME_TABLE)
 public class TestThemeEntity extends BaseEntityId {
     @ColumnInfo@NonNull
     private String name;

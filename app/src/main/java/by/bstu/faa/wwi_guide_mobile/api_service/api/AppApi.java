@@ -25,46 +25,32 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface AppApi {
-
     @POST("auth/login")
     Call<UserDto> loginUser(@Body LoginData data);
-
     @POST("auth/reg")
     Call<AppMsgResponseDto> registerUser(@Body RegData regData);
-
     @PUT("users")
     Call<Void> updateUserInfo(@Header("Authorization") String token, @Body UserDto userDto);
-
     @POST("logs")
     Call<Void> sendLog(@Header("Authorization") String token, @Body LogDto userLog);
-
     @GET("years")
     Call<List<YearDto>> getYears();
-
     @GET("ranks")
     Call<List<RankDto>> getRanks();
-
     @GET("countries")
     Call<List<CountryDto>> getCountries();
-
     @GET("armaments")
     Call<List<ArmamentDto>> getArmament();
-
     @GET("tests-themes")
     Call<List<TestThemeDto>> getTestsThemes();
-
     @GET("tests-questions")
     Call<List<TestQuestionDto>> getTestsQuestions();
-
     @GET("tests-answers")
     Call<List<TestAnswerDto>> getTestsAnswers();
-
     @GET("surveys")
     Call<List<SurveyDto>> getSurveys();
-
     @GET("events")
     Call<List<EventDto>> getEvents();
-
     @GET("achievements")
     Call<List<AchievementDto>> getAchievements();
 }

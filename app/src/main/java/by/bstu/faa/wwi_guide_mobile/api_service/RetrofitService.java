@@ -19,7 +19,6 @@ public class RetrofitService {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-
         // Watch Request and Response for logs in IDE
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor);
@@ -35,11 +34,9 @@ public class RetrofitService {
         if (mInstance == null) { mInstance = new RetrofitService(); }
         return mInstance;
     }
-
     public AppApi getAppApi() {
         return mRetrofit.create(AppApi.class);
     }
-
     public static boolean hasConnection(final Context context)
     {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

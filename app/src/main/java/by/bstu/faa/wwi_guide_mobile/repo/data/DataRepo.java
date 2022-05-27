@@ -62,7 +62,6 @@ public abstract class DataRepo<T extends IdDto, B extends BaseDao<C>, C extends 
                     @Override
                     public void onComplete() {
                         Log.d(repoTag, "DB: onComplete inserting and updating items");
-
                         getEntitiesFromDB()
                                 .subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -70,7 +69,6 @@ public abstract class DataRepo<T extends IdDto, B extends BaseDao<C>, C extends 
                                     @Override
                                     public void onSuccess(List<C> data) {
                                         Log.d(repoTag, "DB: Received current items");
-
                                         deleteOldEntities(data, resBody, entityClass)
                                                 .subscribeOn(Schedulers.io())
                                                 .observeOn(AndroidSchedulers.mainThread())
@@ -84,9 +82,7 @@ public abstract class DataRepo<T extends IdDto, B extends BaseDao<C>, C extends 
                                                 });
                                     }
                                     @Override
-                                    public void onError(Throwable e) {
-                                        Log.e(repoTag, "DB: Error occurred!\n" + e.getMessage());
-                                    }
+                                    public void onError(Throwable e) { Log.e(repoTag, "DB: Error occurred!\n" + e.getMessage()); }
                                     @Override
                                     public void onComplete() { Log.d(repoTag, "onComplete getting data (empty)"); }
                                 });
