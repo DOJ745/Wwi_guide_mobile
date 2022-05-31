@@ -70,6 +70,7 @@ public interface FragmentDataMethods {
             imageTitleViewLayoutParams.startToStart = constraintLayout.getId();
             imageTitleViewLayoutParams.endToEnd = constraintLayout.getId();
             imageTitleViewLayoutParams.topMargin = 8;
+            imageTitleView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             imageTitleViewLayoutParams.topToBottom = imageView.getId();
             imageTitleView.setLayoutParams(imageTitleViewLayoutParams);
 
